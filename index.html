@@ -1,137 +1,549 @@
 <!DOCTYPE html>
 <html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Responsive Navbar Sidebar Kanan</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Grand Luxe Hotel | Luxury Experience</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css" />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#8B7355",
+              secondary: "#2C2C2C",
+              accent: "#D4AF37",
+              light: "#F8F5F2",
+              dark: "#1A1A1A",
+            },
+            fontFamily: {
+              serif: ["Playfair Display", "serif"],
+              sans: ["Montserrat", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-white text-secondary">
+    <!-- Navigation -->
+    <!-- Navigation -->
+    <nav
+      id="navbar"
+      class="fixed w-full z-50 bg-white/80 backdrop-blur-md shadow-md transition-all duration-300"
+    >
+      <div class="container mx-auto px-4">
+        <div class="flex justify-between items-center py-4">
+          <a
+            href="index.html"
+            class="text-2xl font-serif font-bold text-primary"
+            >Grand Luxe</a
+          >
 
-    body {
-      font-family: Arial, sans-serif;
-    }
+          <!-- Menu Desktop -->
+          <div class="hidden md:flex space-x-8">
+            <a
+              href="index.html"
+              class="font-medium hover:text-primary transition-colors duration-300"
+              >Beranda</a
+            >
+            <a
+              href="kamar.html"
+              class="font-medium hover:text-primary transition-colors duration-300"
+              >Kamar & Suite</a
+            >
+            <a
+              href="pemesanan.html"
+              class="font-medium hover:text-primary transition-colors duration-300"
+              >Pemesanan</a
+            >
+            <a
+              href="login.html"
+              class="font-medium hover:text-primary transition-colors duration-300"
+              >Masuk</a
+            >
+          </div>
 
-    /* ==== NAVBAR ==== */
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background-color: #007bff;
-      color: white;
-      padding: 10px 20px;
-      position: relative;
-      z-index: 1000;
-    }
+          <!-- Tombol Pesan & Hamburger -->
+          <div class="flex items-center space-x-4">
+            <a
+              href="pemesanan.html"
+              class="bg-primary text-white px-6 py-2 rounded-md font-medium hover:bg-opacity-90 transition-all duration-300 transform hover:-translate-y-1"
+              >Pesan Sekarang</a
+            >
+            <button
+              id="mobile-menu-button"
+              class="md:hidden text-2xl text-primary focus:outline-none"
+            >
+              <i class="fas fa-bars"></i>
+            </button>
+          </div>
+        </div>
+      </div>
 
-    .logo {
-      font-size: 1.5em;
-      font-weight: bold;
-    }
+      <!-- Overlay -->
+      <div
+        id="overlay"
+        class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-40 transition-opacity duration-300"
+      ></div>
 
-    .nav-links {
-      display: flex;
-      list-style: none;
-    }
+      <!-- Mobile Sidebar Menu -->
+      <div
+        id="mobile-menu"
+        class="fixed top-0 right-[-250px] w-[250px] h-screen bg-white/70 backdrop-blur-xl shadow-2xl border-l border-white/30 z-50 transition-all duration-500 flex flex-col pt-24 space-y-4 px-6"
+      >
+        <a href="index.html" class="font-medium hover:text-primary">Beranda</a>
+        <a href="kamar.html" class="font-medium hover:text-primary"
+          >Kamar & Suite</a
+        >
+        <a href="pemesanan.html" class="font-medium hover:text-primary"
+          >Pemesanan</a
+        >
+        <a href="login.html" class="font-medium hover:text-primary">Masuk</a>
+      </div>
+    </nav>
 
-    .nav-links li {
-      margin-left: 20px;
-    }
+    <!-- Hero Section -->
+    <section class="hero-bg min-h-screen flex items-center text-white">
+      <div class="container mx-auto px-4">
+        <div class="max-w-2xl">
+          <h1 class="text-5xl md:text-6xl font-serif font-bold mb-6">
+            Pengalaman Mewah yang Tak Terlupakan
+          </h1>
+          <p class="text-xl mb-8">
+            Grand Luxe Hotel menawarkan akomodasi bintang lima dengan pelayanan
+            terbaik di lokasi strategis pusat kota.
+          </p>
+          <div
+            class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4"
+          >
+            <a
+              href="pemesanan.html"
+              class="bg-accent text-dark px-8 py-3 rounded-md font-bold text-center hover:bg-opacity-90 transition-all duration-300 transform hover:-translate-y-1"
+              >Pesan Sekarang</a
+            >
+            <a
+              href="kamar.html"
+              class="border-2 border-white text-white px-8 py-3 rounded-md font-bold text-center hover:bg-white hover:text-dark transition-all duration-300"
+              >Jelajahi Kamar</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
 
-    .nav-links a {
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-    }
+    <!-- Facilities Section -->
+    <section class="py-20 bg-light">
+      <div class="container mx-auto px-4">
+        <h2
+          class="text-4xl font-serif font-bold text-center mb-16 relative section-title"
+        >
+          Fasilitas Kami
+        </h2>
 
-    /* ==== HAMBURGER ==== */
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      cursor: pointer;
-      z-index: 1100; /* biar di atas sidebar */
-    }
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div class="text-center p-6">
+            <div class="text-5xl text-primary mb-4">
+              <i class="fas fa-swimming-pool"></i>
+            </div>
+            <h3 class="text-xl font-serif font-semibold mb-3">
+              Kolam Renang Infinity
+            </h3>
+            <p class="text-gray-600">
+              Nikmati pemandangan kota yang menakjubkan dari kolam renang
+              infinity kami yang eksklusif.
+            </p>
+          </div>
 
-    .hamburger div {
-      width: 25px;
-      height: 3px;
-      background-color: white;
-      margin: 4px;
-      transition: 0.3s;
-    }
+          <div class="text-center p-6">
+            <div class="text-5xl text-primary mb-4">
+              <i class="fas fa-spa"></i>
+            </div>
+            <h3 class="text-xl font-serif font-semibold mb-3">
+              Spa & Wellness
+            </h3>
+            <p class="text-gray-600">
+              Pijat relaksasi dan perawatan tubuh dengan terapis profesional
+              untuk menyegarkan pikiran dan tubuh.
+            </p>
+          </div>
 
-    /* ==== ANIMASI HAMBURGER JADI "X" ==== */
-    .hamburger.active div:nth-child(1) {
-      transform: rotate(45deg) translate(5px, 5px);
-    }
+          <div class="text-center p-6">
+            <div class="text-5xl text-primary mb-4">
+              <i class="fas fa-utensils"></i>
+            </div>
+            <h3 class="text-xl font-serif font-semibold mb-3">
+              Restoran Premium
+            </h3>
+            <p class="text-gray-600">
+              Nikmati hidangan internasional terbaik yang disiapkan oleh koki
+              terkenal dunia.
+            </p>
+          </div>
 
-    .hamburger.active div:nth-child(2) {
-      opacity: 0;
-    }
+          <div class="text-center p-6">
+            <div class="text-5xl text-primary mb-4">
+              <i class="fas fa-dumbbell"></i>
+            </div>
+            <h3 class="text-xl font-serif font-semibold mb-3">
+              Fitness Center
+            </h3>
+            <p class="text-gray-600">
+              Pusat kebugaran lengkap dengan peralatan modern dan pelatih
+              pribadi.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    .hamburger.active div:nth-child(3) {
-      transform: rotate(-45deg) translate(5px, -5px);
-    }
+    <!-- Rooms Preview -->
+    <section class="py-20">
+      <div class="container mx-auto px-4">
+        <h2
+          class="text-4xl font-serif font-bold text-center mb-16 relative section-title"
+        >
+          Kamar & Suite
+        </h2>
 
-    /* ==== RESPONSIVE ==== */
-    @media (max-width: 768px) {
-      .nav-links {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        position: fixed;
-        top: 0;
-        right: -250px; /* sembunyi di kanan */
-        width: 200px;
-        height: 100vh;
-        background-color: #007bff;
-        padding-top: 60px;
-        transition: right 0.3s ease;
-      }
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Room 1 -->
+          <div
+            class="room-card bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300"
+          >
+            <div
+              class="h-64 bg-cover bg-center"
+              style="
+                background-image: url('https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+              "
+            ></div>
+            <div class="p-6">
+              <h3 class="text-2xl font-serif font-semibold mb-2">
+                Deluxe Room
+              </h3>
+              <p class="text-gray-600 mb-4">
+                Kamar mewah dengan pemandangan kota, dilengkapi dengan fasilitas
+                terbaik untuk kenyamanan Anda.
+              </p>
+              <div class="flex justify-between items-center">
+                <span class="text-primary font-bold text-xl"
+                  >Rp 1.500.000
+                  <span class="text-sm font-normal text-gray-500"
+                    >/malam</span
+                  ></span
+                >
+                <a
+                  href="kamar.html"
+                  class="text-primary font-medium hover:underline"
+                  >Lihat Detail</a
+                >
+              </div>
+            </div>
+          </div>
 
-      .nav-links.active {
-        right: 0; /* muncul dari kanan */
-      }
+          <!-- Room 2 -->
+          <div
+            class="room-card bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300"
+          >
+            <div
+              class="h-64 bg-cover bg-center"
+              style="
+                background-image: url('https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+              "
+            ></div>
+            <div class="p-6">
+              <h3 class="text-2xl font-serif font-semibold mb-2">
+                Executive Suite
+              </h3>
+              <p class="text-gray-600 mb-4">
+                Suite eksklusif dengan ruang tamu terpisah, cocok untuk
+                perjalanan bisnis atau keluarga.
+              </p>
+              <div class="flex justify-between items-center">
+                <span class="text-primary font-bold text-xl"
+                  >Rp 2.800.000
+                  <span class="text-sm font-normal text-gray-500"
+                    >/malam</span
+                  ></span
+                >
+                <a
+                  href="kamar.html"
+                  class="text-primary font-medium hover:underline"
+                  >Lihat Detail</a
+                >
+              </div>
+            </div>
+          </div>
 
-      .nav-links li {
-        margin: 15px 20px;
-      }
+          <!-- Room 3 -->
+          <div
+            class="room-card bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300"
+          >
+            <div
+              class="h-64 bg-cover bg-center"
+              style="
+                background-image: url('https://images.unsplash.com/photo-1566665797739-1674de7a421a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+              "
+            ></div>
+            <div class="p-6">
+              <h3 class="text-2xl font-serif font-semibold mb-2">
+                Presidential Suite
+              </h3>
+              <p class="text-gray-600 mb-4">
+                Akomodasi paling mewah dengan fasilitas terbaik, pemandangan
+                spektakuler, dan layanan butler pribadi.
+              </p>
+              <div class="flex justify-between items-center">
+                <span class="text-primary font-bold text-xl"
+                  >Rp 5.500.000
+                  <span class="text-sm font-normal text-gray-500"
+                    >/malam</span
+                  ></span
+                >
+                <a
+                  href="kamar.html"
+                  class="text-primary font-medium hover:underline"
+                  >Lihat Detail</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
 
-      .hamburger {
-        display: flex;
-      }
-    }
-  </style>
-</head>
-<body>
+        <div class="text-center mt-12">
+          <a
+            href="kamar.html"
+            class="bg-primary text-white px-8 py-3 rounded-md font-bold hover:bg-opacity-90 transition-all duration-300 transform hover:-translate-y-1"
+            >Lihat Semua Kamar</a
+          >
+        </div>
+      </div>
+    </section>
 
-  <nav>
-    <div class="logo">MyWebsite</div>
-    <ul class="nav-links">
-      <li><a href="#">Beranda</a></li>
-      <li><a href="#">Tentang</a></li>
-      <li><a href="#">Layanan</a></li>
-      <li><a href="#">Kontak</a></li>
-    </ul>
-    <div class="hamburger" id="hamburger">
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
-  </nav>
+    <!-- Testimonials -->
+    <section class="py-20 bg-light">
+      <div class="container mx-auto px-4">
+        <h2
+          class="text-4xl font-serif font-bold text-center mb-16 relative section-title"
+        >
+          Testimonials
+        </h2>
 
-  <script>
-    const hamburger = document.getElementById('hamburger');
-    const navLinks = document.querySelector('.nav-links');
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div class="bg-white rounded-xl p-6 shadow-md">
+            <div class="flex items-center mb-4">
+              <div class="text-accent text-xl mr-2">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+            </div>
+            <p class="italic mb-6">
+              "Pengalaman menginap yang luar biasa! Pelayanan sangat memuaskan,
+              kamar bersih dan nyaman, serta lokasi strategis. Pasti akan
+              kembali lagi!"
+            </p>
+            <div class="flex items-center">
+              <div class="w-12 h-12 bg-gray-300 rounded-full mr-4"></div>
+              <div>
+                <h4 class="font-bold">Sarah Johnson</h4>
+                <p class="text-sm text-gray-500">Business Traveler</p>
+              </div>
+            </div>
+          </div>
 
-    hamburger.addEventListener('click', () => {
-      hamburger.classList.toggle('active'); // ubah jadi X
-      navLinks.classList.toggle('active');   // tampilkan sidebar
-    });
-  </script>
+          <div class="bg-white rounded-xl p-6 shadow-md">
+            <div class="flex items-center mb-4">
+              <div class="text-accent text-xl mr-2">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+            </div>
+            <p class="italic mb-6">
+              "Momen bulan madu kami di Grand Luxe Hotel sangat sempurna!
+              Suite-nya mewah, pemandangan menakjubkan, dan staf sangat
+              membantu."
+            </p>
+            <div class="flex items-center">
+              <div class="w-12 h-12 bg-gray-300 rounded-full mr-4"></div>
+              <div>
+                <h4 class="font-bold">Michael & Lisa Chen</h4>
+                <p class="text-sm text-gray-500">Honeymooners</p>
+              </div>
+            </div>
+          </div>
 
-</body>
+          <div class="bg-white rounded-xl p-6 shadow-md">
+            <div class="flex items-center mb-4">
+              <div class="text-accent text-xl mr-2">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+            </div>
+            <p class="italic mb-6">
+              "Hotel ini sempurna untuk acara perusahaan kami. Fasilitas meeting
+              lengkap, makanan lezat, dan layanan profesional. Sangat
+              direkomendasikan!"
+            </p>
+            <div class="flex items-center">
+              <div class="w-12 h-12 bg-gray-300 rounded-full mr-4"></div>
+              <div>
+                <h4 class="font-bold">Robert Williams</h4>
+                <p class="text-sm text-gray-500">Corporate Event Planner</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-16 pb-8">
+      <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+          <div>
+            <h3 class="text-xl font-serif font-bold mb-6 text-accent">
+              Grand Luxe Hotel
+            </h3>
+            <p class="mb-4 text-gray-300">
+              Hotel mewah bintang lima dengan pelayanan terbaik di jantung kota.
+              Pengalaman menginap tak terlupakan menanti Anda.
+            </p>
+            <div class="flex space-x-4">
+              <a
+                href="#"
+                class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-accent transition-colors duration-300"
+              >
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a
+                href="#"
+                class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-accent transition-colors duration-300"
+              >
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a
+                href="#"
+                class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-accent transition-colors duration-300"
+              >
+                <i class="fab fa-instagram"></i>
+              </a>
+              <a
+                href="#"
+                class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-accent transition-colors duration-300"
+              >
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-serif font-bold mb-6 text-accent">
+              Tautan Cepat
+            </h3>
+            <ul class="space-y-3">
+              <li>
+                <a
+                  href="index.html"
+                  class="text-gray-300 hover:text-white transition-colors duration-300"
+                  >Beranda</a
+                >
+              </li>
+              <li>
+                <a
+                  href="kamar.html"
+                  class="text-gray-300 hover:text-white transition-colors duration-300"
+                  >Kamar & Suite</a
+                >
+              </li>
+              <li>
+                <a
+                  href="pemesanan.html"
+                  class="text-gray-300 hover:text-white transition-colors duration-300"
+                  >Pemesanan</a
+                >
+              </li>
+              <li>
+                <a
+                  href="login.html"
+                  class="text-gray-300 hover:text-white transition-colors duration-300"
+                  >Masuk</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-serif font-bold mb-6 text-accent">
+              Kontak Kami
+            </h3>
+            <ul class="space-y-3 text-gray-300">
+              <li class="flex items-start">
+                <i class="fas fa-map-marker-alt mt-1 mr-3 text-accent"></i>
+                <span>Jalan Kemewahan No. 123, Jakarta Pusat</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fas fa-phone mr-3 text-accent"></i>
+                <span>+62 21 1234 5678</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fas fa-envelope mr-3 text-accent"></i>
+                <span>info@grandluxehotel.com</span>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-serif font-bold mb-6 text-accent">
+              Newsletter
+            </h3>
+            <p class="mb-4 text-gray-300">
+              Berlangganan newsletter kami untuk mendapatkan penawaran khusus
+              dan update terbaru.
+            </p>
+            <form class="flex">
+              <input
+                type="email"
+                placeholder="Email Anda"
+                class="px-4 py-2 w-full rounded-l-md focus:outline-none text-dark"
+              />
+              <button
+                type="submit"
+                class="bg-accent text-dark px-4 py-2 rounded-r-md font-bold hover:bg-opacity-90 transition-colors duration-300"
+              >
+                Langganan
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <div class="border-t border-gray-700 pt-8 text-center text-gray-400">
+          <p>&copy; 2023 Grand Luxe Hotel. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+  </body>
 </html>

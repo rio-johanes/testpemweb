@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kamar & Suite - Grand Luxe Hotel</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles/style.css" />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#8B7355",
+              secondary: "#2C2C2C",
+              accent: "#D4AF37",
+              light: "#F8F5F2",
+              dark: "#1A1A1A",
+            },
+            fontFamily: {
+              serif: ["Playfair Display", "serif"],
+              sans: ["Montserrat", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-white text-secondary">
+    <!-- Navigation -->
+    <nav
+      id="navbar"
+      class="fixed w-full z-50 bg-white bg-opacity-95 shadow-md transition-all duration-300"
+    >
+      <div class="container mx-auto px-4">
+        <div class="flex justify-between items-center py-4">
+          <a
+            href="index.html"
+            class="text-2xl font-serif font-bold text-primary"
+            >Grand Luxe</a
+          >
+
+          <div class="hidden md:flex space-x-8">
+            <a
+              href="index.html"
+              class="font-medium hover:text-primary transition-colors duration-300"
+              >Beranda</a
+            >
+            <a
+              href="kamar.html"
+              class="font-medium hover:text-primary transition-colors duration-300"
+              >Kamar & Suite</a
+            >
+            <a
+              href="pemesanan.html"
+              class="font-medium hover:text-primary transition-colors duration-300"
+              >Pemesanan</a
+            >
+            <a
+              href="login.html"
+              class="font-medium hover:text-primary transition-colors duration-300"
+              >Masuk</a
+            >
+          </div>
+
+          <div class="flex items-center space-x-4">
+            <a
+              href="pemesanan.html"
+              class="bg-primary text-white px-6 py-2 rounded-md font-medium hover:bg-opacity-90 transition-all duration-300 transform hover:-translate-y-1"
+              >Pesan Sekarang</a
+            >
+            <button id="mobile-menu-button" class="md:hidden text-2xl">
+              <i class="fas fa-bars"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden py-4 border-t">
+          <a href="index.html" class="block py-2 font-medium hover:text-primary"
+            >Beranda</a
+          >
+          <a href="kamar.html" class="block py-2 font-medium hover:text-primary"
+            >Kamar & Suite</a
+          >
+          <a
+            href="pemesanan.html"
+            class="block py-2 font-medium hover:text-primary"
+            >Pemesanan</a
+          >
+          <a href="login.html" class="block py-2 font-medium hover:text-primary"
+            >Masuk</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <!-- Rooms Page -->
+    <div class="min-h-screen bg-light pt-24 pb-12">
+      <div class="container mx-auto px-4">
+        <h1 class="text-4xl font-serif font-bold text-center mb-4">
+          Kamar & Suite
+        </h1>
+        <p class="text-xl text-gray-600 text-center mb-12 max-w-2xl mx-auto">
+          Temukan akomodasi sempurna untuk kebutuhan Anda, dari kamar standar
+          yang nyaman hingga suite mewah dengan fasilitas terbaik.
+        </p>
+
+        <!-- Filter Section -->
+        <div class="bg-white rounded-xl shadow-md p-6 mb-12">
+          <h2 class="text-2xl font-serif font-bold mb-6">
+            Temukan Kamar Ideal Anda
+          </h2>
+
+          <form id="room-filter-form">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div>
+                <label for="check-in" class="block text-gray-700 mb-2"
+                  >Check-in</label
+                >
+                <input
+                  type="date"
+                  id="check-in"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                />
+              </div>
+
+              <div>
+                <label for="check-out" class="block text-gray-700 mb-2"
+                  >Check-out</label
+                >
+                <input
+                  type="date"
+                  id="check-out"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                />
+              </div>
+
+              <div>
+                <label for="guests" class="block text-gray-700 mb-2"
+                  >Jumlah Tamu</label
+                >
+                <select
+                  id="guests"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                >
+                  <option value="1">1 Orang</option>
+                  <option value="2" selected>2 Orang</option>
+                  <option value="3">3 Orang</option>
+                  <option value="4">4 Orang</option>
+                </select>
+              </div>
+
+              <div class="flex items-end">
+                <button
+                  type="submit"
+                  class="w-full bg-primary text-white py-2 rounded-md font-medium hover:bg-opacity-90 transition-colors duration-300"
+                >
+                  Cari Kamar
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- Rooms Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+          <!-- Room 1 -->
+          <div
+            class="room-card bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300"
+          >
+            <div
+              class="h-64 bg-cover bg-center"
+              style="
+                background-image: url('https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+              "
+            ></div>
+            <div class="p-6">
+              <h3 class="text-2xl font-serif font-semibold mb-2">
+                Deluxe Room
+              </h3>
+              <p class="text-gray-600 mb-4">
+                Kamar mewah dengan pemandangan kota, dilengkapi dengan fasilitas
+                terbaik untuk kenyamanan Anda.
+              </p>
+
+              <div class="flex items-center mb-4">
+                <div class="flex text-accent mr-2">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+                <span class="text-gray-500">(128 reviews)</span>
+              </div>
+
+              <div class="mb-4">
+                <h4 class="font-semibold mb-2">Fasilitas:</h4>
+                <div class="flex flex-wrap gap-2">
+                  <span
+                    class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"
+                    >WiFi Gratis</span
+                  >
+                  <span
+                    class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"
+                    >AC</span
+                  >
+                  <span
+                    class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"
+                    >TV LED</span
+                  >
+                </div>
+              </div>
+
+              <div class="flex justify-between items-center">
+                <span class="text-primary font-bold text-xl"
+                  >Rp 1.500.000
+                  <span class="text-sm font-normal text-gray-500"
+                    >/malam</span
+                  ></span
+                >
+                <a
+                  href="pemesanan.html"
+                  class="bg-primary text-white px-4 py-2 rounded-md font-medium hover:bg-opacity-90 transition-colors duration-300"
+                  >Pesan Sekarang</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Room 2 -->
+          <div
+            class="room-card bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300"
+          >
+            <div
+              class="h-64 bg-cover bg-center"
+              style="
+                background-image: url('https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+              "
+            ></div>
+            <div class="p-6">
+              <h3 class="text-2xl font-serif font-semibold mb-2">
+                Executive Suite
+              </h3>
+              <p class="text-gray-600 mb-4">
+                Suite eksklusif dengan ruang tamu terpisah, cocok untuk
+                perjalanan bisnis atau keluarga.
+              </p>
+
+              <div class="flex items-center mb-4">
+                <div class="flex text-accent mr-2">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+                <span class="text-gray-500">(96 reviews)</span>
+              </div>
+
+              <div class="mb-4">
+                <h4 class="font-semibold mb-2">Fasilitas:</h4>
+                <div class="flex flex-wrap gap-2">
+                  <span
+                    class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"
+                    >WiFi Gratis</span
+                  >
+                  <span
+                    class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"
+                    >Mini Bar</span
+                  >
+                  <span
+                    class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"
+                    >Jacuzzi</span
+                  >
+                </div>
+              </div>
+
+              <div class="flex justify-between items-center">
+                <span class="text-primary font-bold text-xl"
+                  >Rp 2.800.000
+                  <span class="text-sm font-normal text-gray-500"
+                    >/malam</span
+                  ></span
+                >
+                <a
+                  href="pemesanan.html"
+                  class="bg-primary text-white px-4 py-2 rounded-md font-medium hover:bg-opacity-90 transition-colors duration-300"
+                  >Pesan Sekarang</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Room 3 -->
+          <div
+            class="room-card bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300"
+          >
+            <div
+              class="h-64 bg-cover bg-center"
+              style="
+                background-image: url('https://images.unsplash.com/photo-1566665797739-1674de7a421a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+              "
+            ></div>
+            <div class="p-6">
+              <h3 class="text-2xl font-serif font-semibold mb-2">
+                Presidential Suite
+              </h3>
+              <p class="text-gray-600 mb-4">
+                Akomodasi paling mewah dengan fasilitas terbaik, pemandangan
+                spektakuler, dan layanan butler pribadi.
+              </p>
+
+              <div class="flex items-center mb-4">
+                <div class="flex text-accent mr-2">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+                <span class="text-gray-500">(64 reviews)</span>
+              </div>
+
+              <div class="mb-4">
+                <h4 class="font-semibold mb-2">Fasilitas:</h4>
+                <div class="flex flex-wrap gap-2">
+                  <span
+                    class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"
+                    >Butler Service</span
+                  >
+                  <span
+                    class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"
+                    >Private Pool</span
+                  >
+                  <span
+                    class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"
+                    >Lounge Access</span
+                  >
+                </div>
+              </div>
+
+              <div class="flex justify-between items-center">
+                <span class="text-primary font-bold text-xl"
+                  >Rp 5.500.000
+                  <span class="text-sm font-normal text-gray-500"
+                    >/malam</span
+                  ></span
+                >
+                <a
+                  href="pemesanan.html"
+                  class="bg-primary text-white px-4 py-2 rounded-md font-medium hover:bg-opacity-90 transition-colors duration-300"
+                  >Pesan Sekarang</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Room 4 -->
+          <div
+            class="room-card bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300"
+          >
+            <div
+              class="h-64 bg-cover bg-center"
+              style="
+                background-image: url('https://images.unsplash.com/photo-1631049307264-da0ec9d70304?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+              "
+            ></div>
+            <div class="p-6">
+              <h3 class="text-2xl font-serif font-semibold mb-2">
+                Family Suite
+              </h3>
+              <p class="text-gray-600 mb-4">
+                Suite luas dengan dua kamar tidur, ideal untuk keluarga yang
+                menginginkan kenyamanan dan ruang ekstra.
+              </p>
+
+              <div class="flex items-center mb-4">
+                <div class="flex text-accent mr-2">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star-half-alt"></i>
+                </div>
+                <span class="text-gray-500">(72 reviews)</span>
+              </div>
+
+              <div class="mb-4">
+                <h4 class="font-semibold mb-2">Fasilitas:</h4>
+                <div class="flex flex-wrap gap-2">
+                  <span
+                    class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"
+                    >2 Kamar Tidur</span
+                  >
+                  <span
+                    class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"
+                    >Ruang Keluarga</span
+                  >
+                  <span
+                    class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"
+                    >Dapur Kecil</span
+                  >
+                </div>
+              </div>
+
+              <div class="flex justify-between items-center">
+                <span class="text-primary font-bold text-xl"
+                  >Rp 3.200.000
+                  <span class="text-sm font-normal text-gray-500"
+                    >/malam</span
+                  ></span
+                >
+                <a
+                  href="pemesanan.html"
+                  class="bg-primary text-white px-4 py-2 rounded-md font-medium hover:bg-opacity-90 transition-colors duration-300"
+                  >Pesan Sekarang</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Room 5 -->
+          <div
+            class="room-card bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300"
+          >
+            <div
+              class="h-64 bg-cover bg-center"
+              style="
+                background-image: url('https://images.unsplash.com/photo-1590490360182-c33d57733427?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+              "
+            ></div>
+            <div class="p-6">
+              <h3 class="text-2xl font-serif font-semibold mb-2">
+                Junior Suite
+              </h3>
+              <p class="text-gray-600 mb-4">
+                Suite dengan ruang yang lebih luas dari kamar deluxe, dilengkapi
+                area duduk yang nyaman untuk bersantai.
+              </p>
+
+              <div class="flex items-center mb-4">
+                <div class="flex text-accent mr-2">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+                <span class="text-gray-500">(88 reviews)</span>
+              </div>
+
+              <div class="mb-4">
+                <h4 class="font-semibold mb-2">Fasilitas:</h4>
+                <div class="flex flex-wrap gap-2">
+                  <span
+                    class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"
+                    >Area Duduk</span
+                  >
+                  <span
+                    class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"
+                    >Kopi/Tea Maker</span
+                  >
+                  <span
+                    class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"
+                    >Safe Deposit</span
+                  >
+                </div>
+              </div>
+
+              <div class="flex justify-between items-center">
+                <span class="text-primary font-bold text-xl"
+                  >Rp 2.100.000
+                  <span class="text-sm font-normal text-gray-500"
+                    >/malam</span
+                  ></span
+                >
+                <a
+                  href="pemesanan.html"
+                  class="bg-primary text-white px-4 py-2 rounded-md font-medium hover:bg-opacity-90 transition-colors duration-300"
+                  >Pesan Sekarang</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Room 6 -->
+          <div
+            class="room-card bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300"
+          >
+            <div
+              class="h-64 bg-cover bg-center"
+              style="
+                background-image: url('https://images.unsplash.com/photo-1578683010236-d716f9a3f461?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+              "
+            ></div>
+            <div class="p-6">
+              <h3 class="text-2xl font-serif font-semibold mb-2">
+                Honeymoon Suite
+              </h3>
+              <p class="text-gray-600 mb-4">
+                Suite romantis dengan dekorasi khusus, pemandangan indah, dan
+                fasilitas eksklusif untuk pasangan.
+              </p>
+
+              <div class="flex items-center mb-4">
+                <div class="flex text-accent mr-2">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+                <span class="text-gray-500">(105 reviews)</span>
+              </div>
+
+              <div class="mb-4">
+                <h4 class="font-semibold mb-2">Fasilitas:</h4>
+                <div class="flex flex-wrap gap-2">
+                  <span
+                    class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"
+                    >King Size Bed</span
+                  >
+                  <span
+                    class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"
+                    >Champagne</span
+                  >
+                  <span
+                    class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"
+                    >Rose Petals</span
+                  >
+                </div>
+              </div>
+
+              <div class="flex justify-between items-center">
+                <span class="text-primary font-bold text-xl"
+                  >Rp 3.800.000
+                  <span class="text-sm font-normal text-gray-500"
+                    >/malam</span
+                  ></span
+                >
+                <a
+                  href="pemesanan.html"
+                  class="bg-primary text-white px-4 py-2 rounded-md font-medium hover:bg-opacity-90 transition-colors duration-300"
+                  >Pesan Sekarang</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Call to Action -->
+        <div class="bg-primary rounded-xl p-8 text-center text-white">
+          <h2 class="text-3xl font-serif font-bold mb-4">
+            Butuh Bantuan Memilih Kamar?
+          </h2>
+          <p class="text-xl mb-6 max-w-2xl mx-auto">
+            Tim resepsionis kami siap membantu Anda menemukan kamar yang sesuai
+            dengan kebutuhan dan preferensi Anda.
+          </p>
+          <a
+            href="#"
+            class="bg-accent text-dark px-8 py-3 rounded-md font-bold hover:bg-opacity-90 transition-colors duration-300"
+            >Hubungi Kami</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <script src="js/script.js"></script>
+  </body>
+</html>
