@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Responsive Navbar</title>
+  <title>Responsive Navbar Sidebar Kanan</title>
   <style>
     * {
       margin: 0;
@@ -23,6 +23,8 @@
       background-color: #007bff;
       color: white;
       padding: 10px 20px;
+      position: relative;
+      z-index: 1000;
     }
 
     .logo {
@@ -63,18 +65,25 @@
     /* ==== RESPONSIVE ==== */
     @media (max-width: 768px) {
       .nav-links {
-        display: none;
-        position: absolute;
-        top: 60px;
-        right: 0;
-        background-color: #007bff;
+        display: flex;
         flex-direction: column;
-        width: 100%;
-        text-align: center;
+        align-items: flex-start;
+        position: fixed;
+        top: 0;
+        right: -250px; /* disembunyikan di luar layar */
+        width: 200px;
+        height: 100vh;
+        background-color: #007bff;
+        padding-top: 60px;
+        transition: right 0.3s ease;
       }
 
       .nav-links.active {
-        display: flex;
+        right: 0; /* muncul dari kanan */
+      }
+
+      .nav-links li {
+        margin: 15px 20px;
       }
 
       .hamburger {
