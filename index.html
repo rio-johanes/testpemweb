@@ -15,7 +15,7 @@
       font-family: Arial, sans-serif;
     }
 
-    /* ==== NAVBAR DASAR ==== */
+    /* ==== NAVBAR ==== */
     nav {
       display: flex;
       justify-content: space-between;
@@ -52,6 +52,7 @@
       display: none;
       flex-direction: column;
       cursor: pointer;
+      z-index: 1100; /* biar di atas sidebar */
     }
 
     .hamburger div {
@@ -62,6 +63,19 @@
       transition: 0.3s;
     }
 
+    /* ==== ANIMASI HAMBURGER JADI "X" ==== */
+    .hamburger.active div:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .hamburger.active div:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active div:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+
     /* ==== RESPONSIVE ==== */
     @media (max-width: 768px) {
       .nav-links {
@@ -70,7 +84,7 @@
         align-items: flex-start;
         position: fixed;
         top: 0;
-        right: -250px; /* disembunyikan di luar layar */
+        right: -250px; /* sembunyi di kanan */
         width: 200px;
         height: 100vh;
         background-color: #007bff;
@@ -114,7 +128,8 @@
     const navLinks = document.querySelector('.nav-links');
 
     hamburger.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
+      hamburger.classList.toggle('active'); // ubah jadi X
+      navLinks.classList.toggle('active');   // tampilkan sidebar
     });
   </script>
 
