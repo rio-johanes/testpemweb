@@ -78,7 +78,6 @@ document.addEventListener("DOMContentLoaded", function () {
             .value.trim()
             .toLowerCase(); // <-- DITAMBAH .toLowerCase()
           const password = document.getElementById("login-password").value.trim();
-          localStorage.clear();
           if (email === "grandluxe@admin.com" && password === "admin1234") {
             // LOGIN ADMIN
             alert("Selamat datang, Admin!");
@@ -279,3 +278,4 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
 }); // <-- HANYA ADA SATU "DOMContentLoaded" PENUTUP
+
