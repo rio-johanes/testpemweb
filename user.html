@@ -37,6 +37,13 @@
         },
       };
     </script>
+    <script>
+    if (localStorage.getItem("role") !== "user") {
+      alert("Akses ditolak! Silakan login terlebih dahulu.");
+      window.location.href = "login.html";
+    }
+    </script>
+
   </head>
   <body class="bg-white text-secondary">
     <!-- Navigation -->
@@ -304,3 +311,4 @@
     <script src="script.js"></script>
   </body>
 </html>
+
