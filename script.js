@@ -1,4 +1,6 @@
-// JavaScript for Grand Luxe Hotel
+// ==========================================================
+// === Grand Luxe Hotel JavaScript - Final Stable Version ===
+// ==========================================================
 
 document.addEventListener("DOMContentLoaded", function () {
   /* ==========================================================
@@ -36,41 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   /* ==========================================================
-     ========== 2. FORM SUBMISSION HANDLING ==========
-  ========================================================== */
-  const forms = document.querySelectorAll("form");
-  forms.forEach((form) => {
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-
-      const submitButton = form.querySelector('button[type="submit"]');
-      const originalText = submitButton.textContent;
-      submitButton.innerHTML =
-        '<i class="fas fa-spinner fa-spin mr-2"></i> Memproses...';
-      submitButton.disabled = true;
-
-      setTimeout(() => {
-        alert("Form berhasil dikirim! (Ini hanya demo frontend)");
-
-        submitButton.textContent = originalText;
-        submitButton.disabled = false;
-
-        if (form.id === "login-form") {
-          window.location.href = "user.html";
-        } else if (form.id === "register-form") {
-          window.location.href = "user.html";
-        } else if (form.id === "booking-form") {
-          window.location.href = "user.html";
-        } else if (form.id === "add-room-form") {
-          form.reset();
-          alert("Kamar berhasil ditambahkan!");
-        }
-      }, 1500);
-    });
-  });
-
-  /* ==========================================================
-     ========== 3. NAVBAR SCROLL EFFECT ==========
+     ========== 2. NAVBAR SCROLL EFFECT ==========
   ========================================================== */
   window.addEventListener("scroll", function () {
     const navbar = document.getElementById("navbar");
@@ -84,22 +52,96 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   /* ==========================================================
-     ========== 4. DATE INPUTS ==========
+     ========== 3. FORM LAIN (BOOKING, ADD ROOM) ==========
   ========================================================== */
-  const today = new Date().toISOString().split("T")[0];
-  const checkInInputs = document.querySelectorAll('input[type="date"]');
-  checkInInputs.forEach((input) => {
-    input.setAttribute("min", today);
+  const forms = document.querySelectorAll("form");
+  forms.forEach((form) => {
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      // Form login & register ditangani terpisah (abaikan di sini)
+      if (form.id === "login-form" || form.id === "register-form") return;
+
+      const submitButton = form.querySelector('button[type="submit"]');
+      const originalText = submitButton.textContent;
+      submitButton.innerHTML =
+        '<i class="fas fa-spinner fa-spin mr-2"></i> Memproses...';
+      submitButton.disabled = true;
+
+      setTimeout(() => {
+        alert("Form berhasil dikirim! (Demo frontend)");
+
+        submitButton.textContent = originalText;
+        submitButton.disabled = false;
+
+        if (form.id === "booking-form") {
+          window.location.href = "user.html";
+        } else if (form.id === "add-room-form") {
+          form.reset();
+          alert("Kamar berhasil ditambahkan!");
+        }
+      }, 1200);
+    });
   });
 
   /* ==========================================================
-     ========== 5. BOOKING CALCULATION ==========
+     ========== 4. LOGIN & REGISTER HANDLING ==========
+  ========================================================== */
+  const registerForm = document.getElementById("register-form");
+  const loginForm = document.getElementById("login-form");
+  const showLogin = document.getElementById("show-login");
+  const showRegister = document.getElementById("show-register");
+
+  // Ganti tampilan form
+  showLogin?.addEventListener("click", (e) => {
+    e.preventDefault();
+    registerForm?.classList.add("hidden");
+    loginForm?.classList.remove("hidden");
+  });
+
+  showRegister?.addEventListener("click", (e) => {
+    e.preventDefault();
+    loginForm?.classList.add("hidden");
+    registerForm?.classList.remove("hidden");
+  });
+
+  // Proses login
+  loginForm?.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById("login-email").value.trim();
+    const password = document.getElementById("login-password").value.trim();
+
+    localStorage.clear(); // Bersihkan sesi lama
+
+    // Admin Login
+    if (email === "grandluxe@admin.com" && password === "admin1234") {
+      localStorage.setItem("role", "admin");
+      alert("Login berhasil! Selamat datang, Administrator.");
+      window.location.href = "admin.html";
+      return;
+    }
+
+    // User Login
+    localStorage.setItem("role", "user");
+    alert("Login berhasil! Selamat datang di Grand Luxe Hotel.");
+    window.location.href = "user.html";
+  });
+
+  // Proses register
+  registerForm?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    alert("Pendaftaran berhasil! Silakan login menggunakan akun Anda.");
+    registerForm.classList.add("hidden");
+    loginForm.classList.remove("hidden");
+  });
+
+  /* ==========================================================
+     ========== 5. PEMESANAN (KALKULASI) ==========
   ========================================================== */
   const roomRadios = document.querySelectorAll('input[name="room-type"]');
   const calculateTotal = () => {
-    const selectedRoom = document.querySelector(
-      'input[name="room-type"]:checked'
-    );
+    const selectedRoom = document.querySelector('input[name="room-type"]:checked');
     const checkIn = document.getElementById("check-in");
     const checkOut = document.getElementById("check-out");
 
@@ -143,115 +185,38 @@ document.addEventListener("DOMContentLoaded", function () {
     return Math.ceil(timeDiff / (1000 * 3600 * 24));
   };
 
-  const updateSummary = (
-    roomType,
-    nights,
-    subtotal,
-    taxAmount,
-    discountAmount,
-    total
-  ) => {
+  const updateSummary = (roomType, nights, subtotal, taxAmount, discountAmount, total) => {
     const roomName = {
       deluxe: "Deluxe Room",
       executive: "Executive Suite",
       presidential: "Presidential Suite",
     };
 
-    document.querySelector(
-      ".flex.justify-between.mb-2 span:first-child"
-    ).textContent = roomName[roomType];
-    document.querySelector(
-      ".flex.justify-between.mb-2 span:last-child"
-    ).textContent = `Rp ${getRoomPrice(
-      roomType
-    ).toLocaleString()} x ${nights} malam`;
-    document
-      .querySelectorAll(".flex.justify-between.mb-2")[1]
-      .querySelector("span:last-child").textContent = `Rp ${Math.round(
-      taxAmount
-    ).toLocaleString()}`;
-    document
-      .querySelectorAll(".flex.justify-between.mb-2")[2]
-      .querySelector("span:last-child").textContent = `- Rp ${Math.round(
-      discountAmount
-    ).toLocaleString()}`;
-    document.querySelector(
-      ".flex.justify-between.text-lg span:last-child"
-    ).textContent = `Rp ${Math.round(total).toLocaleString()}`;
+    document.querySelector(".summary-room").textContent = roomName[roomType];
+    document.querySelector(".summary-night").textContent =
+      `Rp ${getRoomPrice(roomType).toLocaleString()} x ${nights} malam`;
+    document.querySelector(".summary-tax").textContent =
+      `Rp ${Math.round(taxAmount).toLocaleString()}`;
+    document.querySelector(".summary-discount").textContent =
+      `- Rp ${Math.round(discountAmount).toLocaleString()}`;
+    document.querySelector(".summary-total").textContent =
+      `Rp ${Math.round(total).toLocaleString()}`;
   };
 
   if (roomRadios.length > 0) {
-    roomRadios.forEach((radio) => {
-      radio.addEventListener("change", calculateTotal);
-    });
-
-    const dateInputs = document.querySelectorAll("#check-in, #check-out");
-    dateInputs.forEach((input) => {
+    roomRadios.forEach((radio) => radio.addEventListener("change", calculateTotal));
+    document.querySelectorAll("#check-in, #check-out").forEach((input) => {
       input.addEventListener("change", calculateTotal);
     });
-
-    calculateTotal();
   }
 
   /* ==========================================================
-     ========== 6. IMAGE LAZY LOADING ==========
+     ========== 6. LOGOUT HANDLER (UNTUK DASHBOARD) ==========
   ========================================================== */
-  const lazyImages = document.querySelectorAll("img[data-src]");
-  const imageObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        const img = entry.target;
-        img.src = img.dataset.src;
-        img.classList.remove("lazy");
-        imageObserver.unobserve(img);
-      }
-    });
-  });
-
-  lazyImages.forEach((img) => imageObserver.observe(img));
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-  const registerForm = document.getElementById("register-form");
-  const loginForm = document.getElementById("login-form");
-  const showLogin = document.getElementById("show-login");
-  const showRegister = document.getElementById("show-register");
-
-  // Toggle form
-  showLogin?.addEventListener("click", (e) => {
-    e.preventDefault();
-    registerForm.classList.add("hidden");
-    loginForm.classList.remove("hidden");
-  });
-
-  showRegister?.addEventListener("click", (e) => {
-    e.preventDefault();
-    loginForm.classList.add("hidden");
-    registerForm.classList.remove("hidden");
-  });
-
-  // Login admin check
-  loginForm?.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    const email = document.getElementById("login-email").value.trim();
-    const password = document.getElementById("login-password").value.trim();
-    localStorage.clear(); // Hapus semua data lama
-    
-    if (email === "grandluxe@admin.com" && password === "admin1234") {
-      localStorage.setItem("role", "admin");
-      window.location.href = "admin.html";
-    } else {
-      localStorage.setItem("role", "user");
-      window.location.href = "user.html";
-    }
-  });
-
-  // Register dummy action
-  registerForm?.addEventListener("submit", (e) => {
-    e.preventDefault();
-    alert("Pendaftaran berhasil! Silakan login.");
-    registerForm.classList.add("hidden");
-    loginForm.classList.remove("hidden");
+  const logoutBtn = document.getElementById("logout-btn");
+  logoutBtn?.addEventListener("click", () => {
+    localStorage.clear();
+    alert("Anda telah keluar.");
+    window.location.href = "login.html";
   });
 });
