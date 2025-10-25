@@ -4,20 +4,26 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard Admin - Grand Luxe Hotel</title>
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+
     <!-- Font Awesome -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
+
     <!-- Google Fonts -->
     <link
       href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap"
       rel="stylesheet"
     />
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css" />
+
+    <!-- Tailwind Theme Config -->
     <script>
       tailwind.config = {
         theme: {
@@ -36,17 +42,18 @@
           },
         },
       };
-      }
-    </script>
-    <script>
-    if (localStorage.getItem("role") !== "admin") {
-      alert("Akses ditolak! Hanya admin yang dapat masuk.");
-      window.location.href = "login.html";
-    }
     </script>
 
+    <!-- Proteksi Akses Admin -->
+    <script>
+      if (localStorage.getItem("role") !== "admin") {
+        alert("Akses ditolak! Hanya admin yang dapat masuk.");
+        window.location.href = "login.html";
+      }
+    </script>
   </head>
-  <body class="bg-white text-secondary">
+
+  <body class="bg-white text-secondary font-sans">
     <!-- Navigation -->
     <nav
       id="navbar"
@@ -61,24 +68,12 @@
           >
 
           <div class="hidden md:flex space-x-8">
-            <a
-              href="index.html"
-              class="font-medium hover:text-primary transition-colors duration-300"
+            <a href="index.html" class="hover:text-primary font-medium"
               >Beranda</a
             >
-            <a
-              href="kamar.html"
-              class="font-medium hover:text-primary transition-colors duration-300"
-              >Kamar</a
-            >
-            <a
-              href="admin.html"
-              class="font-medium hover:text-primary transition-colors duration-300"
-              >Admin</a
-            >
-            <a
-              href="index.html"
-              class="font-medium hover:text-primary transition-colors duration-300"
+            <a href="kamar.html" class="hover:text-primary font-medium">Kamar</a>
+            <a href="admin.html" class="hover:text-primary font-medium">Admin</a>
+            <a href="login.html" class="hover:text-primary font-medium"
               >Keluar</a
             >
           </div>
@@ -93,39 +88,30 @@
 
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden py-4 border-t">
-          <a href="index.html" class="block py-2 font-medium hover:text-primary"
-            >Beranda</a
-          >
-          <a href="kamar.html" class="block py-2 font-medium hover:text-primary"
-            >Kamar</a
-          >
-          <a href="admin.html" class="block py-2 font-medium hover:text-primary"
-            >Admin</a
-          >
-          <a href="index.html" class="block py-2 font-medium hover:text-primary"
-            >Keluar</a
-          >
+          <a href="index.html" class="block py-2 hover:text-primary">Beranda</a>
+          <a href="kamar.html" class="block py-2 hover:text-primary">Kamar</a>
+          <a href="admin.html" class="block py-2 hover:text-primary">Admin</a>
+          <a href="login.html" class="block py-2 hover:text-primary">Keluar</a>
         </div>
       </div>
     </nav>
 
-    <!-- Admin Dashboard -->
+    <!-- Dashboard Section -->
     <div class="min-h-screen bg-gray-100 pt-24 pb-12">
       <div class="container mx-auto px-4">
         <div class="bg-white rounded-xl shadow-md overflow-hidden">
+          <!-- Header -->
           <div class="bg-primary text-white py-6 px-8">
-            <h1 class="text-3xl font-serif font-bold">
-              Dashboard Administrator
-            </h1>
+            <h1 class="text-3xl font-serif font-bold">Dashboard Administrator</h1>
             <p class="mt-2">Kelola hotel, pemesanan, dan pengguna</p>
           </div>
 
+          <!-- Content -->
           <div class="p-8">
+            <!-- Statistik -->
             <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
-              <div
-                class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm"
-              >
-                <div class="flex justify-between items-start">
+              <div class="bg-white border rounded-lg p-6 shadow-sm">
+                <div class="flex justify-between">
                   <div>
                     <p class="text-gray-600">Total Pemesanan</p>
                     <h3 class="text-2xl font-bold mt-2">142</h3>
@@ -137,10 +123,8 @@
                 <p class="text-sm text-gray-500 mt-4">+12% dari bulan lalu</p>
               </div>
 
-              <div
-                class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm"
-              >
-                <div class="flex justify-between items-start">
+              <div class="bg-white border rounded-lg p-6 shadow-sm">
+                <div class="flex justify-between">
                   <div>
                     <p class="text-gray-600">Pendapatan</p>
                     <h3 class="text-2xl font-bold mt-2">Rp 382Jt</h3>
@@ -152,10 +136,8 @@
                 <p class="text-sm text-gray-500 mt-4">+8% dari bulan lalu</p>
               </div>
 
-              <div
-                class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm"
-              >
-                <div class="flex justify-between items-start">
+              <div class="bg-white border rounded-lg p-6 shadow-sm">
+                <div class="flex justify-between">
                   <div>
                     <p class="text-gray-600">Tamu Check-in</p>
                     <h3 class="text-2xl font-bold mt-2">24</h3>
@@ -167,10 +149,8 @@
                 <p class="text-sm text-gray-500 mt-4">5 check-in hari ini</p>
               </div>
 
-              <div
-                class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm"
-              >
-                <div class="flex justify-between items-start">
+              <div class="bg-white border rounded-lg p-6 shadow-sm">
+                <div class="flex justify-between">
                   <div>
                     <p class="text-gray-600">Kamar Tersedia</p>
                     <h3 class="text-2xl font-bold mt-2">18</h3>
@@ -183,301 +163,73 @@
               </div>
             </div>
 
+            <!-- Isi utama -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
               <!-- Sidebar -->
               <div class="lg:col-span-1">
-                <div
-                  class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm"
-                >
+                <div class="bg-white border rounded-lg p-6 shadow-sm">
                   <h3 class="text-xl font-serif font-bold mb-6">Menu Admin</h3>
-
                   <ul class="space-y-2">
-                    <li>
-                      <a
-                        href="admin.html"
-                        class="block py-2 px-4 bg-primary text-white rounded-md font-medium"
-                        >Dashboard</a
-                      >
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        class="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded-md transition-colors duration-300"
-                        >Kelola Kamar</a
-                      >
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        class="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded-md transition-colors duration-300"
-                        >Kelola Pemesanan</a
-                      >
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        class="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded-md transition-colors duration-300"
-                        >Kelola Pengguna</a
-                      >
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        class="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded-md transition-colors duration-300"
-                        >Laporan</a
-                      >
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        class="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded-md transition-colors duration-300"
-                        >Pengaturan</a
-                      >
-                    </li>
+                    <li><a href="admin.html" class="block bg-primary text-white py-2 px-4 rounded-md font-medium">Dashboard</a></li>
+                    <li><a href="#" class="block py-2 px-4 hover:bg-gray-100 rounded-md">Kelola Kamar</a></li>
+                    <li><a href="#" class="block py-2 px-4 hover:bg-gray-100 rounded-md">Kelola Pemesanan</a></li>
+                    <li><a href="#" class="block py-2 px-4 hover:bg-gray-100 rounded-md">Kelola Pengguna</a></li>
+                    <li><a href="#" class="block py-2 px-4 hover:bg-gray-100 rounded-md">Laporan</a></li>
+                    <li><a href="#" class="block py-2 px-4 hover:bg-gray-100 rounded-md">Pengaturan</a></li>
                   </ul>
                 </div>
               </div>
 
-              <!-- Main Content -->
+              <!-- Konten utama -->
               <div class="lg:col-span-2">
-                <div
-                  class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm mb-8"
-                >
-                  <h2 class="text-2xl font-serif font-bold mb-6">
-                    Pemesanan Terbaru
-                  </h2>
-
+                <div class="bg-white border rounded-lg p-6 shadow-sm mb-8">
+                  <h2 class="text-2xl font-serif font-bold mb-6">Pemesanan Terbaru</h2>
                   <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse">
+                    <table class="w-full border-collapse">
                       <thead>
                         <tr class="bg-gray-50">
-                          <th class="py-3 px-4 font-medium">ID</th>
-                          <th class="py-3 px-4 font-medium">Nama</th>
-                          <th class="py-3 px-4 font-medium">Tanggal</th>
-                          <th class="py-3 px-4 font-medium">Status</th>
-                          <th class="py-3 px-4 font-medium">Aksi</th>
+                          <th class="py-3 px-4 text-left font-medium">ID</th>
+                          <th class="py-3 px-4 text-left font-medium">Nama</th>
+                          <th class="py-3 px-4 text-left font-medium">Tanggal</th>
+                          <th class="py-3 px-4 text-left font-medium">Status</th>
+                          <th class="py-3 px-4 text-left font-medium">Aksi</th>
                         </tr>
                       </thead>
-                      <tbody>
-                        <tr class="border-b border-gray-200 hover:bg-gray-50">
+                      <tbody id="order-table">
+                        <!-- Data dummy, bisa diganti JS -->
+                        <tr class="border-b hover:bg-gray-50">
                           <td class="py-3 px-4">GLH-20231115-001</td>
                           <td class="py-3 px-4">Sarah Johnson</td>
                           <td class="py-3 px-4">15-18 Nov 2023</td>
                           <td class="py-3 px-4">
-                            <span
-                              class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs"
-                              >Aktif</span
-                            >
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">Aktif</span>
                           </td>
                           <td class="py-3 px-4">
-                            <button class="text-primary hover:underline mr-2">
-                              Edit
-                            </button>
-                            <button class="text-red-600 hover:underline">
-                              Hapus
-                            </button>
-                          </td>
-                        </tr>
-                        <tr class="border-b border-gray-200 hover:bg-gray-50">
-                          <td class="py-3 px-4">GLH-20231114-002</td>
-                          <td class="py-3 px-4">Michael Chen</td>
-                          <td class="py-3 px-4">20-25 Nov 2023</td>
-                          <td class="py-3 px-4">
-                            <span
-                              class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs"
-                              >Menunggu</span
-                            >
-                          </td>
-                          <td class="py-3 px-4">
-                            <button class="text-primary hover:underline mr-2">
-                              Edit
-                            </button>
-                            <button class="text-red-600 hover:underline">
-                              Hapus
-                            </button>
-                          </td>
-                        </tr>
-                        <tr class="border-b border-gray-200 hover:bg-gray-50">
-                          <td class="py-3 px-4">GLH-20231112-003</td>
-                          <td class="py-3 px-4">Robert Williams</td>
-                          <td class="py-3 px-4">10-12 Des 2023</td>
-                          <td class="py-3 px-4">
-                            <span
-                              class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs"
-                              >Pending</span
-                            >
-                          </td>
-                          <td class="py-3 px-4">
-                            <button class="text-primary hover:underline mr-2">
-                              Edit
-                            </button>
-                            <button class="text-red-600 hover:underline">
-                              Hapus
-                            </button>
-                          </td>
-                        </tr>
-                        <tr class="border-b border-gray-200 hover:bg-gray-50">
-                          <td class="py-3 px-4">GLH-20231110-004</td>
-                          <td class="py-3 px-4">Lisa Anderson</td>
-                          <td class="py-3 px-4">05-10 Des 2023</td>
-                          <td class="py-3 px-4">
-                            <span
-                              class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs"
-                              >Aktif</span
-                            >
-                          </td>
-                          <td class="py-3 px-4">
-                            <button class="text-primary hover:underline mr-2">
-                              Edit
-                            </button>
-                            <button class="text-red-600 hover:underline">
-                              Hapus
-                            </button>
+                            <button class="text-primary hover:underline mr-2">Edit</button>
+                            <button class="text-red-600 hover:underline">Hapus</button>
                           </td>
                         </tr>
                       </tbody>
                     </table>
                   </div>
-
-                  <div class="mt-6 text-center">
-                    <button
-                      class="bg-primary text-white px-6 py-2 rounded-md font-medium hover:bg-opacity-90 transition-colors duration-300"
-                    >
-                      Lihat Semua Pemesanan
-                    </button>
-                  </div>
                 </div>
 
-                <div
-                  class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm"
-                >
-                  <h2 class="text-2xl font-serif font-bold mb-6">
-                    Tambah Kamar Baru
-                  </h2>
-
+                <!-- Tambah Kamar -->
+                <div class="bg-white border rounded-lg p-6 shadow-sm">
+                  <h2 class="text-2xl font-serif font-bold mb-6">Tambah Kamar Baru</h2>
                   <form id="add-room-form">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                       <div>
-                        <label for="room-type" class="block text-gray-700 mb-2"
-                          >Tipe Kamar</label
-                        >
-                        <input
-                          type="text"
-                          id="room-type"
-                          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                          placeholder="Contoh: Deluxe Room"
-                        />
+                        <label class="block text-gray-700 mb-2">Tipe Kamar</label>
+                        <input type="text" id="room-type" class="w-full border px-4 py-2 rounded-md" placeholder="Contoh: Deluxe Room" />
                       </div>
-
                       <div>
-                        <label for="room-price" class="block text-gray-700 mb-2"
-                          >Harga per Malam</label
-                        >
-                        <input
-                          type="number"
-                          id="room-price"
-                          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                          placeholder="1500000"
-                        />
-                      </div>
-
-                      <div>
-                        <label
-                          for="room-capacity"
-                          class="block text-gray-700 mb-2"
-                          >Kapasitas</label
-                        >
-                        <select
-                          id="room-capacity"
-                          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                        >
-                          <option value="1">1 Orang</option>
-                          <option value="2">2 Orang</option>
-                          <option value="3">3 Orang</option>
-                          <option value="4">4 Orang</option>
-                        </select>
-                      </div>
-
-                      <div>
-                        <label
-                          for="room-status"
-                          class="block text-gray-700 mb-2"
-                          >Status</label
-                        >
-                        <select
-                          id="room-status"
-                          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                        >
-                          <option value="available">Tersedia</option>
-                          <option value="occupied">Terisi</option>
-                          <option value="maintenance">Pemeliharaan</option>
-                        </select>
+                        <label class="block text-gray-700 mb-2">Harga per Malam</label>
+                        <input type="number" id="room-price" class="w-full border px-4 py-2 rounded-md" placeholder="1500000" />
                       </div>
                     </div>
-
-                    <div class="mb-6">
-                      <label
-                        for="room-description"
-                        class="block text-gray-700 mb-2"
-                        >Deskripsi</label
-                      >
-                      <textarea
-                        id="room-description"
-                        rows="4"
-                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                        placeholder="Deskripsi kamar..."
-                      ></textarea>
-                    </div>
-
-                    <div class="mb-6">
-                      <label class="block text-gray-700 mb-2">Fasilitas</label>
-                      <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
-                        <div class="flex items-center">
-                          <input
-                            type="checkbox"
-                            id="wifi"
-                            class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
-                          />
-                          <label for="wifi" class="ml-2 text-gray-700"
-                            >WiFi</label
-                          >
-                        </div>
-                        <div class="flex items-center">
-                          <input
-                            type="checkbox"
-                            id="ac"
-                            class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
-                          />
-                          <label for="ac" class="ml-2 text-gray-700">AC</label>
-                        </div>
-                        <div class="flex items-center">
-                          <input
-                            type="checkbox"
-                            id="tv"
-                            class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
-                          />
-                          <label for="tv" class="ml-2 text-gray-700">TV</label>
-                        </div>
-                        <div class="flex items-center">
-                          <input
-                            type="checkbox"
-                            id="minibar"
-                            class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
-                          />
-                          <label for="minibar" class="ml-2 text-gray-700"
-                            >Minibar</label
-                          >
-                        </div>
-                      </div>
-                    </div>
-
                     <div class="flex justify-end">
-                      <button
-                        type="submit"
-                        class="bg-primary text-white px-6 py-2 rounded-md font-medium hover:bg-opacity-90 transition-colors duration-300"
-                      >
-                        Tambah Kamar
-                      </button>
+                      <button type="submit" class="bg-primary text-white px-6 py-2 rounded-md hover:bg-opacity-90 transition">Tambah Kamar</button>
                     </div>
                   </form>
                 </div>
@@ -491,8 +243,3 @@
     <script src="script.js"></script>
   </body>
 </html>
-
-
-
-
-
