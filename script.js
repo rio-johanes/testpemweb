@@ -237,10 +237,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const email = document.getElementById("login-email").value.trim();
     const password = document.getElementById("login-password").value.trim();
     
-    localStorage.clear(); // Hapus semua data lama
-    if (email === "grandluxe@admin.com" && password === "admin1234") {
-      alert("Selamat datang, Admin!");
+    const role = localStorage.getItem("role");
+
+    if (role === "admin") {
       window.location.href = "admin.html";
+    } else if (role === "user") {
+      window.location.href = "user.html";
+    } else {
+      // belum login
+      window.location.href = "login.html";
     }
   });
 
@@ -252,4 +257,5 @@ document.addEventListener("DOMContentLoaded", () => {
     loginForm.classList.remove("hidden");
   });
 });
+
 
