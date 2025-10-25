@@ -36,28 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   /* ==========================================================
-     ========== 1.5. LOGIN/REGISTER FORM TOGGLE (DIPINDAH) ==========
-  ========================================================== */
-  const registerForm = document.getElementById("register-form");
-  const loginForm = document.getElementById("login-form");
-  const showLogin = document.getElementById("show-login");
-  const showRegister = document.getElementById("show-register");
-
-  // Toggle form
-  showLogin?.addEventListener("click", (e) => {
-    e.preventDefault();
-    registerForm.classList.add("hidden");
-    loginForm.classList.remove("hidden");
-  });
-
-  showRegister?.addEventListener("click", (e) => {
-    e.preventDefault();
-    loginForm.classList.add("hidden");
-    registerForm.classList.remove("hidden");
-  });
-
-  /* ==========================================================
-     ========== 2. FORM SUBMISSION HANDLING (DIPERBAIKI) ==========
+     ========== 2. FORM SUBMISSION HANDLING ==========
   ========================================================== */
   const forms = document.querySelectorAll("form");
   forms.forEach((form) => {
@@ -71,50 +50,21 @@ document.addEventListener("DOMContentLoaded", function () {
       submitButton.disabled = true;
 
       setTimeout(() => {
-        // === LOGIKA BARU YANG DIGABUNGKAN ===
-        if (form.id === "login-form") {
-          const email = document
-            .getElementById("login-email")
-            .value.trim()
-            .toLowerCase(); // <-- DITAMBAH .toLowerCase()
-          const password = document.getElementById("login-password").value.trim();
+        alert("Form berhasil dikirim! (Ini hanya demo frontend)");
 
-          if (email === "grandluxe@admin.com" && password === "admin1234") {
-            // LOGIN ADMIN
-            alert("Selamat datang, Admin!");
-            localStorage.setItem("statusLogin", "admin"); // <-- WAJIB
-            window.location.href = "admin.html";
-          } else {
-            // LOGIN USER BIASA (atau login salah)
-            // Anda bisa tambahkan cek user biasa di sini jika perlu
-            alert("Selamat datang, Pengguna!");
-            localStorage.setItem("statusLogin", "user"); // <-- WAJIB
-            window.location.href = "user.html";
-          }
+        submitButton.textContent = originalText;
+        submitButton.disabled = false;
+
+        if (form.id === "login-form") {
+          window.location.href = "user.html";
         } else if (form.id === "register-form") {
-          // LOGIKA REGISTER DIPINDAH KE SINI
-          alert("Pendaftaran berhasil! Silakan login.");
-          registerForm.classList.add("hidden");
-          loginForm.classList.remove("hidden");
+          window.location.href = "user.html";
         } else if (form.id === "booking-form") {
-          alert("Pemesanan berhasil! (Demo)");
           window.location.href = "user.html";
         } else if (form.id === "add-room-form") {
           form.reset();
           alert("Kamar berhasil ditambahkan!");
-        } else {
-          // Fallback untuk form lain
-          alert("Form berhasil dikirim! (Ini hanya demo frontend)");
         }
-        
-        // Hanya kembalikan tombol jika form tidak pindah halaman
-        if (form.id === "register-form" || form.id === "add-room-form") {
-            submitButton.textContent = originalText;
-            submitButton.disabled = false;
-        }
-        // Untuk form login/booking, halaman akan pindah jadi tidak perlu
-        // mengembalikan tombol.
-        
       }, 1500);
     });
   });
@@ -207,31 +157,27 @@ document.addEventListener("DOMContentLoaded", function () {
       presidential: "Presidential Suite",
     };
 
-    // Perlu di-check apakah elemen ini ada sebelum diubah
-    const summaryContainer = document.querySelector(".lg\\:col-span-1 .sticky");
-    if (summaryContainer) {
-        summaryContainer.querySelector(
-          ".flex.justify-between.mb-2 span:first-child"
-        ).textContent = roomName[roomType];
-        summaryContainer.querySelector(
-          ".flex.justify-between.mb-2 span:last-child"
-        ).textContent = `Rp ${getRoomPrice(
-          roomType
-        ).toLocaleString()} x ${nights} malam`;
-        summaryContainer
-          .querySelectorAll(".flex.justify-between.mb-2")[1]
-          .querySelector("span:last-child").textContent = `Rp ${Math.round(
-          taxAmount
-        ).toLocaleString()}`;
-        summaryContainer
-          .querySelectorAll(".flex.justify-between.mb-2")[2]
-          .querySelector("span:last-child").textContent = `- Rp ${Math.round(
-          discountAmount
-        ).toLocaleString()}`;
-        summaryContainer.querySelector(
-          ".flex.justify-between.text-lg span:last-child"
-        ).textContent = Rp ${Math.round(total).toLocaleString()};
-    }
+    document.querySelector(
+      ".flex.justify-between.mb-2 span:first-child"
+    ).textContent = roomName[roomType];
+    document.querySelector(
+      ".flex.justify-between.mb-2 span:last-child"
+    ).textContent = `Rp ${getRoomPrice(
+      roomType
+    ).toLocaleString()} x ${nights} malam`;
+    document
+      .querySelectorAll(".flex.justify-between.mb-2")[1]
+      .querySelector("span:last-child").textContent = `Rp ${Math.round(
+      taxAmount
+    ).toLocaleString()}`;
+    document
+      .querySelectorAll(".flex.justify-between.mb-2")[2]
+      .querySelector("span:last-child").textContent = `- Rp ${Math.round(
+      discountAmount
+    ).toLocaleString()}`;
+    document.querySelector(
+      ".flex.justify-between.text-lg span:last-child"
+    ).textContent = `Rp ${Math.round(total).toLocaleString()}`;
   };
 
   if (roomRadios.length > 0) {
@@ -263,19 +209,45 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   lazyImages.forEach((img) => imageObserver.observe(img));
+});
 
-  /* ==========================================================
-     ========== 7. LOGOUT BUTTON (BARU) ==========
-  ========================================================== */
-  // Tambahkan ID "logout-button" pada semua tombol/link logout Anda di HTML
-  const logoutButtons = document.querySelectorAll("#logout-button");
-  logoutButtons.forEach(button => {
-    button.addEventListener("click", (e) => {
-        e.preventDefault();
-        localStorage.removeItem("statusLogin");
-        alert("Anda telah logout.");
-        window.location.href = "login.html"; // Arahkan ke halaman login
-    });
+document.addEventListener("DOMContentLoaded", () => {
+  const registerForm = document.getElementById("register-form");
+  const loginForm = document.getElementById("login-form");
+  const showLogin = document.getElementById("show-login");
+  const showRegister = document.getElementById("show-register");
+
+  // Toggle form
+  showLogin?.addEventListener("click", (e) => {
+    e.preventDefault();
+    registerForm.classList.add("hidden");
+    loginForm.classList.remove("hidden");
   });
 
-}); 
+  showRegister?.addEventListener("click", (e) => {
+    e.preventDefault();
+    loginForm.classList.add("hidden");
+    registerForm.classList.remove("hidden");
+  });
+
+  // Login admin check
+  loginForm?.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById("login-email").value.trim();
+    const password = document.getElementById("login-password").value.trim();
+
+    if (email === "grandluxe@admin.com" && password === "admin1234") {
+      alert("Selamat datang, Admin!");
+      window.location.href = "admin.html";
+    }
+  });
+
+  // Register dummy action
+  registerForm?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    alert("Pendaftaran berhasil! Silakan login.");
+    registerForm.classList.add("hidden");
+    loginForm.classList.remove("hidden");
+  });
+});
