@@ -51,6 +51,8 @@
             class="text-2xl font-serif font-bold text-primary"
             >Grand Luxe</a
           >
+
+          <!-- Menu Desktop -->
           <div class="hidden md:flex space-x-8">
             <a
               href="index.html"
@@ -69,14 +71,49 @@
             >
             <a
               href="login.html"
-              class="font-medium text-primary border-b-2 border-primary"
+              class="font-medium hover:text-primary transition-colors duration-300"
               >Masuk</a
             >
           </div>
+
+          <!-- Tombol Pesan & Hamburger -->
+          <div class="flex items-center space-x-4">
+            <a
+              href="pemesanan.html"
+              class="bg-primary text-white px-6 py-2 rounded-md font-medium hover:bg-opacity-90 transition-all duration-300 transform hover:-translate-y-1"
+              >Pesan Sekarang</a
+            >
+            <button
+              id="mobile-menu-button"
+              class="md:hidden text-2xl text-primary focus:outline-none"
+            >
+              <i class="fas fa-bars"></i>
+            </button>
+          </div>
         </div>
       </div>
-    </nav>
 
+      <!-- Overlay -->
+      <div
+        id="overlay"
+        class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-40 transition-opacity duration-300"
+      ></div>
+
+      <!-- Mobile Sidebar Menu -->
+      <div
+        id="mobile-menu"
+        class="fixed top-0 right-[-250px] w-[250px] h-screen bg-white/70 backdrop-blur-xl shadow-2xl border-l border-white/30 z-50 transition-all duration-500 flex flex-col pt-24 space-y-4 px-6"
+      >
+        <a href="index.html" class="font-medium hover:text-primary">Beranda</a>
+        <a href="kamar.html" class="font-medium hover:text-primary"
+          >Kamar & Suite</a
+        >
+        <a href="pemesanan.html" class="font-medium hover:text-primary"
+          >Pemesanan</a
+        >
+        <a href="login.html" class="font-medium hover:text-primary">Masuk</a>
+      </div>
+    </nav>
     <!-- Auth Section -->
     <div
       class="auth-bg min-h-screen flex items-center justify-center pt-28 relative"
