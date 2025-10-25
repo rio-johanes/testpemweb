@@ -210,3 +210,44 @@ document.addEventListener("DOMContentLoaded", function () {
 
   lazyImages.forEach((img) => imageObserver.observe(img));
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const registerForm = document.getElementById("register-form");
+  const loginForm = document.getElementById("login-form");
+  const showLogin = document.getElementById("show-login");
+  const showRegister = document.getElementById("show-register");
+
+  // Toggle form
+  showLogin?.addEventListener("click", (e) => {
+    e.preventDefault();
+    registerForm.classList.add("hidden");
+    loginForm.classList.remove("hidden");
+  });
+
+  showRegister?.addEventListener("click", (e) => {
+    e.preventDefault();
+    loginForm.classList.add("hidden");
+    registerForm.classList.remove("hidden");
+  });
+
+  // Login admin check
+  loginForm?.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById("login-email").value.trim();
+    const password = document.getElementById("login-password").value.trim();
+
+    if (email === "grandluxe@admin.com" && password === "admin1234") {
+      alert("Selamat datang, Admin!");
+      window.location.href = "admin.html";
+    }
+  });
+
+  // Register dummy action
+  registerForm?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    alert("Pendaftaran berhasil! Silakan login.");
+    registerForm.classList.add("hidden");
+    loginForm.classList.remove("hidden");
+  });
+});
