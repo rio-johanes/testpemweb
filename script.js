@@ -123,9 +123,12 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // User Login
-    localStorage.setItem("role", "user");
-    alert("Login berhasil! Selamat datang di Grand Luxe Hotel.");
-    window.location.href = "user.html";
+    if (email === "grandluxe@user.com" && password === "user1234") {
+      localStorage.setItem("role", "user");
+      alert("Login berhasil! Selamat datang di Grand Luxe Hotel.");
+      window.location.href = "user.html";
+      return;
+    }  
   });
 
   // Proses register
@@ -220,3 +223,4 @@ document.addEventListener("DOMContentLoaded", function () {
     window.location.href = "login.html";
   });
 });
+
