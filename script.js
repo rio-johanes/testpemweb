@@ -1,11 +1,5 @@
-// ==========================================================
-// === Grand Luxe Hotel JavaScript - Final Stable Version ===
-// ==========================================================
-
 document.addEventListener("DOMContentLoaded", function () {
-  /* ==========================================================
-     ========== 1. NAVBAR HAMBURGER & SIDEBAR KANAN ==========
-  ========================================================== */
+  // 1. NAVBAR HAMBURGER & SIDEBAR KANAN
   const menuButton = document.getElementById("mobile-menu-button");
   const mobileMenu = document.getElementById("mobile-menu");
   const overlay = document.getElementById("overlay");
@@ -37,9 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  /* ==========================================================
-     ========== 2. NAVBAR SCROLL EFFECT ==========
-  ========================================================== */
+ // 2. NAVBAR SCROLL EFFECT
   window.addEventListener("scroll", function () {
     const navbar = document.getElementById("navbar");
     if (window.scrollY > 100) {
@@ -51,9 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  /* ==========================================================
-     ========== 3. FORM LAIN (BOOKING, ADD ROOM) ==========
-  ========================================================== */
+ //3. FORM LAIN (BOOKING, ADD ROOM)
   const forms = document.querySelectorAll("form");
   forms.forEach((form) => {
     form.addEventListener("submit", function (e) {
@@ -84,9 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  /* ==========================================================
-     ========== 4. LOGIN & REGISTER HANDLING ==========
-  ========================================================== */
+ //4. LOGIN & REGISTER HANDLING
   const registerForm = document.getElementById("register-form");
   const loginForm = document.getElementById("login-form");
   const showLogin = document.getElementById("show-login");
@@ -139,9 +127,7 @@ document.addEventListener("DOMContentLoaded", function () {
     loginForm.classList.remove("hidden");
   });
 
-  /* ==========================================================
-     ========== 5. PEMESANAN (KALKULASI) ==========
-  ========================================================== */
+  //5. PEMESANAN (KALKULASI)
   const roomRadios = document.querySelectorAll('input[name="room-type"]');
   const calculateTotal = () => {
     const selectedRoom = document.querySelector('input[name="room-type"]:checked');
@@ -213,9 +199,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  /* ==========================================================
-     ========== 6. LOGOUT HANDLER (UNTUK DASHBOARD) ==========
-  ========================================================== */
+  //6. LOGOUT HANDLER (UNTUK DASHBOARD)
   const logoutBtn = document.getElementById("logout-btn");
   logoutBtn?.addEventListener("click", () => {
     localStorage.clear();
@@ -223,4 +207,3 @@ document.addEventListener("DOMContentLoaded", function () {
     window.location.href = "login.html";
   });
 });
-
