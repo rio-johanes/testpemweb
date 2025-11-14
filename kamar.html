@@ -4,9 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Kamar & Suite - Grand Luxe Hotel</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css" />
     <script>
       tailwind.config = {
@@ -29,71 +39,681 @@
     </script>
   </head>
   <body class="bg-white text-secondary">
-    <!-- Navbar -->
-    <nav id="navbar" class="fixed w-full z-50 bg-white/80 backdrop-blur-md shadow-md transition-all duration-300">
+    <!-- Navigation -->
+    <nav
+      id="navbar"
+      class="fixed w-full z-50 bg-white/80 backdrop-blur-md shadow-md transition-all duration-300"
+    >
       <div class="container mx-auto px-4">
         <div class="flex justify-between items-center py-4">
-          <a href="index.html" class="text-2xl font-serif font-bold text-primary">Grand Luxe</a>
+          <a
+            href="index.html"
+            class="text-2xl font-serif font-bold text-primary"
+            >Grand Luxe</a
+          >
+
+          <!-- Menu Desktop -->
           <div class="hidden md:flex space-x-8 ml-auto mr-8">
-            <a href="index.html" class="font-medium hover:text-primary">Beranda</a>
-            <a href="kamar.html" class="font-medium hover:text-primary">Kamar & Suite</a>
-            <a href="pemesanan.html" class="font-medium hover:text-primary">Pemesanan</a>
+            <a
+              href="index.html"
+              class="font-medium hover:text-primary transition-colors duration-300"
+              >Beranda</a
+            >
+            <a
+              href="kamar.html"
+              class="font-medium hover:text-primary transition-colors duration-300"
+              >Kamar & Suite</a
+            >
+            <a
+              href="pemesanan.html"
+              class="font-medium hover:text-primary transition-colors duration-300"
+              >Pemesanan</a
+            >
           </div>
 
+          <!-- User Avatar & Logout -->
           <div class="flex items-center space-x-4">
             <!-- Avatar User -->
-            <a id="user-avatar" href="login.html" class="block w-10 h-10 rounded-full overflow-hidden border-2 border-primary hover:scale-105">
-              <img src="https://th.bing.com/th/id/OIP.2fjfpvyy6AslG7GH5mipHgHaHa?w=177&h=180" class="w-full h-full object-cover" />
+            <a id="user-avatar" href="login.html" class="block w-10 h-10 rounded-full overflow-hidden border-2 border-primary hover:scale-105 transition-transform duration-300">
+              <img
+                src="https://th.bing.com/th/id/OIP.2fjfpvyy6AslG7GH5mipHgHaHa?w=177&h=180&c=7&r=0&o=7&cb=ucfimgc2&dpr=1.3&pid=1.7&rm=3"
+                alt="Profil"
+                class="w-full h-full object-cover"
+              />
             </a>
+            
             <!-- Logout Button -->
             <button id="logout-btn" class="hidden md:block bg-accent text-dark px-4 py-2 rounded-md font-medium hover:bg-opacity-90 transition-all duration-300">
               Logout
             </button>
-            <button id="mobile-menu-button" class="md:hidden text-2xl text-primary"><i class="fas fa-bars"></i></button>
-          </div>
 
-          <div id="overlay" class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-40"></div>
-          <div id="mobile-menu" class="fixed top-0 right-[-250px] w-[250px] h-screen bg-white/70 backdrop-blur-xl shadow-2xl border-l border-white/30 z-50 transition-all duration-500 flex flex-col pt-24 space-y-4 px-6">
-            <a href="index.html" class="font-medium hover:text-primary">Beranda</a>
-            <a href="kamar.html" class="font-medium hover:text-primary">Kamar & Suite</a>
-            <a href="pemesanan.html" class="font-medium hover:text-primary">Pemesanan</a>
-            <a href="login.html" class="font-medium hover:text-primary">Masuk</a>
+            <!-- Tombol Menu Mobile -->
+            <button
+              id="mobile-menu-button"
+              class="md:hidden text-2xl text-primary focus:outline-none"
+            >
+              <i class="fas fa-bars"></i>
+            </button>
           </div>
+        </div>
+
+        <!-- Overlay -->
+        <div
+          id="overlay"
+          class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-40 transition-opacity duration-300"
+        ></div>
+
+        <!-- Mobile Sidebar Menu -->
+        <div
+          id="mobile-menu"
+          class="fixed top-0 right-[-250px] w-[250px] h-screen bg-white/70 backdrop-blur-xl shadow-2xl border-l border-white/30 z-50 transition-all duration-500 flex flex-col pt-24 space-y-4 px-6"
+        >
+          <a href="index.html" class="font-medium hover:text-primary">Beranda</a>
+          <a href="kamar.html" class="font-medium hover:text-primary"
+            >Kamar & Suite</a
+          >
+          <a href="pemesanan.html" class="font-medium hover:text-primary"
+            >Pemesanan</a
+          >
+          <a href="login.html" class="font-medium hover:text-primary">Masuk</a>
         </div>
       </div>
     </nav>
 
-    <!-- Halaman Kamar -->
+    <!-- Rooms Page -->
     <div class="min-h-screen bg-light pt-24 pb-12">
       <div class="container mx-auto px-4">
-        <h1 class="text-4xl font-serif font-bold text-center mb-4">Kamar & Suite</h1>
-        <p class="text-xl text-gray-600 text-center mb-12 max-w-2xl mx-auto">Temukan akomodasi sempurna untuk kebutuhan Anda.</p>
+        <h1 class="text-4xl font-serif font-bold text-center mb-4">
+          Kamar & Suite
+        </h1>
+        <p class="text-xl text-gray-600 text-center mb-12 max-w-2xl mx-auto">
+          Temukan akomodasi sempurna untuk kebutuhan Anda, dari kamar standar
+          yang nyaman hingga suite mewah dengan fasilitas terbaik.
+        </p>
 
-        <div id="rooms-container">
-          <!-- Contoh Kamar -->
-          <div class="bg-white rounded-xl shadow-md p-6 mb-6">
-            <h3 class="text-2xl font-serif font-bold mb-2">Deluxe Room</h3>
-            <p class="text-gray-600 mb-4">Kamar mewah dengan pemandangan kota.</p>
-            <button class="btn-pesan bg-primary text-white px-6 py-2 rounded-md font-medium hover:bg-opacity-90 transition-colors duration-300">Pesan Sekarang</button>
+        <!-- Filter Section -->
+        <div class="bg-white rounded-xl shadow-md p-6 mb-12">
+          <h2 class="text-2xl font-serif font-bold mb-6">
+            Temukan Kamar Ideal Anda
+          </h2>
+
+          <form id="room-filter-form">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div>
+                <label for="check-in" class="block text-gray-700 mb-2"
+                  >Check-in</label
+                >
+                <input
+                  type="date"
+                  id="check-in"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                  min=""
+                />
+                <div id="check-in-error" class="text-red-500 text-sm mt-1 hidden">Tanggal check-in tidak valid</div>
+              </div>
+
+              <div>
+                <label for="check-out" class="block text-gray-700 mb-2"
+                  >Check-out</label
+                >
+                <input
+                  type="date"
+                  id="check-out"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                  min=""
+                />
+                <div id="check-out-error" class="text-red-500 text-sm mt-1 hidden">Tanggal check-out harus setelah check-in</div>
+              </div>
+
+              <div>
+                <label for="guests" class="block text-gray-700 mb-2"
+                  >Jumlah Tamu</label
+                >
+                <select
+                  id="guests"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                >
+                  <option value="1">1 Orang</option>
+                  <option value="2" selected>2 Orang</option>
+                  <option value="3">3 Orang</option>
+                  <option value="4">4 Orang</option>
+                </select>
+              </div>
+
+              <div class="flex items-end">
+                <button
+                  type="submit"
+                  class="w-full bg-primary text-white py-2 rounded-md font-medium hover:bg-opacity-90 transition-colors duration-300"
+                >
+                  Cari Kamar
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- Rooms Grid -->
+        <div id="rooms-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+          <!-- Room 1 -->
+          <div
+            class="room-card bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300"
+          >
+            <div
+              class="h-64 bg-cover bg-center"
+              style="
+                background-image: url('https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+              "
+            ></div>
+            <div class="p-6">
+              <h3 class="text-2xl font-serif font-semibold mb-2">
+                Deluxe Room
+              </h3>
+              <p class="text-gray-600 mb-4">
+                Kamar mewah dengan pemandangan kota, dilengkapi dengan fasilitas
+                terbaik untuk kenyamanan Anda.
+              </p>
+
+              <div class="flex items-center mb-4">
+                <div class="flex text-accent mr-2">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+                <span class="text-gray-500">(128 reviews)</span>
+              </div>
+
+              <div class="mb-4">
+                <h4 class="font-semibold mb-2">Fasilitas:</h4>
+                <div class="flex flex-wrap gap-2">
+                  <span
+                    class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"
+                    >WiFi Gratis</span
+                  >
+                  <span
+                    class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"
+                    >AC</span
+                  >
+                  <span
+                    class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"
+                    >TV LED</span
+                  >
+                </div>
+              </div>
+
+              <div class="flex justify-between items-center">
+                <span class="text-primary font-bold text-xl"
+                  >Rp 1.500.000
+                  <span class="text-sm font-normal text-gray-500"
+                    >/malam</span
+                  ></span
+                >
+                <button
+                  class="btn-pesan bg-primary text-white px-4 py-2 rounded-md font-medium hover:bg-opacity-90 transition-colors duration-300"
+                >
+                  Pesan Sekarang
+                </button>
+              </div>
+            </div>
           </div>
 
-          <div class="bg-white rounded-xl shadow-md p-6 mb-6">
-            <h3 class="text-2xl font-serif font-bold mb-2">Executive Suite</h3>
-            <p class="text-gray-600 mb-4">Suite eksklusif dengan ruang tamu terpisah.</p>
-            <button class="btn-pesan bg-primary text-white px-6 py-2 rounded-md font-medium hover:bg-opacity-90 transition-colors duration-300">Pesan Sekarang</button>
+          <!-- Room 2 -->
+          <div
+            class="room-card bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300"
+          >
+            <div
+              class="h-64 bg-cover bg-center"
+              style="
+                background-image: url('https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+              "
+            ></div>
+            <div class="p-6">
+              <h3 class="text-2xl font-serif font-semibold mb-2">
+                Executive Suite
+              </h3>
+              <p class="text-gray-600 mb-4">
+                Suite eksklusif dengan ruang tamu terpisah, cocok untuk
+                perjalanan bisnis atau keluarga.
+              </p>
+
+              <div class="flex items-center mb-4">
+                <div class="flex text-accent mr-2">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+                <span class="text-gray-500">(96 reviews)</span>
+              </div>
+
+              <div class="mb-4">
+                <h4 class="font-semibold mb-2">Fasilitas:</h4>
+                <div class="flex flex-wrap gap-2">
+                  <span
+                    class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"
+                    >WiFi Gratis</span
+                  >
+                  <span
+                    class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"
+                    >Mini Bar</span
+                  >
+                  <span
+                    class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"
+                    >Jacuzzi</span
+                  >
+                </div>
+              </div>
+
+              <div class="flex justify-between items-center">
+                <span class="text-primary font-bold text-xl"
+                  >Rp 2.800.000
+                  <span class="text-sm font-normal text-gray-500"
+                    >/malam</span
+                  ></span
+                >
+                <button
+                  class="btn-pesan bg-primary text-white px-4 py-2 rounded-md font-medium hover:bg-opacity-90 transition-colors duration-300"
+                >
+                  Pesan Sekarang
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Room 3 -->
+          <div
+            class="room-card bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300"
+          >
+            <div
+              class="h-64 bg-cover bg-center"
+              style="
+                background-image: url('https://images.unsplash.com/photo-1566665797739-1674de7a421a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+              "
+            ></div>
+            <div class="p-6">
+              <h3 class="text-2xl font-serif font-semibold mb-2">
+                Presidential Suite
+              </h3>
+              <p class="text-gray-600 mb-4">
+                Akomodasi paling mewah dengan fasilitas terbaik, pemandangan
+                spektakuler, dan layanan butler pribadi.
+              </p>
+
+              <div class="flex items-center mb-4">
+                <div class="flex text-accent mr-2">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+                <span class="text-gray-500">(64 reviews)</span>
+              </div>
+
+              <div class="mb-4">
+                <h4 class="font-semibold mb-2">Fasilitas:</h4>
+                <div class="flex flex-wrap gap-2">
+                  <span
+                    class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"
+                    >Butler Service</span
+                  >
+                  <span
+                    class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"
+                    >Private Pool</span
+                  >
+                  <span
+                    class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"
+                    >Lounge Access</span
+                  >
+                </div>
+              </div>
+
+              <div class="flex justify-between items-center">
+                <span class="text-primary font-bold text-xl"
+                  >Rp 5.500.000
+                  <span class="text-sm font-normal text-gray-500"
+                    >/malam</span
+                  ></span
+                >
+                <button
+                  class="btn-pesan bg-primary text-white px-4 py-2 rounded-md font-medium hover:bg-opacity-90 transition-colors duration-300"
+                >
+                  Pesan Sekarang
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Room 4 -->
+          <div
+            class="room-card bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300"
+          >
+            <div
+              class="h-64 bg-cover bg-center"
+              style="
+                background-image: url('https://images.unsplash.com/photo-1631049307264-da0ec9d70304?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+              "
+            ></div>
+            <div class="p-6">
+              <h3 class="text-2xl font-serif font-semibold mb-2">
+                Family Suite
+              </h3>
+              <p class="text-gray-600 mb-4">
+                Suite luas dengan dua kamar tidur, ideal untuk keluarga yang
+                menginginkan kenyamanan dan ruang ekstra.
+              </p>
+
+              <div class="flex items-center mb-4">
+                <div class="flex text-accent mr-2">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star-half-alt"></i>
+                </div>
+                <span class="text-gray-500">(72 reviews)</span>
+              </div>
+
+              <div class="mb-4">
+                <h4 class="font-semibold mb-2">Fasilitas:</h4>
+                <div class="flex flex-wrap gap-2">
+                  <span
+                    class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"
+                    >2 Kamar Tidur</span
+                  >
+                  <span
+                    class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"
+                    >Ruang Keluarga</span
+                  >
+                  <span
+                    class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"
+                    >Dapur Kecil</span
+                  >
+                </div>
+              </div>
+
+              <div class="flex justify-between items-center">
+                <span class="text-primary font-bold text-xl"
+                  >Rp 3.200.000
+                  <span class="text-sm font-normal text-gray-500"
+                    >/malam</span
+                  ></span
+                >
+                <button
+                  class="btn-pesan bg-primary text-white px-4 py-2 rounded-md font-medium hover:bg-opacity-90 transition-colors duration-300"
+                >
+                  Pesan Sekarang
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Room 5 -->
+          <div
+            class="room-card bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300"
+          >
+            <div
+              class="h-64 bg-cover bg-center"
+              style="
+                background-image: url('https://images.unsplash.com/photo-1590490360182-c33d57733427?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+              "
+            ></div>
+            <div class="p-6">
+              <h3 class="text-2xl font-serif font-semibold mb-2">
+                Junior Suite
+              </h3>
+              <p class="text-gray-600 mb-4">
+                Suite dengan ruang yang lebih luas dari kamar deluxe, dilengkapi
+                area duduk yang nyaman untuk bersantai.
+              </p>
+
+              <div class="flex items-center mb-4">
+                <div class="flex text-accent mr-2">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+                <span class="text-gray-500">(88 reviews)</span>
+              </div>
+
+              <div class="mb-4">
+                <h4 class="font-semibold mb-2">Fasilitas:</h4>
+                <div class="flex flex-wrap gap-2">
+                  <span
+                    class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"
+                    >Area Duduk</span
+                  >
+                  <span
+                    class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"
+                    >Kopi/Tea Maker</span
+                  >
+                  <span
+                    class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"
+                    >Safe Deposit</span
+                  >
+                </div>
+              </div>
+
+              <div class="flex justify-between items-center">
+                <span class="text-primary font-bold text-xl"
+                  >Rp 2.100.000
+                  <span class="text-sm font-normal text-gray-500"
+                    >/malam</span
+                  ></span
+                >
+                <button
+                  class="btn-pesan bg-primary text-white px-4 py-2 rounded-md font-medium hover:bg-opacity-90 transition-colors duration-300"
+                >
+                  Pesan Sekarang
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Room 6 -->
+          <div
+            class="room-card bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300"
+          >
+            <div
+              class="h-64 bg-cover bg-center"
+              style="
+                background-image: url('https://images.unsplash.com/photo-1578683010236-d716f9a3f461?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+              "
+            ></div>
+            <div class="p-6">
+              <h3 class="text-2xl font-serif font-semibold mb-2">
+                Honeymoon Suite
+              </h3>
+              <p class="text-gray-600 mb-4">
+                Suite romantis dengan dekorasi khusus, pemandangan indah, dan
+                fasilitas eksklusif untuk pasangan.
+              </p>
+
+              <div class="flex items-center mb-4">
+                <div class="flex text-accent mr-2">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+                <span class="text-gray-500">(105 reviews)</span>
+              </div>
+
+              <div class="mb-4">
+                <h4 class="font-semibold mb-2">Fasilitas:</h4>
+                <div class="flex flex-wrap gap-2">
+                  <span
+                    class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"
+                    >King Size Bed</span
+                  >
+                  <span
+                    class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"
+                    >Champagne</span
+                  >
+                  <span
+                    class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm"
+                    >Rose Petals</span
+                  >
+                </div>
+              </div>
+
+              <div class="flex justify-between items-center">
+                <span class="text-primary font-bold text-xl"
+                  >Rp 3.800.000
+                  <span class="text-sm font-normal text-gray-500"
+                    >/malam</span
+                  ></span
+                >
+                <button
+                  class="btn-pesan bg-primary text-white px-4 py-2 rounded-md font-medium hover:bg-opacity-90 transition-colors duration-300"
+                >
+                  Pesan Sekarang
+                </button>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="bg-primary rounded-xl p-8 text-center text-white mt-12">
-          <h2 class="text-3xl font-serif font-bold mb-4">Butuh Bantuan Memilih Kamar?</h2>
-          <p class="text-xl mb-6 max-w-2xl mx-auto">Tim resepsionis kami siap membantu Anda.</p>
-          <a href="#" class="bg-accent text-dark px-8 py-3 rounded-md font-bold hover:bg-opacity-90">Hubungi Kami</a>
+        <!-- Call to Action -->
+        <div class="bg-primary rounded-xl p-8 text-center text-white">
+          <h2 class="text-3xl font-serif font-bold mb-4">
+            Butuh Bantuan Memilih Kamar?
+          </h2>
+          <p class="text-xl mb-6 max-w-2xl mx-auto">
+            Tim resepsionis kami siap membantu Anda menemukan kamar yang sesuai
+            dengan kebutuhan dan preferensi Anda.
+          </p>
+          <a
+            href="https://wa.me/6281234567890?text=Halo%2C%20saya%20ingin%20bertanya%20tentang%20kamar%20di%20Grand%20Luxe%20Hotel"
+            target="_blank"
+            class="bg-accent text-dark px-8 py-3 rounded-md font-bold hover:bg-opacity-90 transition-colors duration-300"
+          >
+            Hubungi Kami via WhatsApp
+          </a>
         </div>
       </div>
     </div>
 
     <script>
-      document.addEventListener("DOMContentLoaded", function() {
+      document.addEventListener("DOMContentLoaded", function () {
+        // 1. NAVBAR HAMBURGER & SIDEBAR KANAN
+        const menuButton = document.getElementById("mobile-menu-button");
+        const mobileMenu = document.getElementById("mobile-menu");
+        const overlay = document.getElementById("overlay");
+
+        if (menuButton && mobileMenu) {
+          const icon = menuButton.querySelector("i");
+
+          menuButton.addEventListener("click", () => {
+            const isOpen = mobileMenu.classList.contains("right-0");
+
+            if (isOpen) {
+              // Tutup sidebar
+              mobileMenu.classList.replace("right-0", "right-[-250px]");
+              overlay?.classList.add("hidden");
+              icon?.classList.replace("fa-xmark", "fa-bars");
+            } else {
+              // Buka sidebar
+              mobileMenu.classList.replace("right-[-250px]", "right-0");
+              overlay?.classList.remove("hidden");
+              icon?.classList.replace("fa-bars", "fa-xmark");
+            }
+          });
+
+          // Tutup sidebar saat klik overlay
+          overlay?.addEventListener("click", () => {
+            mobileMenu.classList.replace("right-0", "right-[-250px]");
+            overlay.classList.add("hidden");
+            icon?.classList.replace("fa-xmark", "fa-bars");
+          });
+        }
+
+        // 2. NAVBAR SCROLL EFFECT
+        window.addEventListener("scroll", function () {
+          const navbar = document.getElementById("navbar");
+          if (window.scrollY > 100) {
+            navbar.classList.add("shadow-lg", "py-3");
+            navbar.classList.remove("py-4");
+          } else {
+            navbar.classList.remove("shadow-lg", "py-3");
+            navbar.classList.add("py-4");
+          }
+        });
+
+        // 3. VALIDASI TANGGAL CHECK-IN & CHECK-OUT
+        // Set minimum date untuk input tanggal (hari ini)
+        const today = new Date().toISOString().split("T")[0];
+        document.getElementById("check-in").min = today;
+        document.getElementById("check-out").min = today;
+        
+        // Validasi tanggal check-in
+        document.getElementById("check-in").addEventListener("change", function() {
+          const checkInDate = new Date(this.value);
+          const checkOutInput = document.getElementById("check-out");
+          const checkOutError = document.getElementById("check-out-error");
+          
+          // Set minimum check-out date ke hari setelah check-in
+          const minCheckOutDate = new Date(checkInDate);
+          minCheckOutDate.setDate(minCheckOutDate.getDate() + 1);
+          checkOutInput.min = minCheckOutDate.toISOString().split("T")[0];
+          
+          // Validasi jika check-out sudah dipilih sebelum check-in diubah
+          if (checkOutInput.value) {
+            const checkOutDate = new Date(checkOutInput.value);
+            if (checkOutDate <= checkInDate) {
+              checkOutError.classList.remove("hidden");
+              checkOutInput.value = "";
+            } else {
+              checkOutError.classList.add("hidden");
+            }
+          }
+        });
+        
+        // Validasi tanggal check-out
+        document.getElementById("check-out").addEventListener("change", function() {
+          const checkInInput = document.getElementById("check-in");
+          const checkOutDate = new Date(this.value);
+          const checkInDate = new Date(checkInInput.value);
+          const checkOutError = document.getElementById("check-out-error");
+          
+          if (checkOutDate <= checkInDate) {
+            checkOutError.classList.remove("hidden");
+            this.value = "";
+          } else {
+            checkOutError.classList.add("hidden");
+          }
+        });
+        
+        // Validasi form submit
+        document.getElementById("room-filter-form").addEventListener("submit", function(e) {
+          const checkInInput = document.getElementById("check-in");
+          const checkOutInput = document.getElementById("check-out");
+          const checkInDate = new Date(checkInInput.value);
+          const checkOutDate = new Date(checkOutInput.value);
+          const checkOutError = document.getElementById("check-out-error");
+          
+          if (!checkInInput.value || !checkOutInput.value) {
+            e.preventDefault();
+            alert("Harap isi tanggal check-in dan check-out");
+            return;
+          }
+          
+          if (checkOutDate <= checkInDate) {
+            e.preventDefault();
+            checkOutError.classList.remove("hidden");
+            return;
+          }
+          
+          // Jika validasi berhasil, lanjutkan dengan pencarian
+          alert("Pencarian kamar untuk tanggal " + checkInInput.value + " hingga " + checkOutInput.value);
+        });
+
+        // 4. LOGIN & LOGOUT MANAGEMENT
         // Cek apakah user sudah login
         const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
         const role = localStorage.getItem("role");
@@ -116,8 +736,8 @@
         if (userAvatar && isLoggedIn && role === "user") userAvatar.href = "user.html";
         if (userAvatar && isLoggedIn && role === "admin") userAvatar.href = "admin.html";
 
-        // Validasi tombol pesan
-        document.querySelectorAll(".btn-pesan, a[href='pemesanan.html']").forEach((btn) => {
+        // 5. VALIDASI TOMBOL PESAN
+        document.querySelectorAll(".btn-pesan").forEach((btn) => {
           btn.addEventListener("click", function (e) {
             const roleNow = localStorage.getItem("role");
             const logged = localStorage.getItem("isLoggedIn") === "true";
@@ -133,7 +753,6 @@
         });
       });
     </script>
-
     <script src="script.js"></script>
   </body>
 </html>
