@@ -57,42 +57,73 @@
     <!-- Navigation -->
     <nav
       id="navbar"
-      class="fixed w-full z-50 bg-white bg-opacity-95 shadow-md transition-all duration-300"
+      class="fixed w-full z-50 bg-white/80 backdrop-blur-md shadow-md transition-all duration-300"
     >
       <div class="container mx-auto px-4">
-        <div class="flex justify-between items-center py-4">
+        <div class="flex justify-between items-center py-5 px-0 relative">
           <a
             href="index.html"
             class="text-2xl font-serif font-bold text-primary"
             >Grand Luxe</a
           >
 
-          <div class="hidden md:flex space-x-8">
-            <a href="index.html" class="hover:text-primary font-medium"
+          <!-- Menu Desktop -->
+          <div
+            class="hidden md:flex space-x-8 absolute left-1/2 transform -translate-x-1/2"
+          >
+            <a
+              href="index.html"
+              class="font-medium hover:text-primary transition-colors duration-300"
               >Beranda</a
             >
-            <a href="kamar.html" class="hover:text-primary font-medium">Kamar</a>
-            <a href="admin.html" class="hover:text-primary font-medium">Admin</a>
-            <a href="login.html" class="hover:text-primary font-medium"
-              >Keluar</a
+            <a
+              href="kamar.html"
+              class="font-medium hover:text-primary transition-colors duration-300"
+              >Kamar & Suite</a
+            >
+            <a
+              href="pemesanan.html"
+              class="font-medium hover:text-primary transition-colors duration-300"
+              >Pemesanan</a
+            >
+            <a
+              href="login.html"
+              class="font-medium hover:text-primary transition-colors duration-300"
+              >Masuk</a
             >
           </div>
 
+          <!-- Tombol Pesan & Hamburger -->
           <div class="flex items-center space-x-4">
-            <span class="text-gray-600">Admin Panel</span>
-            <button id="mobile-menu-button" class="md:hidden text-2xl">
+            <button
+              id="mobile-menu-button"
+              class="md:hidden text-2xl text-primary focus:outline-none"
+            >
               <i class="fas fa-bars"></i>
             </button>
           </div>
         </div>
+      </div>
 
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden py-4 border-t">
-          <a href="index.html" class="block py-2 hover:text-primary">Beranda</a>
-          <a href="kamar.html" class="block py-2 hover:text-primary">Kamar</a>
-          <a href="admin.html" class="block py-2 hover:text-primary">Admin</a>
-          <a href="login.html" class="block py-2 hover:text-primary">Keluar</a>
-        </div>
+      <!-- Overlay -->
+      <div
+        id="overlay"
+        class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-40 transition-opacity duration-300"
+      ></div>
+
+      <!-- Mobile Sidebar Menu -->
+      <div
+        id="mobile-menu"
+        class="fixed top-0 right-[-250px] w-[250px] h-screen bg-white/70 backdrop-blur-xl shadow-2xl border-l border-white/30 z-50 transition-all duration-500 flex flex-col pt-24 space-y-4 px-6"
+      >
+        <a href="index.html" class="font-medium hover:text-primary">Beranda</a>
+        <a href="kamar.html" class="font-medium hover:text-primary"
+          >Kamar & Suite</a
+        >
+        <a href="pemesanan.html" class="font-medium hover:text-primary"
+          >Pemesanan</a
+        >
+        <a href="login.html" class="font-medium hover:text-primary">Masuk</a>
       </div>
     </nav>
 
@@ -102,8 +133,12 @@
         <div class="bg-white rounded-xl shadow-md overflow-hidden">
           <!-- Header -->
           <div class="bg-gray-100 text-secondary py-6 px-8">
-            <h1 class="text-3xl font-serif font-bold text-primary">Dashboard Administrator</h1>
-            <p class="mt-2 text-gray-700">Kelola hotel, pemesanan, dan pengguna</p>
+            <h1 class="text-3xl font-serif font-bold text-primary">
+              Dashboard Administrator
+            </h1>
+            <p class="mt-2 text-gray-700">
+              Kelola hotel, pemesanan, dan pengguna
+            </p>
           </div>
 
           <!-- Content -->
@@ -170,12 +205,48 @@
                 <div class="bg-white border rounded-lg p-6 shadow-sm">
                   <h3 class="text-xl font-serif font-bold mb-6">Menu Admin</h3>
                   <ul class="space-y-2">
-                    <li><a href="admin.html" class="block bg-primary text-white py-2 px-4 rounded-md font-medium">Dashboard</a></li>
-                    <li><a href="#" class="block py-2 px-4 hover:bg-gray-100 rounded-md">Kelola Kamar</a></li>
-                    <li><a href="#" class="block py-2 px-4 hover:bg-gray-100 rounded-md">Kelola Pemesanan</a></li>
-                    <li><a href="#" class="block py-2 px-4 hover:bg-gray-100 rounded-md">Kelola Pengguna</a></li>
-                    <li><a href="#" class="block py-2 px-4 hover:bg-gray-100 rounded-md">Laporan</a></li>
-                    <li><a href="#" class="block py-2 px-4 hover:bg-gray-100 rounded-md">Pengaturan</a></li>
+                    <li>
+                      <a
+                        href="admin.html"
+                        class="block bg-primary text-white py-2 px-4 rounded-md font-medium"
+                        >Dashboard</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#"
+                        class="block py-2 px-4 hover:bg-gray-100 rounded-md"
+                        >Kelola Kamar</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#"
+                        class="block py-2 px-4 hover:bg-gray-100 rounded-md"
+                        >Kelola Pemesanan</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#"
+                        class="block py-2 px-4 hover:bg-gray-100 rounded-md"
+                        >Kelola Pengguna</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#"
+                        class="block py-2 px-4 hover:bg-gray-100 rounded-md"
+                        >Laporan</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#"
+                        class="block py-2 px-4 hover:bg-gray-100 rounded-md"
+                        >Pengaturan</a
+                      >
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -183,15 +254,21 @@
               <!-- Konten utama -->
               <div class="lg:col-span-2">
                 <div class="bg-white border rounded-lg p-6 shadow-sm mb-8">
-                  <h2 class="text-2xl font-serif font-bold mb-6">Pemesanan Terbaru</h2>
+                  <h2 class="text-2xl font-serif font-bold mb-6">
+                    Pemesanan Terbaru
+                  </h2>
                   <div class="overflow-x-auto">
                     <table class="w-full border-collapse">
                       <thead>
                         <tr class="bg-gray-50">
                           <th class="py-3 px-4 text-left font-medium">ID</th>
                           <th class="py-3 px-4 text-left font-medium">Nama</th>
-                          <th class="py-3 px-4 text-left font-medium">Tanggal</th>
-                          <th class="py-3 px-4 text-left font-medium">Status</th>
+                          <th class="py-3 px-4 text-left font-medium">
+                            Tanggal
+                          </th>
+                          <th class="py-3 px-4 text-left font-medium">
+                            Status
+                          </th>
                           <th class="py-3 px-4 text-left font-medium">Aksi</th>
                         </tr>
                       </thead>
@@ -202,11 +279,18 @@
                           <td class="py-3 px-4">Sarah Johnson</td>
                           <td class="py-3 px-4">15-18 Nov 2023</td>
                           <td class="py-3 px-4">
-                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">Aktif</span>
+                            <span
+                              class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs"
+                              >Aktif</span
+                            >
                           </td>
                           <td class="py-3 px-4">
-                            <button class="text-primary hover:underline mr-2">Edit</button>
-                            <button class="text-red-600 hover:underline">Hapus</button>
+                            <button class="text-primary hover:underline mr-2">
+                              Edit
+                            </button>
+                            <button class="text-red-600 hover:underline">
+                              Hapus
+                            </button>
                           </td>
                         </tr>
                       </tbody>
@@ -216,20 +300,41 @@
 
                 <!-- Tambah Kamar -->
                 <div class="bg-white border rounded-lg p-6 shadow-sm">
-                  <h2 class="text-2xl font-serif font-bold mb-6">Tambah Kamar Baru</h2>
+                  <h2 class="text-2xl font-serif font-bold mb-6">
+                    Tambah Kamar Baru
+                  </h2>
                   <form id="add-room-form">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                       <div>
-                        <label class="block text-gray-700 mb-2">Tipe Kamar</label>
-                        <input type="text" id="room-type" class="w-full border px-4 py-2 rounded-md" placeholder="Contoh: Deluxe Room" />
+                        <label class="block text-gray-700 mb-2"
+                          >Tipe Kamar</label
+                        >
+                        <input
+                          type="text"
+                          id="room-type"
+                          class="w-full border px-4 py-2 rounded-md"
+                          placeholder="Contoh: Deluxe Room"
+                        />
                       </div>
                       <div>
-                        <label class="block text-gray-700 mb-2">Harga per Malam</label>
-                        <input type="number" id="room-price" class="w-full border px-4 py-2 rounded-md" placeholder="1500000" />
+                        <label class="block text-gray-700 mb-2"
+                          >Harga per Malam</label
+                        >
+                        <input
+                          type="number"
+                          id="room-price"
+                          class="w-full border px-4 py-2 rounded-md"
+                          placeholder="1500000"
+                        />
                       </div>
                     </div>
                     <div class="flex justify-end">
-                      <button type="submit" class="bg-primary text-white px-6 py-2 rounded-md hover:bg-opacity-90 transition">Tambah Kamar</button>
+                      <button
+                        type="submit"
+                        class="bg-primary text-white px-6 py-2 rounded-md hover:bg-opacity-90 transition"
+                      >
+                        Tambah Kamar
+                      </button>
                     </div>
                   </form>
                 </div>
@@ -243,4 +348,3 @@
     <script src="script.js"></script>
   </body>
 </html>
-
