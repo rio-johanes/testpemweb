@@ -71,7 +71,7 @@
             >
           </div>
 
-          <!-- User Avatar & Logout -->
+          <!-- User Avatar -->
           <div class="flex items-center space-x-4">
             <!-- Avatar User -->
             <a id="user-avatar" href="login.html" class="block w-10 h-10 rounded-full overflow-hidden border-2 border-primary hover:scale-105 transition-transform duration-300">
@@ -81,11 +81,6 @@
                 class="w-full h-full object-cover"
               />
             </a>
-            
-            <!-- Logout Button -->
-            <button id="logout-btn" class="hidden md:block bg-accent text-dark px-4 py-2 rounded-md font-medium hover:bg-opacity-90 transition-all duration-300">
-              Logout
-            </button>
 
             <!-- Tombol Menu Mobile -->
             <button
@@ -713,24 +708,11 @@
           alert("Pencarian kamar untuk tanggal " + checkInInput.value + " hingga " + checkOutInput.value);
         });
 
-        // 4. LOGIN & LOGOUT MANAGEMENT
+        // 4. LOGIN MANAGEMENT
         // Cek apakah user sudah login
         const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
         const role = localStorage.getItem("role");
-        const logoutBtn = document.getElementById("logout-btn");
         const userAvatar = document.getElementById("user-avatar");
-
-        // Tampilkan logout jika login
-        if (logoutBtn) {
-          if (isLoggedIn) logoutBtn.classList.remove("hidden");
-          else logoutBtn.classList.add("hidden");
-
-          logoutBtn.addEventListener("click", () => {
-            localStorage.clear();
-            alert("Anda telah keluar.");
-            window.location.href = "login.html";
-          });
-        }
 
         // Klik avatar menuju dashboard jika login
         if (userAvatar && isLoggedIn && role === "user") userAvatar.href = "user.html";
