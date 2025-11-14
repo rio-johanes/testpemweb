@@ -16,8 +16,6 @@
       href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap"
       rel="stylesheet"
     />
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="style.css" />
     <script>
       tailwind.config = {
         theme: {
@@ -37,6 +35,22 @@
         },
       };
     </script>
+    <style>
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #8B7355;
+        border-radius: 3px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #725a3d;
+      }
+    </style>
   </head>
   <body class="bg-white text-secondary">
     <!-- Navigation -->
@@ -510,6 +524,7 @@
           
           // Validasi data
           if (!checkIn || !checkOut || !selectedRoom) {
+            resetSummary();
             return;
           }
 
@@ -520,6 +535,7 @@
           const nights = Math.ceil(timeDiff / (1000 * 3600 * 24));
           
           if (nights <= 0) {
+            resetSummary();
             return;
           }
 
@@ -541,10 +557,19 @@
 
           // Update ringkasan pemesanan
           document.querySelector('.summary-room-name').textContent = roomName;
-          document.querySelector('.summary-room-details').textContent = Rp ${roomPrice.toLocaleString('id-ID')} x ${nights} malam;
-          document.querySelector('.summary-tax').textContent = Rp ${Math.round(tax).toLocaleString('id-ID')};
-          document.querySelector('.summary-discount').textContent = - Rp ${Math.round(discount).toLocaleString('id-ID')};
-          document.querySelector('.summary-total').textContent = Rp ${Math.round(total).toLocaleString('id-ID')};
+          document.querySelector('.summary-room-details').textContent = `Rp ${roomPrice.toLocaleString('id-ID')} x ${nights} malam`;
+          document.querySelector('.summary-tax').textContent = `Rp ${Math.round(tax).toLocaleString('id-ID')}`;
+          document.querySelector('.summary-discount').textContent = `- Rp ${Math.round(discount).toLocaleString('id-ID')}`;
+          document.querySelector('.summary-total').textContent = `Rp ${Math.round(total).toLocaleString('id-ID')}`;
+        }
+
+        // Fungsi untuk mereset ringkasan ke nilai default
+        function resetSummary() {
+          document.querySelector('.summary-room-name').textContent = "Deluxe Room";
+          document.querySelector('.summary-room-details').textContent = "Rp 1.500.000 x 0 malam";
+          document.querySelector('.summary-tax').textContent = "Rp 0";
+          document.querySelector('.summary-discount').textContent = "- Rp 0";
+          document.querySelector('.summary-total').textContent = "Rp 0";
         }
 
         // 5. EVENT LISTENERS UNTUK KALKULASI OTOMATIS
@@ -558,6 +583,12 @@
           minCheckOutDate.setDate(minCheckOutDate.getDate() + 1);
           checkOutInput.min = minCheckOutDate.toISOString().split("T")[0];
           
+          // Jika check-out lebih awal dari check-in, reset check-out
+          const checkOutDate = new Date(checkOutInput.value);
+          if (checkOutDate <= checkInDate) {
+            checkOutInput.value = "";
+          }
+          
           calculateBookingSummary();
         });
 
@@ -569,6 +600,10 @@
         document.querySelectorAll('input[name="room-type"]').forEach(radio => {
           radio.addEventListener("change", calculateBookingSummary);
         });
+
+        // Jumlah tamu (dewasa dan anak-anak)
+        document.getElementById("adults").addEventListener("change", calculateBookingSummary);
+        document.getElementById("children").addEventListener("change", calculateBookingSummary);
 
         // 6. VALIDASI FORM PEMESANAN
         document.getElementById("booking-form").addEventListener("submit", function(e) {
@@ -639,6 +674,5 @@
         calculateBookingSummary();
       });
     </script>
-    <script src="script.js"></script>
   </body>
 </html>
