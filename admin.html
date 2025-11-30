@@ -4,26 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard Admin - Grand Luxe Hotel</title>
-
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Font Awesome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-
-    <!-- Google Fonts -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap"
-      rel="stylesheet"
-    />
-
-    <!-- Custom CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="style.css" />
-
-    <!-- Tailwind Theme Config -->
     <script>
       tailwind.config = {
         theme: {
@@ -43,10 +27,8 @@
         },
       };
     </script>
-
-    <!-- Proteksi Akses Admin -->
     <script>
-      if (localStorage.getItem("role") !== "admin") {
+      if (localStorage.getItem("role") !== "Admin") {
         alert("Akses ditolak! Hanya admin yang dapat masuk.");
         window.location.href = "login.html";
       }
@@ -54,279 +36,134 @@
   </head>
 
   <body class="bg-white text-secondary font-sans">
-    <!-- Navigation -->
-    <nav
-      id="navbar"
-      class="fixed w-full z-50 bg-white/80 backdrop-blur-md shadow-md transition-all duration-300"
-    >
+    <nav id="navbar" class="fixed w-full z-50 bg-white/80 backdrop-blur-md shadow-md transition-all duration-300">
       <div class="container mx-auto px-4">
         <div class="flex justify-between items-center py-4">
-          <a
-            href="index.html"
-            class="text-2xl font-serif font-bold text-primary"
-            >Grand Luxe</a
-          >
-
-          <!-- Menu Desktop -->
-          <div class="hidden md:flex space-x-8 ml-auto mr-8">
-            <a
-              href="index.html"
-              class="font-medium hover:text-primary transition-colors duration-300"
-              >Beranda</a
-            >
-            <a
-              href="kamar.html"
-              class="font-medium hover:text-primary transition-colors duration-300"
-              >Kamar & Suite</a
-            >
-            <a
-              href="pemesanan.html"
-              class="font-medium hover:text-primary transition-colors duration-300"
-              >Pemesanan</a
-            >
-          </div>
-
-          <!-- Hamburger -->
-          <div class="flex items-center space-x-4">
-            <a href="login.html" class="block w-10 h-10 rounded-full overflow-hidden border-2 border-primary hover:scale-105 transition-transform duration-300">
-              <img
-                src="https://th.bing.com/th/id/OIP.2fjfpvyy6AslG7GH5mipHgHaHa?w=177&h=180&c=7&r=0&o=7&cb=ucfimgc2&dpr=1.3&pid=1.7&rm=3"
-                alt="Profil"
-                class="w-full h-full object-cover"
-              />
-            </a>
-
-            <!-- Tombol Menu Mobile -->
-            <button
-              id="mobile-menu-button"
-              class="md:hidden text-2xl text-primary focus:outline-none"
-            >
-              <i class="fas fa-bars"></i>
-            </button>
-          </div>
-        </div>
-
-        <!-- Overlay -->
-        <div
-          id="overlay"
-          class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-40 transition-opacity duration-300"
-        ></div>
-
-        <!-- Mobile Sidebar Menu -->
-        <div
-          id="mobile-menu"
-          class="fixed top-0 right-[-250px] w-[250px] h-screen bg-white/70 backdrop-blur-xl shadow-2xl border-l border-white/30 z-50 transition-all duration-500 flex flex-col pt-24 space-y-4 px-6"
-        >
-          <a href="index.html" class="font-medium hover:text-primary">Beranda</a>
-          <a href="kamar.html" class="font-medium hover:text-primary"
-            >Kamar & Suite</a
-          >
-          <a href="pemesanan.html" class="font-medium hover:text-primary"
-            >Pemesanan</a
-          >
-          <a href="login.html" class="font-medium hover:text-primary">Masuk</a>
+          <a href="index.html" class="text-2xl font-serif font-bold text-primary">Grand Luxe</a>
         </div>
       </div>
     </nav>
 
-    <!-- Dashboard Section -->
     <div class="min-h-screen bg-gray-100 pt-24 pb-12">
       <div class="container mx-auto px-4">
         <div class="bg-white rounded-xl shadow-md overflow-hidden">
-          <!-- Header -->
           <div class="bg-gray-100 text-secondary py-6 px-8">
             <div class="flex justify-between items-center">
               <div>
-                <h1 class="text-3xl font-serif font-bold text-primary">
-                  Dashboard Administrator
-                </h1>
-                <p class="mt-2 text-gray-700">
-                  Kelola hotel, pemesanan, dan pengguna
-                </p>
+                <h1 class="text-3xl font-serif font-bold text-primary">Dashboard Administrator</h1>
+                <p class="mt-2 text-gray-700">Kelola hotel dan pemesanan</p>
               </div>
-              <!-- Tombol hamburger untuk sidebar admin di mobile -->
-              <button
-                id="admin-sidebar-toggle"
-                class="lg:hidden text-2xl text-primary focus:outline-none"
-              >
-                <i class="fas fa-bars"></i>
-              </button>
             </div>
           </div>
 
-          <!-- Content -->
           <div class="p-8">
-            <!-- Statistik -->
-            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
               <div class="bg-white border rounded-lg p-6 shadow-sm">
                 <div class="flex justify-between">
                   <div>
                     <p class="text-gray-600">Total Pemesanan</p>
-                    <h3 class="text-2xl font-bold mt-2">142</h3>
+                    <h3 class="text-2xl font-bold mt-2">Loading...</h3>
                   </div>
                   <div class="bg-blue-100 p-3 rounded-full">
                     <i class="fas fa-calendar-check text-blue-600 text-xl"></i>
                   </div>
                 </div>
-                <p class="text-sm text-gray-500 mt-4">+12% dari bulan lalu</p>
               </div>
-
               <div class="bg-white border rounded-lg p-6 shadow-sm">
                 <div class="flex justify-between">
                   <div>
                     <p class="text-gray-600">Pendapatan</p>
-                    <h3 class="text-2xl font-bold mt-2">Rp 382Jt</h3>
+                    <h3 class="text-2xl font-bold mt-2">Loading...</h3>
                   </div>
                   <div class="bg-green-100 p-3 rounded-full">
                     <i class="fas fa-dollar-sign text-green-600 text-xl"></i>
                   </div>
                 </div>
-                <p class="text-sm text-gray-500 mt-4">+8% dari bulan lalu</p>
               </div>
-
               <div class="bg-white border rounded-lg p-6 shadow-sm">
                 <div class="flex justify-between">
                   <div>
                     <p class="text-gray-600">Tamu Check-in</p>
-                    <h3 class="text-2xl font-bold mt-2">24</h3>
+                    <h3 class="text-2xl font-bold mt-2">Loading...</h3>
                   </div>
                   <div class="bg-purple-100 p-3 rounded-full">
                     <i class="fas fa-user-check text-purple-600 text-xl"></i>
                   </div>
                 </div>
-                <p class="text-sm text-gray-500 mt-4">5 check-in hari ini</p>
-              </div>
-
-              <div class="bg-white border rounded-lg p-6 shadow-sm">
-                <div class="flex justify-between">
-                  <div>
-                    <p class="text-gray-600">Kamar Tersedia</p>
-                    <h3 class="text-2xl font-bold mt-2">18</h3>
-                  </div>
-                  <div class="bg-yellow-100 p-3 rounded-full">
-                    <i class="fas fa-bed text-yellow-600 text-xl"></i>
-                  </div>
-                </div>
-                <p class="text-sm text-gray-500 mt-4">32% terisi</p>
               </div>
             </div>
 
-            <!-- Isi utama -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              <!-- Sidebar Admin -->
               <div class="lg:col-span-1">
-                <div id="admin-sidebar" class="bg-white border rounded-lg p-6 shadow-sm lg:block hidden lg:static fixed top-0 left-0 h-full w-64 z-40 transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
-                  <div class="flex justify-between items-center mb-6 lg:hidden">
-                    <h3 class="text-xl font-serif font-bold">Menu Admin</h3>
-                    <button id="close-admin-sidebar" class="text-2xl text-primary">
-                      <i class="fas fa-times"></i>
-                    </button>
+                <div id="admin-sidebar" class="bg-gray-50 rounded-xl p-6 shadow-sm border border-gray-100 h-full">
+                  <div class="flex items-center mb-6 pb-6 border-b border-gray-200">
+                    <div class="w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center text-white text-xl font-bold mr-4 shadow-md">A</div>
+                    <div>
+                      <h3 class="font-bold text-lg text-secondary">Administrator</h3>
+                      <p class="text-gray-600 text-sm" id="admin-email">admin@grandluxe.com</p>
+                    </div>
                   </div>
-                  <h3 class="text-xl font-serif font-bold mb-6 hidden lg:block">Menu Admin</h3>
+                  <h3 class="text-xl font-serif font-bold mb-6">Menu Admin</h3>
                   <ul class="space-y-2">
                     <li>
-                      <a
-                        href="admin.html"
-                        class="block bg-primary text-white py-2 px-4 rounded-md font-medium"
-                        >Dashboard</a
-                      >
+                      <a href="admin.html" class="block bg-primary text-white py-3 px-4 rounded-lg font-medium shadow-md flex items-center">
+                        <i class="fas fa-tachometer-alt w-5 text-center mr-3"></i> Dashboard
+                      </a>
                     </li>
                     <li>
-                      <a
-                        href="#"
-                        class="block py-2 px-4 hover:bg-gray-100 rounded-md kelola-kamar"
-                        >Kelola Kamar</a
-                      >
+                      <a href="#" class="kelola-kamar block py-3 px-4 text-gray-700 hover:bg-white hover:text-primary rounded-lg transition-all flex items-center">
+                        <i class="fas fa-bed w-5 text-center mr-3"></i> Kelola Kamar
+                      </a>
                     </li>
                     <li>
-                      <a
-                        href="#"
-                        class="block py-2 px-4 hover:bg-gray-100 rounded-md kelola-pemesanan"
-                        >Kelola Pemesanan</a
-                      >
+                      <a href="#" class="kelola-pemesanan block py-3 px-4 text-gray-700 hover:bg-white hover:text-primary rounded-lg transition-all flex items-center">
+                        <i class="fas fa-calendar-check w-5 text-center mr-3"></i> Kelola Pemesanan
+                      </a>
                     </li>
-                    <li>
-                      <a
-                        href="#"
-                        class="block py-2 px-4 hover:bg-gray-100 rounded-md kelola-pengguna"
-                        >Kelola Pengguna</a
-                      >
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        class="block py-2 px-4 hover:bg-gray-100 rounded-md pengaturan"
-                        >Pengaturan</a
-                      >
+                    <li class="pt-4 mt-4 border-t border-gray-200">
+                      <a href="#" id="logout-btn-admin" class="flex items-center py-3 px-4 text-red-600 hover:bg-red-50 hover:text-red-700 rounded-lg transition-all">
+                        <i class="fas fa-sign-out-alt w-5 text-center mr-3"></i> Keluar
+                      </a>
                     </li>
                   </ul>
                 </div>
               </div>
 
-              <!-- Konten utama yang akan berubah -->
               <div class="lg:col-span-2">
-                <!-- Dashboard default -->
                 <div id="dashboard-content">
-                  <!-- Konten dashboard yang sudah ada -->
+                  <div class="bg-white border rounded-lg p-6 shadow-sm mb-8">
+                    <h2 class="text-2xl font-serif font-bold mb-6">Ringkasan Sistem</h2>
+                    <p class="text-gray-600">Selamat datang di panel kontrol Grand Luxe Hotel.</p>
+                  </div>
                 </div>
                 
-                <!-- Kelola Kamar -->
                 <div id="kelola-kamar-content" class="hidden">
                   <div class="bg-white border rounded-lg p-6 shadow-sm mb-8">
-                    <h2 class="text-2xl font-serif font-bold mb-6">Kelola Kamar</h2>
-                    <!-- Daftar Kamar -->
-                    <div>
-                      <h3 class="text-xl font-serif font-semibold mb-4">Daftar Kamar</h3>
-                      <div class="overflow-x-auto">
-                        <table class="w-full border-collapse">
-                          <thead>
-                            <tr class="bg-gray-50">
-                              <th class="py-3 px-4 text-left font-medium">Tipe Kamar</th>
-                              <th class="py-3 px-4 text-left font-medium">Harga</th>
-                              <th class="py-3 px-4 text-left font-medium">Status</th>
-                              <th class="py-3 px-4 text-left font-medium">Aksi</th>
-                            </tr>
-                          </thead>
-                          <tbody id="rooms-table">
-                            <!-- Data kamar akan diisi oleh JavaScript -->
-                          </tbody>
-                        </table>
-                      </div>
+                    <div class="flex justify-between items-center mb-6">
+                      <h2 class="text-2xl font-serif font-bold">Kelola Kamar</h2>
+                      <button onclick="document.getElementById('add-room-modal').classList.remove('hidden')" class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 shadow-md flex items-center">
+                        <i class="fas fa-plus mr-2"></i> Tambah Kamar
+                      </button>
+                    </div>
+                    <div class="overflow-x-auto">
+                      <table class="w-full border-collapse">
+                        <thead>
+                          <tr class="bg-gray-50">
+                            <th class="py-3 px-4 text-left font-medium">Tipe Kamar</th>
+                            <th class="py-3 px-4 text-left font-medium">Harga</th>
+                            <th class="py-3 px-4 text-left font-medium">Status</th>
+                            <th class="py-3 px-4 text-left font-medium">Aksi</th>
+                          </tr>
+                        </thead>
+                        <tbody id="rooms-table"></tbody>
+                      </table>
                     </div>
                   </div>
                 </div>
                 
-                <!-- Kelola Pemesanan -->
                 <div id="kelola-pemesanan-content" class="hidden">
                   <div class="bg-white border rounded-lg p-6 shadow-sm">
                     <h2 class="text-2xl font-serif font-bold mb-6">Kelola Pemesanan</h2>
-                    
-                    <!-- Filter Pemesanan -->
-                    <div class="mb-6">
-                      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div>
-                          <label class="block text-gray-700 mb-2">Status</label>
-                          <select id="filter-status" class="w-full border px-4 py-2 rounded-md">
-                            <option value="all">Semua Status</option>
-                            <option value="pending">Pending</option>
-                            <option value="confirmed">Dikonfirmasi</option>
-                            <option value="active">Aktif</option>
-                            <option value="completed">Selesai</option>
-                            <option value="cancelled">Dibatalkan</option>
-                          </select>
-                        </div>
-                        <div>
-                          <label class="block text-gray-700 mb-2">Dari Tanggal</label>
-                          <input type="date" id="filter-date-from" class="w-full border px-4 py-2 rounded-md">
-                        </div>
-                        <div>
-                          <label class="block text-gray-700 mb-2">Sampai Tanggal</label>
-                          <input type="date" id="filter-date-to" class="w-full border px-4 py-2 rounded-md">
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <!-- Daftar Pemesanan -->
                     <div class="overflow-x-auto">
                       <table class="w-full border-collapse">
                         <thead>
@@ -338,129 +175,12 @@
                             <th class="py-3 px-4 text-left font-medium">Aksi</th>
                           </tr>
                         </thead>
-                        <tbody id="bookings-table">
-                          <!-- Data pemesanan akan diisi oleh JavaScript -->
-                        </tbody>
+                        <tbody id="bookings-table"></tbody>
                       </table>
                     </div>
                   </div>
                 </div>
                 
-                <!-- Kelola Pengguna -->
-                <div id="kelola-pengguna-content" class="hidden">
-                  <div class="bg-white border rounded-lg p-6 shadow-sm">
-                    <h2 class="text-2xl font-serif font-bold mb-6">Kelola Pengguna</h2>
-                    
-                    <!-- Daftar Pengguna -->
-                    <div class="overflow-x-auto">
-                      <table class="w-full border-collapse">
-                        <thead>
-                          <tr class="bg-gray-50">
-                            <th class="py-3 px-4 text-left font-medium">Nama</th>
-                            <th class="py-3 px-4 text-left font-medium">Email</th>
-                            <th class="py-3 px-4 text-left font-medium">Role</th>
-                            <th class="py-3 px-4 text-left font-medium">Status</th>
-                            <th class="py-3 px-4 text-left font-medium">Aksi</th>
-                          </tr>
-                        </thead>
-                        <tbody id="users-table">
-                          <!-- Data pengguna akan diisi oleh JavaScript -->
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-                
-                <!-- Pengaturan -->
-                <div id="pengaturan-content" class="hidden">
-                  <div class="bg-white border rounded-lg p-6 shadow-sm">
-                    <h2 class="text-2xl font-serif font-bold mb-6">Pengaturan</h2>
-                    
-                    <!-- Form Pengaturan -->
-                    <form id="settings-form">
-                      <div class="mb-6">
-                        <h3 class="text-xl font-serif font-semibold mb-4">Informasi Hotel</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                          <div>
-                            <label class="block text-gray-700 mb-2">Nama Hotel</label>
-                            <input
-                              type="text"
-                              id="hotel-name"
-                              class="w-full border px-4 py-2 rounded-md"
-                              value="Grand Luxe Hotel"
-                              required
-                            />
-                          </div>
-                          <div>
-                            <label class="block text-gray-700 mb-2">Email</label>
-                            <input
-                              type="email"
-                              id="hotel-email"
-                              class="w-full border px-4 py-2 rounded-md"
-                              value="info@grandluxehotel.com"
-                              required
-                            />
-                          </div>
-                          <div>
-                            <label class="block text-gray-700 mb-2">Telepon</label>
-                            <input
-                              type="text"
-                              id="hotel-phone"
-                              class="w-full border px-4 py-2 rounded-md"
-                              value="+62 21 1234 5678"
-                              required
-                            />
-                          </div>
-                          <div>
-                            <label class="block text-gray-700 mb-2">Alamat</label>
-                            <input
-                              type="text"
-                              id="hotel-address"
-                              class="w-full border px-4 py-2 rounded-md"
-                              value="Jalan Kemewahan No. 123, Jakarta Pusat"
-                              required
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div class="mb-6">
-                        <h3 class="text-xl font-serif font-semibold mb-4">Pengaturan Sistem</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                          <div>
-                            <label class="block text-gray-700 mb-2">Check-in Time</label>
-                            <input
-                              type="time"
-                              id="checkin-time"
-                              class="w-full border px-4 py-2 rounded-md"
-                              value="14:00"
-                              required
-                            />
-                          </div>
-                          <div>
-                            <label class="block text-gray-700 mb-2">Check-out Time</label>
-                            <input
-                              type="time"
-                              id="checkout-time"
-                              class="w-full border px-4 py-2 rounded-md"
-                              value="12:00"
-                              required
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div class="flex justify-end">
-                        <button
-                          type="submit"
-                          class="bg-primary text-white px-6 py-2 rounded-md hover:bg-opacity-90 transition"
-                        >
-                          Simpan Pengaturan
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
@@ -468,153 +188,47 @@
       </div>
     </div>
 
-    <!-- Overlay untuk sidebar admin di mobile -->
-    <div id="admin-sidebar-overlay" class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-30 transition-opacity duration-300"></div>
-
-    <!-- Modal Edit Kamar -->
     <div id="edit-room-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div class="bg-white rounded-lg p-6 w-full max-w-md">
         <h3 class="text-xl font-serif font-bold mb-4">Edit Kamar</h3>
         <form id="edit-room-form">
           <input type="hidden" id="edit-room-id">
-          <div class="mb-4">
-            <label class="block text-gray-700 mb-2">Tipe Kamar</label>
-            <input type="text" id="edit-room-type" class="w-full border px-4 py-2 rounded-md" required>
-          </div>
-          <div class="mb-4">
-            <label class="block text-gray-700 mb-2">Harga per Malam</label>
-            <input type="number" id="edit-room-price" class="w-full border px-4 py-2 rounded-md" required>
-          </div>
-          <div class="mb-4">
-            <label class="block text-gray-700 mb-2">Status</label>
+          <div class="mb-4"><label class="block text-gray-700 mb-2">Tipe Kamar</label><input type="text" id="edit-room-type" class="w-full border px-4 py-2 rounded-md" required></div>
+          <div class="mb-4"><label class="block text-gray-700 mb-2">Harga</label><input type="number" id="edit-room-price" class="w-full border px-4 py-2 rounded-md" required></div>
+          <div class="mb-4"><label class="block text-gray-700 mb-2">Status</label>
             <select id="edit-room-status" class="w-full border px-4 py-2 rounded-md">
               <option value="Tersedia">Tersedia</option>
               <option value="Tidak Tersedia">Tidak Tersedia</option>
-              <option value="Dalam Perawatan">Dalam Perawatan</option>
             </select>
           </div>
           <div class="flex justify-end space-x-3">
-            <button type="button" id="cancel-edit-room" class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50">
-              Batal
-            </button>
-            <button type="submit" class="bg-primary text-white px-4 py-2 rounded-md hover:bg-opacity-90">
-              Simpan Perubahan
-            </button>
+            <button type="button" onclick="document.getElementById('edit-room-modal').classList.add('hidden')" class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50">Batal</button>
+            <button type="submit" class="bg-primary text-white px-4 py-2 rounded-md hover:bg-opacity-90">Simpan</button>
           </div>
         </form>
       </div>
     </div>
 
-    <!-- Modal Edit Pemesanan -->
-    <div id="edit-booking-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div class="bg-white rounded-lg p-6 w-full max-w-md">
-        <h3 class="text-xl font-serif font-bold mb-4">Edit Pemesanan</h3>
-        <form id="edit-booking-form">
-          <input type="hidden" id="edit-booking-id">
-          <div class="mb-4">
-            <label class="block text-gray-700 mb-2">Nama Pemesan</label>
-            <input type="text" id="edit-booking-name" class="w-full border px-4 py-2 rounded-md" required>
-          </div>
-          <div class="mb-4">
-            <label class="block text-gray-700 mb-2">Tanggal Check-in</label>
-            <input type="date" id="edit-booking-checkin" class="w-full border px-4 py-2 rounded-md" required>
-          </div>
-          <div class="mb-4">
-            <label class="block text-gray-700 mb-2">Tanggal Check-out</label>
-            <input type="date" id="edit-booking-checkout" class="w-full border px-4 py-2 rounded-md" required>
-          </div>
-          <div class="mb-4">
-            <label class="block text-gray-700 mb-2">Status</label>
-            <select id="edit-booking-status" class="w-full border px-4 py-2 rounded-md">
-              <option value="Pending">Pending</option>
-              <option value="Dikonfirmasi">Dikonfirmasi</option>
-              <option value="Aktif">Aktif</option>
-              <option value="Selesai">Selesai</option>
-              <option value="Dibatalkan">Dibatalkan</option>
-            </select>
-          </div>
-          <div class="flex justify-end space-x-3">
-            <button type="button" id="cancel-edit-booking" class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50">
-              Batal
-            </button>
-            <button type="submit" class="bg-primary text-white px-4 py-2 rounded-md hover:bg-opacity-90">
-              Simpan Perubahan
-            </button>
+    <div id="add-room-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div class="bg-white rounded-lg p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-xl font-serif font-bold text-primary">Tambah Kamar Baru</h3>
+          <button onclick="document.getElementById('add-room-modal').classList.add('hidden')" class="text-gray-500 hover:text-red-500"><i class="fas fa-times text-xl"></i></button>
+        </div>
+        <form id="add-room-form">
+          <div class="mb-4"><label class="block text-gray-700 mb-2">Tipe Kamar</label><input type="text" id="add-room-type" class="w-full border px-4 py-2 rounded-md" required></div>
+          <div class="mb-4"><label class="block text-gray-700 mb-2">Harga</label><input type="number" id="add-room-price" class="w-full border px-4 py-2 rounded-md" required></div>
+          <div class="mb-4"><label class="block text-gray-700 mb-2">Deskripsi</label><textarea id="add-room-desc" class="w-full border px-4 py-2 rounded-md" rows="3" required></textarea></div>
+          <div class="mb-4"><label class="block text-gray-700 mb-2">Fasilitas</label><input type="text" id="add-room-facilities" class="w-full border px-4 py-2 rounded-md"></div>
+          <div class="mb-6"><label class="block text-gray-700 mb-2">Upload Foto</label><input type="file" id="add-room-image" accept="image/*" class="w-full border px-4 py-2 rounded-md bg-white" required><p class="text-xs text-gray-500 mt-1">Format JPG/PNG</p></div>
+          <div class="flex justify-end space-x-3 border-t pt-4">
+            <button type="button" onclick="document.getElementById('add-room-modal').classList.add('hidden')" class="px-4 py-2 border border-gray-300 rounded-md">Batal</button>
+            <button type="submit" class="bg-green-600 text-white px-6 py-2 rounded-md hover:bg-green-700">Simpan</button>
           </div>
         </form>
       </div>
     </div>
 
-    <!-- Modal Edit Pengguna -->
-    <div id="edit-user-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div class="bg-white rounded-lg p-6 w-full max-w-md">
-        <h3 class="text-xl font-serif font-bold mb-4">Edit Pengguna</h3>
-        <form id="edit-user-form">
-          <input type="hidden" id="edit-user-id">
-          <div class="mb-4">
-            <label class="block text-gray-700 mb-2">Nama Lengkap</label>
-            <input type="text" id="edit-user-name" class="w-full border px-4 py-2 rounded-md" required>
-          </div>
-          <div class="mb-4">
-            <label class="block text-gray-700 mb-2">Email</label>
-            <input type="email" id="edit-user-email" class="w-full border px-4 py-2 rounded-md" required>
-          </div>
-          <div class="mb-4">
-            <label class="block text-gray-700 mb-2">Role</label>
-            <select id="edit-user-role" class="w-full border px-4 py-2 rounded-md">
-              <option value="User">User</option>
-              <option value="Admin">Admin</option>
-            </select>
-          </div>
-          <div class="mb-4">
-            <label class="block text-gray-700 mb-2">Status</label>
-            <select id="edit-user-status" class="w-full border px-4 py-2 rounded-md">
-              <option value="Aktif">Aktif</option>
-              <option value="Nonaktif">Nonaktif</option>
-            </select>
-          </div>
-          <div class="flex justify-end space-x-3">
-            <button type="button" id="cancel-edit-user" class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50">
-              Batal
-            </button>
-            <button type="submit" class="bg-primary text-white px-4 py-2 rounded-md hover:bg-opacity-90">
-              Simpan Perubahan
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <script>
-      // Script untuk sidebar admin di mobile
-      document.addEventListener('DOMContentLoaded', function() {
-        const adminSidebarToggle = document.getElementById('admin-sidebar-toggle');
-        const adminSidebar = document.getElementById('admin-sidebar');
-        const adminSidebarOverlay = document.getElementById('admin-sidebar-overlay');
-        const closeAdminSidebar = document.getElementById('close-admin-sidebar');
-        
-        if (adminSidebarToggle && adminSidebar) {
-          adminSidebarToggle.addEventListener('click', function() {
-            adminSidebar.classList.toggle('-translate-x-full');
-            adminSidebarOverlay.classList.toggle('hidden');
-          });
-          
-          if (closeAdminSidebar) {
-            closeAdminSidebar.addEventListener('click', function() {
-              adminSidebar.classList.add('-translate-x-full');
-              adminSidebarOverlay.classList.add('hidden');
-            });
-          }
-          
-          if (adminSidebarOverlay) {
-            adminSidebarOverlay.addEventListener('click', function() {
-              adminSidebar.classList.add('-translate-x-full');
-              adminSidebarOverlay.classList.add('hidden');
-            });
-          }
-        }
-      });
-    </script>
     <script src="script.js"></script>
   </body>
 </html>
