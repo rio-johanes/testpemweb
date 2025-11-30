@@ -96,3 +96,51 @@ html, body {
   overflow-y: auto;
   overflow-x: hidden;
 }
+
+@media (max-width: 768px) {
+  .hero-bg {
+    background-position: 65% center;
+  }
+  
+  .room-card {
+    margin-bottom: 1.5rem;
+  }
+  
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+.btn-pesan, 
+.mobile-menu-button {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+@media (max-width: 640px) {
+  h1 {
+    font-size: 2rem !important;
+    line-height: 1.2 !important;
+  }
+  
+  h2 {
+    font-size: 1.75rem !important;
+  }
+  
+  p {
+    font-size: 1rem !important;
+    line-height: 1.5 !important;
+  }
+}
+
+.btn-hover, 
+.room-card, 
+.mobile-menu-item {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+input, select, textarea, button {
+  font-size: 16px; 
+}
