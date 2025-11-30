@@ -1,779 +1,619 @@
+const API_BASE_URL = 'http://localhost:5000/api';
+
 document.addEventListener("DOMContentLoaded", function () {
-  // 1. NAVBAR HAMBURGER & SIDEBAR KANAN
+
+  // ============================================================
+  // 1. NAVBAR & UI (Mobile Menu & Scroll)
+  // ============================================================
   const menuButton = document.getElementById("mobile-menu-button");
   const mobileMenu = document.getElementById("mobile-menu");
   const overlay = document.getElementById("overlay");
 
   if (menuButton && mobileMenu) {
-    const icon = menuButton.querySelector("i");
-
-    menuButton.addEventListener("click", () => {
-      const isOpen = mobileMenu.classList.contains("right-0");
-
-      if (isOpen) {
-        // Tutup sidebar
-        mobileMenu.classList.replace("right-0", "right-[-250px]");
-        overlay?.classList.add("hidden");
-        icon?.classList.replace("fa-xmark", "fa-bars");
-      } else {
-        // Buka sidebar
+    const toggleMenu = () => {
+      const isClosed = mobileMenu.classList.contains("right-[-250px]");
+      if (isClosed) {
         mobileMenu.classList.replace("right-[-250px]", "right-0");
         overlay?.classList.remove("hidden");
-        icon?.classList.replace("fa-bars", "fa-xmark");
+      } else {
+        mobileMenu.classList.replace("right-0", "right-[-250px]");
+        overlay?.classList.add("hidden");
       }
-    });
-
-    // Tutup sidebar saat klik overlay
-    overlay?.addEventListener("click", () => {
-      mobileMenu.classList.replace("right-0", "right-[-250px]");
-      overlay.classList.add("hidden");
-      icon?.classList.replace("fa-xmark", "fa-bars");
-    });
+    };
+    menuButton.addEventListener("click", toggleMenu);
+    overlay?.addEventListener("click", toggleMenu);
   }
 
-  // 2. NAVBAR SCROLL EFFECT
   window.addEventListener("scroll", function () {
     const navbar = document.getElementById("navbar");
-    if (window.scrollY > 100) {
-      navbar.classList.add("shadow-lg", "py-3");
-      navbar.classList.remove("py-4");
-    } else {
-      navbar.classList.remove("shadow-lg", "py-3");
-      navbar.classList.add("py-4");
+    if (navbar) {
+        if (window.scrollY > 100) {
+        navbar.classList.add("shadow-lg", "py-3");
+        navbar.classList.remove("py-4");
+        } else {
+        navbar.classList.remove("shadow-lg", "py-3");
+        navbar.classList.add("py-4");
+        }
     }
   });
 
-  //3. FORM LAIN (BOOKING, ADD ROOM)
-  const forms = document.querySelectorAll("form");
-  forms.forEach((form) => {
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-
-      // Form login & register ditangani terpisah (abaikan di sini)
-      if (form.id === "login-form" || form.id === "register-form") return;
-
-      const submitButton = form.querySelector('button[type="submit"]');
-      const originalText = submitButton.textContent;
-      submitButton.innerHTML =
-        '<i class="fas fa-spinner fa-spin mr-2"></i> Memproses...';
-      submitButton.disabled = true;
-
-      setTimeout(() => {
-        alert("Form berhasil dikirim! (Demo frontend)");
-
-        submitButton.textContent = originalText;
-        submitButton.disabled = false;
-
-        if (form.id === "booking-form") {
-          window.location.href = "user.html";
-        } else if (form.id === "add-room-form") {
-          form.reset();
-          alert("Kamar berhasil ditambahkan!");
-        }
-      }, 1200);
-    });
-  });
-
-  //4. LOGIN & REGISTER HANDLING
+  // ============================================================
+  // 2. AUTHENTICATION (LOGIN & REGISTER)
+  // ============================================================
   const registerForm = document.getElementById("register-form");
   const loginForm = document.getElementById("login-form");
   const showLogin = document.getElementById("show-login");
   const showRegister = document.getElementById("show-register");
 
-  // Ganti tampilan form
-  showLogin?.addEventListener("click", (e) => {
-    e.preventDefault();
-    registerForm?.classList.add("hidden");
-    loginForm?.classList.remove("hidden");
-  });
-
-  showRegister?.addEventListener("click", (e) => {
-    e.preventDefault();
-    loginForm?.classList.add("hidden");
-    registerForm?.classList.remove("hidden");
-  });
-
-  // Proses login
-  loginForm?.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    const email = document.getElementById("login-email").value.trim();
-    const password = document.getElementById("login-password").value.trim();
-
-    localStorage.clear(); // Bersihkan sesi lama
-
-    // Admin Login
-    if (email === "grandluxe@admin.com" && password === "admin1234") {
-      localStorage.setItem("role", "admin");
-      alert("Login berhasil! Selamat datang, Administrator.");
-      window.location.href = "admin.html";
-      return;
-    }
-
-    // User Login
-    if (email === "grandluxe@user.com" && password === "user1234") {
-      localStorage.setItem("role", "user");
-      alert("Login berhasil! Selamat datang di Grand Luxe Hotel.");
-      window.location.href = "user.html";
-      return;
-    }
-  });
-
-  // Proses register
-  registerForm?.addEventListener("submit", (e) => {
-    e.preventDefault();
-    alert("Pendaftaran berhasil! Silakan login menggunakan akun Anda.");
-    registerForm.classList.add("hidden");
-    loginForm.classList.remove("hidden");
-  });
-
-  //5. PEMESANAN (KALKULASI)
-  const roomRadios = document.querySelectorAll('input[name="room-type"]');
-  const calculateTotal = () => {
-    const selectedRoom = document.querySelector(
-      'input[name="room-type"]:checked'
-    );
-    const checkIn = document.getElementById("check-in");
-    const checkOut = document.getElementById("check-out");
-
-    if (selectedRoom && checkIn?.value && checkOut?.value) {
-      const pricePerNight = getRoomPrice(selectedRoom.value);
-      const nights = calculateNights(checkIn.value, checkOut.value);
-      const tax = 0.1;
-      const discount = 0.05;
-
-      if (nights > 0) {
-        const subtotal = pricePerNight * nights;
-        const taxAmount = subtotal * tax;
-        const discountAmount = subtotal * discount;
-        const total = subtotal + taxAmount - discountAmount;
-
-        updateSummary(
-          selectedRoom.value,
-          nights,
-          subtotal,
-          taxAmount,
-          discountAmount,
-          total
-        );
-      }
-    }
-  };
-
-  const getRoomPrice = (roomType) => {
-    const prices = {
-      deluxe: 1500000,
-      executive: 2800000,
-      presidential: 5500000,
-    };
-    return prices[roomType] || 0;
-  };
-
-  const calculateNights = (checkIn, checkOut) => {
-    const start = new Date(checkIn);
-    const end = new Date(checkOut);
-    const timeDiff = end.getTime() - start.getTime();
-    return Math.ceil(timeDiff / (1000 * 3600 * 24));
-  };
-
-  const updateSummary = (
-    roomType,
-    nights,
-    subtotal,
-    taxAmount,
-    discountAmount,
-    total
-  ) => {
-    const roomName = {
-      deluxe: "Deluxe Room",
-      executive: "Executive Suite",
-      presidential: "Presidential Suite",
-    };
-
-    document.querySelector(".summary-room").textContent = roomName[roomType];
-    document.querySelector(".summary-night").textContent = `Rp ${getRoomPrice(
-      roomType
-    ).toLocaleString()} x ${nights} malam`;
-    document.querySelector(".summary-tax").textContent = `Rp ${Math.round(
-      taxAmount
-    ).toLocaleString()}`;
-    document.querySelector(
-      ".summary-discount"
-    ).textContent = `- Rp ${Math.round(discountAmount).toLocaleString()}`;
-    document.querySelector(".summary-total").textContent = `Rp ${Math.round(
-      total
-    ).toLocaleString()}`;
-  };
-
-  if (roomRadios.length > 0) {
-    roomRadios.forEach((radio) =>
-      radio.addEventListener("change", calculateTotal)
-    );
-    document.querySelectorAll("#check-in, #check-out").forEach((input) => {
-      input.addEventListener("change", calculateTotal);
+  if (showLogin) {
+    showLogin.addEventListener("click", (e) => {
+      e.preventDefault();
+      registerForm?.classList.add("hidden");
+      loginForm?.classList.remove("hidden");
     });
   }
 
-  //6. LOGOUT HANDLER (UNTUK DASHBOARD)
-  const logoutBtn = document.getElementById("logout-btn");
-  logoutBtn?.addEventListener("click", () => {
+  if (showRegister) {
+    showRegister.addEventListener("click", (e) => {
+      e.preventDefault();
+      loginForm?.classList.add("hidden");
+      registerForm?.classList.remove("hidden");
+    });
+  }
+
+  // REGISTER
+  if (registerForm) {
+    registerForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const btn = registerForm.querySelector('button[type="submit"]');
+      const originalText = btn.textContent;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+      btn.disabled = true;
+
+      const payload = {
+        name: document.getElementById("reg-name").value,
+        email: document.getElementById("reg-email").value,
+        phone: document.getElementById("reg-phone").value,
+        password: document.getElementById("reg-password").value
+      };
+
+      try {
+        const res = await fetch(`${API_BASE_URL}/auth/register`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        
+        if (data.success) {
+          alert("✅ Berhasil daftar! Silakan login.");
+          registerForm.reset();
+          registerForm.classList.add("hidden");
+          loginForm.classList.remove("hidden");
+        } else {
+          alert("❌ " + data.message);
+        }
+      } catch (err) { alert("⚠️ Error koneksi."); } 
+      finally { btn.textContent = originalText; btn.disabled = false; }
+    });
+  }
+
+  // LOGIN
+  if (loginForm) {
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const btn = loginForm.querySelector('button[type="submit"]');
+      const originalText = btn.textContent;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Masuk...';
+      btn.disabled = true;
+
+      const payload = {
+        email: document.getElementById("login-email").value,
+        password: document.getElementById("login-password").value
+      };
+
+      try {
+        const res = await fetch(`${API_BASE_URL}/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("isLoggedIn", "true");
+          localStorage.setItem("role", data.user.role);
+          localStorage.setItem("userName", data.user.name);
+          localStorage.setItem("userEmail", payload.email); 
+
+          alert(`✅ Selamat datang, ${data.user.name}!`);
+          window.location.href = (data.user.role === "Admin") ? "admin.html" : "user.html";
+        } else {
+          alert("❌ " + data.message);
+        }
+      } catch (err) { alert("⚠️ Error koneksi."); } 
+      finally { btn.textContent = originalText; btn.disabled = false; }
+    });
+  }
+
+  // LOGOUT
+  const handleLogout = (e) => {
+    e.preventDefault();
     localStorage.clear();
     alert("Anda telah keluar.");
     window.location.href = "login.html";
+  };
+
+  ["logout-btn", "logout-btn-admin", "logout-btn-user"].forEach(id => {
+      const btn = document.getElementById(id);
+      if(btn) btn.addEventListener("click", handleLogout);
   });
-});
 
-// 7. ADMIN SIDEBAR NAVIGATION - DIPERBARUI
-document.addEventListener("DOMContentLoaded", function () {
-  // Data storage (simulasi database)
-  let roomsData = [
-    { id: 1, type: "Deluxe Room", price: "1500000", status: "Tersedia", description: "Kamar mewah dengan pemandangan kota", facilities: "WiFi, AC, TV" },
-    { id: 2, type: "Executive Suite", price: "2800000", status: "Tersedia", description: "Suite eksklusif dengan ruang tamu terpisah", facilities: "WiFi, AC, TV, Mini Bar" },
-    { id: 3, type: "Presidential Suite", price: "5500000", status: "Tidak Tersedia", description: "Akomodasi paling mewah dengan fasilitas terbaik", facilities: "WiFi, AC, TV, Jacuzzi, Butler Service" },
-    { id: 4, type: "Family Suite", price: "3200000", status: "Tersedia", description: "Suite luas dengan dua kamar tidur", facilities: "WiFi, AC, TV, 2 Kamar Tidur" }
-  ];
+  // CEK AVATAR NAVBAR
+  const userAvatar = document.getElementById("user-avatar");
+  if (userAvatar) {
+    const isLogged = localStorage.getItem("isLoggedIn") === "true";
+    const userRole = localStorage.getItem("role");
+    userAvatar.href = isLogged ? ((userRole === "Admin") ? "admin.html" : "user.html") : "login.html";
+  }
 
-  let bookingsData = [
-    { id: "GLH-20231115-001", name: "Sarah Johnson", checkin: "2023-11-15", checkout: "2023-11-18", status: "Aktif", roomType: "Executive Suite" },
-    { id: "GLH-20231112-002", name: "Michael Chen", checkin: "2023-11-12", checkout: "2023-11-14", status: "Selesai", roomType: "Deluxe Room" },
-    { id: "GLH-20231110-003", name: "Lisa Williams", checkin: "2023-11-10", checkout: "2023-11-12", status: "Dibatalkan", roomType: "Presidential Suite" },
-    { id: "GLH-20231108-004", name: "Robert Brown", checkin: "2023-11-08", checkout: "2023-11-10", status: "Pending", roomType: "Family Suite" }
-  ];
+  // ============================================================
+  // 3. BOOKING SYSTEM (USER)
+  // ============================================================
+  const bookingForm = document.getElementById("booking-form");
+  const checkInInput = document.getElementById("check-in");
+  const checkOutInput = document.getElementById("check-out");
 
-  let usersData = [
-    { id: 1, name: "Sarah Johnson", email: "sarah.j@example.com", role: "User", status: "Aktif" },
-    { id: 2, name: "Michael Chen", email: "michael.c@example.com", role: "User", status: "Aktif" },
-    { id: 3, name: "Admin User", email: "admin@example.com", role: "Admin", status: "Aktif" },
-    { id: 4, name: "Lisa Williams", email: "lisa.w@example.com", role: "User", status: "Nonaktif" }
-  ];
+  // Tangkap Data dari URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const roomIdParam = urlParams.get('id');
+  const roomTypeParam = urlParams.get('type');
+  const roomPriceParam = urlParams.get('price');
 
-  // Variabel untuk menyimpan data yang sedang diedit
-  let currentEditingRoom = null;
-  let currentEditingBooking = null;
-  let currentEditingUser = null;
+  if (document.getElementById("display-room-type")) {
+      if (!roomIdParam) {
+          alert("⚠️ Silakan pilih kamar dulu!");
+          window.location.href = "kamar.html"; 
+      } else {
+          document.getElementById("display-room-type").textContent = roomTypeParam;
+          document.getElementById("display-room-price").textContent = `Rp ${parseInt(roomPriceParam).toLocaleString('id-ID')}`;
+          
+          document.getElementById("selected-room-id").value = roomIdParam;
+          document.getElementById("selected-room-name").value = roomTypeParam;
+          document.getElementById("selected-room-price").value = roomPriceParam;
 
-  // Fungsi untuk menampilkan konten yang sesuai
-  function showContent(contentId) {
-    // Sembunyikan semua konten
-    const contents = [
-      "dashboard-content",
-      "kelola-kamar-content",
-      "kelola-pemesanan-content",
-      "kelola-pengguna-content",
-      "laporan-content",
-      "pengaturan-content"
-    ];
-    
-    contents.forEach(id => {
-      const element = document.getElementById(id);
-      if (element) {
-        element.classList.add("hidden");
+          // Update Ringkasan Kanan
+          document.querySelector(".summary-room-name").textContent = roomTypeParam;
+          document.querySelector(".summary-room-details").textContent = `Rp ${parseInt(roomPriceParam).toLocaleString('id-ID')} / malam`;
+      }
+  }
+
+  // Proteksi Tanggal
+  if (checkInInput && checkOutInput) {
+    const today = new Date();
+    today.setMinutes(today.getMinutes() - today.getTimezoneOffset());
+    checkInInput.min = today.toISOString().split('T')[0];
+    checkOutInput.disabled = true;
+
+    checkInInput.addEventListener("change", function() {
+      if (this.value) {
+        checkOutInput.disabled = false;
+        const minOut = new Date(this.value);
+        minOut.setDate(minOut.getDate() + 1);
+        const minOutString = minOut.toISOString().split('T')[0];
+        checkOutInput.min = minOutString;
+        if (checkOutInput.value && checkOutInput.value < minOutString) checkOutInput.value = "";
       }
     });
-    
-    // Tampilkan konten yang dipilih
-    const selectedContent = document.getElementById(contentId);
-    if (selectedContent) {
-      selectedContent.classList.remove("hidden");
-    }
-    
-    // Update menu aktif
-    const menuItems = document.querySelectorAll(".lg\\:col-span-1 a");
-    menuItems.forEach(item => {
-      item.classList.remove("bg-primary", "text-white");
-      item.classList.add("hover:bg-gray-100");
-    });
-    
-    // Highlight menu aktif
-    const activeMenuItem = document.querySelector(`.${contentId.replace("-content", "")}`);
-    if (activeMenuItem) {
-      activeMenuItem.classList.add("bg-primary", "text-white");
-      activeMenuItem.classList.remove("hover:bg-gray-100");
-    }
   }
-  
-  // Event listeners untuk menu sidebar
-  document.querySelector(".kelola-kamar")?.addEventListener("click", function(e) {
-    e.preventDefault();
-    showContent("kelola-kamar-content");
-    loadRoomsData();
-  });
-  
-  document.querySelector(".kelola-pemesanan")?.addEventListener("click", function(e) {
-    e.preventDefault();
-    showContent("kelola-pemesanan-content");
-    loadBookingsData();
-  });
-  
-  document.querySelector(".kelola-pengguna")?.addEventListener("click", function(e) {
-    e.preventDefault();
-    showContent("kelola-pengguna-content");
-    loadUsersData();
-  });
-  
-  document.querySelector(".laporan")?.addEventListener("click", function(e) {
-    e.preventDefault();
-    showContent("laporan-content");
-  });
-  
-  document.querySelector(".pengaturan")?.addEventListener("click", function(e) {
-    e.preventDefault();
-    showContent("pengaturan-content");
-  });
-  
-  // ========== FUNGSI KAMAR ==========
-  
-  // Fungsi untuk memuat data kamar
-  function loadRoomsData() {
-    const roomsTable = document.getElementById("rooms-table");
-    if (!roomsTable) return;
-    
-    roomsTable.innerHTML = "";
-    
-    roomsData.forEach(room => {
-      const row = document.createElement("tr");
-      row.className = "border-b hover:bg-gray-50";
-      row.innerHTML = `
-        <td class="py-3 px-4">${room.type}</td>
-        <td class="py-3 px-4">Rp ${parseInt(room.price).toLocaleString('id-ID')}</td>
-        <td class="py-3 px-4">
-          <span class="${getStatusClass(room.status)} px-2 py-1 rounded-full text-xs">
-            ${room.status}
-          </span>
-        </td>
-        <td class="py-3 px-4">
-          <button class="text-primary hover:underline mr-2 edit-room" data-id="${room.id}">Edit</button>
-          <button class="text-red-600 hover:underline delete-room" data-id="${room.id}">Hapus</button>
-        </td>
-      `;
-      roomsTable.appendChild(row);
-    });
-    
-    // Event listeners untuk tombol edit dan hapus kamar
-    document.querySelectorAll(".edit-room").forEach(button => {
-      button.addEventListener("click", function() {
-        const roomId = parseInt(this.getAttribute("data-id"));
-        openEditRoomModal(roomId);
-      });
-    });
-    
-    document.querySelectorAll(".delete-room").forEach(button => {
-      button.addEventListener("click", function() {
-        const roomId = parseInt(this.getAttribute("data-id"));
-        deleteRoom(roomId);
-      });
-    });
-  }
-  
-  // Fungsi untuk membuka modal edit kamar
-  function openEditRoomModal(roomId) {
-    const room = roomsData.find(r => r.id === roomId);
-    if (!room) return;
-    
-    currentEditingRoom = room;
-    
-    document.getElementById("edit-room-id").value = room.id;
-    document.getElementById("edit-room-type").value = room.type;
-    document.getElementById("edit-room-price").value = room.price;
-    document.getElementById("edit-room-status").value = room.status;
-    
-    document.getElementById("edit-room-modal").classList.remove("hidden");
-  }
-  
-  // Fungsi untuk menghapus kamar
-  function deleteRoom(roomId) {
-    if (confirm("Apakah Anda yakin ingin menghapus kamar ini?")) {
-      roomsData = roomsData.filter(room => room.id !== roomId);
-      loadRoomsData();
-      showNotification("Kamar berhasil dihapus!", "success");
-    }
-  }
-  
-  // Event listener untuk form edit kamar
-  document.getElementById("edit-room-form")?.addEventListener("submit", function(e) {
-    e.preventDefault();
-    
-    const roomId = parseInt(document.getElementById("edit-room-id").value);
-    const roomType = document.getElementById("edit-room-type").value;
-    const roomPrice = document.getElementById("edit-room-price").value;
-    const roomStatus = document.getElementById("edit-room-status").value;
-    
-    const roomIndex = roomsData.findIndex(room => room.id === roomId);
-    if (roomIndex !== -1) {
-      roomsData[roomIndex] = {
-        ...roomsData[roomIndex],
-        type: roomType,
-        price: roomPrice,
-        status: roomStatus
-      };
+
+  // Kalkulasi Total
+  const calculateTotal = () => {
+    const inDate = document.getElementById("check-in").value;
+    const outDate = document.getElementById("check-out").value;
+    const price = parseInt(document.getElementById("selected-room-price")?.value || 0);
+    const name = document.getElementById("selected-room-name")?.value;
+
+    if (price > 0 && inDate && outDate) {
+      const d1 = new Date(inDate);
+      const d2 = new Date(outDate);
+      const days = Math.ceil((d2 - d1) / (1000 * 60 * 60 * 24));
       
-      loadRoomsData();
-      closeEditRoomModal();
-      showNotification("Data kamar berhasil diperbarui!", "success");
+      if (days > 0) {
+        const subtotal = price * days;
+        const tax = subtotal * 0.1;
+        const discount = subtotal * 0.05;
+        const total = subtotal + tax - discount;
+
+        document.querySelector(".summary-room-name").textContent = name;
+        document.querySelector(".summary-room-details").textContent = `Rp ${price.toLocaleString()} x ${days} malam`;
+        document.querySelector(".summary-tax").textContent = `Rp ${Math.round(tax).toLocaleString()}`;
+        document.querySelector(".summary-discount").textContent = `- Rp ${Math.round(discount).toLocaleString()}`;
+        document.querySelector(".summary-total").textContent = `Rp ${Math.round(total).toLocaleString()}`;
+      }
     }
-  });
-  
-  // Event listener untuk tombol batal edit kamar
-  document.getElementById("cancel-edit-room")?.addEventListener("click", function() {
-    closeEditRoomModal();
-  });
-  
-  // Fungsi untuk menutup modal edit kamar
-  function closeEditRoomModal() {
-    document.getElementById("edit-room-modal").classList.add("hidden");
-    currentEditingRoom = null;
-  }
-  
-  // ========== FUNGSI PEMESANAN ==========
-  
-  // Fungsi untuk memuat data pemesanan
-  function loadBookingsData() {
-    const bookingsTable = document.getElementById("bookings-table");
-    if (!bookingsTable) return;
-    
-    bookingsTable.innerHTML = "";
-    
-    bookingsData.forEach(booking => {
-      const row = document.createElement("tr");
-      row.className = "border-b hover:bg-gray-50";
-      row.innerHTML = `
-        <td class="py-3 px-4">${booking.id}</td>
-        <td class="py-3 px-4">${booking.name}</td>
-        <td class="py-3 px-4">${formatDateRange(booking.checkin, booking.checkout)}</td>
-        <td class="py-3 px-4">
-          <span class="${getStatusClass(booking.status)} px-2 py-1 rounded-full text-xs">
-            ${booking.status}
-          </span>
-        </td>
-        <td class="py-3 px-4">
-          <button class="text-primary hover:underline mr-2 edit-booking" data-id="${booking.id}">Edit</button>
-          <button class="text-red-600 hover:underline delete-booking" data-id="${booking.id}">Hapus</button>
-        </td>
-      `;
-      bookingsTable.appendChild(row);
-    });
-    
-    // Event listeners untuk tombol edit dan hapus pemesanan
-    document.querySelectorAll(".edit-booking").forEach(button => {
-      button.addEventListener("click", function() {
-        const bookingId = this.getAttribute("data-id");
-        openEditBookingModal(bookingId);
-      });
-    });
-    
-    document.querySelectorAll(".delete-booking").forEach(button => {
-      button.addEventListener("click", function() {
-        const bookingId = this.getAttribute("data-id");
-        deleteBooking(bookingId);
-      });
-    });
-  }
-  
-  // Fungsi untuk membuka modal edit pemesanan
-  function openEditBookingModal(bookingId) {
-    const booking = bookingsData.find(b => b.id === bookingId);
-    if (!booking) return;
-    
-    currentEditingBooking = booking;
-    
-    document.getElementById("edit-booking-id").value = booking.id;
-    document.getElementById("edit-booking-name").value = booking.name;
-    document.getElementById("edit-booking-checkin").value = booking.checkin;
-    document.getElementById("edit-booking-checkout").value = booking.checkout;
-    document.getElementById("edit-booking-status").value = booking.status;
-    
-    document.getElementById("edit-booking-modal").classList.remove("hidden");
-  }
-  
-  // Fungsi untuk menghapus pemesanan
-  function deleteBooking(bookingId) {
-    if (confirm("Apakah Anda yakin ingin menghapus pemesanan ini?")) {
-      bookingsData = bookingsData.filter(booking => booking.id !== bookingId);
-      loadBookingsData();
-      showNotification("Pemesanan berhasil dihapus!", "success");
-    }
-  }
-  
-  // Event listener untuk form edit pemesanan
-  document.getElementById("edit-booking-form")?.addEventListener("submit", function(e) {
-    e.preventDefault();
-    
-    const bookingId = document.getElementById("edit-booking-id").value;
-    const bookingName = document.getElementById("edit-booking-name").value;
-    const bookingCheckin = document.getElementById("edit-booking-checkin").value;
-    const bookingCheckout = document.getElementById("edit-booking-checkout").value;
-    const bookingStatus = document.getElementById("edit-booking-status").value;
-    
-    const bookingIndex = bookingsData.findIndex(booking => booking.id === bookingId);
-    if (bookingIndex !== -1) {
-      bookingsData[bookingIndex] = {
-        ...bookingsData[bookingIndex],
-        name: bookingName,
-        checkin: bookingCheckin,
-        checkout: bookingCheckout,
-        status: bookingStatus
-      };
-      
-      loadBookingsData();
-      closeEditBookingModal();
-      showNotification("Data pemesanan berhasil diperbarui!", "success");
-    }
-  });
-  
-  // Event listener untuk tombol batal edit pemesanan
-  document.getElementById("cancel-edit-booking")?.addEventListener("click", function() {
-    closeEditBookingModal();
-  });
-  
-  // Fungsi untuk menutup modal edit pemesanan
-  function closeEditBookingModal() {
-    document.getElementById("edit-booking-modal").classList.add("hidden");
-    currentEditingBooking = null;
-  }
-  
-  // ========== FUNGSI PENGGUNA ==========
-  
-  // Fungsi untuk memuat data pengguna
-  function loadUsersData() {
-    const usersTable = document.getElementById("users-table");
-    if (!usersTable) return;
-    
-    usersTable.innerHTML = "";
-    
-    usersData.forEach(user => {
-      const row = document.createElement("tr");
-      row.className = "border-b hover:bg-gray-50";
-      row.innerHTML = `
-        <td class="py-3 px-4">${user.name}</td>
-        <td class="py-3 px-4">${user.email}</td>
-        <td class="py-3 px-4">
-          <span class="${user.role === 'Admin' ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800'} px-2 py-1 rounded-full text-xs">
-            ${user.role}
-          </span>
-        </td>
-        <td class="py-3 px-4">
-          <span class="${user.status === 'Aktif' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'} px-2 py-1 rounded-full text-xs">
-            ${user.status}
-          </span>
-        </td>
-        <td class="py-3 px-4">
-          <button class="text-primary hover:underline mr-2 edit-user" data-id="${user.id}">Edit</button>
-          <button class="text-red-600 hover:underline delete-user" data-id="${user.id}">Hapus</button>
-        </td>
-      `;
-      usersTable.appendChild(row);
-    });
-    
-    // Event listeners untuk tombol edit dan hapus pengguna
-    document.querySelectorAll(".edit-user").forEach(button => {
-      button.addEventListener("click", function() {
-        const userId = parseInt(this.getAttribute("data-id"));
-        openEditUserModal(userId);
-      });
-    });
-    
-    document.querySelectorAll(".delete-user").forEach(button => {
-      button.addEventListener("click", function() {
-        const userId = parseInt(this.getAttribute("data-id"));
-        deleteUser(userId);
-      });
-    });
-  }
-  
-  // Fungsi untuk membuka modal edit pengguna
-  function openEditUserModal(userId) {
-    const user = usersData.find(u => u.id === userId);
-    if (!user) return;
-    
-    currentEditingUser = user;
-    
-    document.getElementById("edit-user-id").value = user.id;
-    document.getElementById("edit-user-name").value = user.name;
-    document.getElementById("edit-user-email").value = user.email;
-    document.getElementById("edit-user-role").value = user.role;
-    document.getElementById("edit-user-status").value = user.status;
-    
-    document.getElementById("edit-user-modal").classList.remove("hidden");
-  }
-  
-  // Fungsi untuk menghapus pengguna
-  function deleteUser(userId) {
-    if (confirm("Apakah Anda yakin ingin menghapus pengguna ini?")) {
-      usersData = usersData.filter(user => user.id !== userId);
-      loadUsersData();
-      showNotification("Pengguna berhasil dihapus!", "success");
-    }
-  }
-  
-  // Event listener untuk form edit pengguna
-  document.getElementById("edit-user-form")?.addEventListener("submit", function(e) {
-    e.preventDefault();
-    
-    const userId = parseInt(document.getElementById("edit-user-id").value);
-    const userName = document.getElementById("edit-user-name").value;
-    const userEmail = document.getElementById("edit-user-email").value;
-    const userRole = document.getElementById("edit-user-role").value;
-    const userStatus = document.getElementById("edit-user-status").value;
-    
-    const userIndex = usersData.findIndex(user => user.id === userId);
-    if (userIndex !== -1) {
-      usersData[userIndex] = {
-        ...usersData[userIndex],
-        name: userName,
-        email: userEmail,
-        role: userRole,
-        status: userStatus
-      };
-      
-      loadUsersData();
-      closeEditUserModal();
-      showNotification("Data pengguna berhasil diperbarui!", "success");
-    }
-  });
-  
-  // Event listener untuk tombol batal edit pengguna
-  document.getElementById("cancel-edit-user")?.addEventListener("click", function() {
-    closeEditUserModal();
-  });
-  
-  // Fungsi untuk menutup modal edit pengguna
-  function closeEditUserModal() {
-    document.getElementById("edit-user-modal").classList.add("hidden");
-    currentEditingUser = null;
-  }
-  
-  // ========== FUNGSI BANTUAN ==========
-  
-  // Fungsi untuk mendapatkan class CSS berdasarkan status
-  function getStatusClass(status) {
-    switch(status) {
-      case "Tersedia":
-      case "Aktif":
-      case "Selesai":
-      case "Dikonfirmasi":
-        return "bg-green-100 text-green-800";
-      case "Tidak Tersedia":
-      case "Nonaktif":
-      case "Dibatalkan":
-        return "bg-red-100 text-red-800";
-      case "Dalam Perawatan":
-      case "Pending":
-        return "bg-yellow-100 text-yellow-800";
-      default:
-        return "bg-gray-100 text-gray-800";
-    }
-  }
-  
-  // Fungsi untuk memformat tanggal
-  function formatDateRange(checkin, checkout) {
-    const checkinDate = new Date(checkin);
-    const checkoutDate = new Date(checkout);
-    
-    const options = { day: 'numeric', month: 'short' };
-    return `${checkinDate.toLocaleDateString('id-ID', options)} - ${checkoutDate.toLocaleDateString('id-ID', options)} ${checkoutDate.getFullYear()}`;
-  }
-  
-  // Fungsi untuk menampilkan notifikasi
-  function showNotification(message, type = "info") {
-    // Hapus notifikasi sebelumnya jika ada
-    const existingNotification = document.querySelector(".custom-notification");
-    if (existingNotification) {
-      existingNotification.remove();
-    }
-    
-    // Buat elemen notifikasi
-    const notification = document.createElement("div");
-    notification.className = `custom-notification fixed top-4 right-4 px-6 py-3 rounded-md shadow-lg z-50 ${
-      type === "success" ? "bg-green-500 text-white" :
-      type === "error" ? "bg-red-500 text-white" :
-      "bg-blue-500 text-white"
-    }`;
-    notification.textContent = message;
-    
-    document.body.appendChild(notification);
-    
-    // Hapus notifikasi setelah 3 detik
-    setTimeout(() => {
-      notification.remove();
-    }, 3000);
-  }
-  
-  // Event listener untuk form tambah kamar
-  const addRoomForm = document.getElementById("add-room-form");
-  if (addRoomForm) {
-    addRoomForm.addEventListener("submit", function(e) {
+  };
+
+  if(checkInInput) checkInInput.addEventListener("change", calculateTotal);
+  if(checkOutInput) checkOutInput.addEventListener("change", calculateTotal);
+
+  // Submit Booking
+  if (bookingForm) {
+    bookingForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      
-      const roomType = document.getElementById("room-type").value;
-      const roomPrice = document.getElementById("room-price").value;
-      const roomDescription = document.getElementById("room-description").value;
-      const roomFacilities = document.getElementById("room-facilities").value;
-      
-      if (roomType && roomPrice) {
-        const newRoom = {
-          id: roomsData.length > 0 ? Math.max(...roomsData.map(r => r.id)) + 1 : 1,
-          type: roomType,
-          price: roomPrice,
-          status: "Tersedia",
-          description: roomDescription,
-          facilities: roomFacilities
-        };
+      const token = localStorage.getItem("token");
+      if (!token) { alert("⚠️ Login dulu!"); window.location.href = "login.html"; return; }
+
+      const inDate = document.getElementById("check-in").value;
+      const outDate = document.getElementById("check-out").value;
+      const roomId = document.getElementById("selected-room-id").value;
+      const price = parseInt(document.getElementById("selected-room-price").value);
+      const roomName = document.getElementById("selected-room-name").value;
+
+      if (!inDate || !outDate) return alert("Tanggal wajib diisi!");
+
+      const days = Math.ceil((new Date(outDate) - new Date(inDate)) / (1000 * 60 * 60 * 24));
+      const btn = bookingForm.querySelector('button[type="submit"]');
+      const originalText = btn.textContent;
+      btn.disabled = true; btn.textContent = "Memproses...";
+
+      try {
+        const res = await fetch(`${API_BASE_URL}/bookings`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+          body: JSON.stringify({
+            room_id: roomId, check_in: inDate, check_out: outDate, total_price: price * days
+          })
+        });
+        const data = await res.json();
         
-        roomsData.push(newRoom);
-        addRoomForm.reset();
-        loadRoomsData();
-        showNotification(`Kamar ${roomType} berhasil ditambahkan!`, "success");
-      }
+        if (data.success) {
+          const nomorAdmin = "6282277158217"; 
+          const userName = localStorage.getItem("userName") || "Tamu";
+          const totalBayar = parseInt(price * days).toLocaleString('id-ID');
+          const textChat = `Halo Admin Grand Luxe, konfirmasi pesanan baru.\n\n*Detail:*\n👤 ${userName}\n🏨 ${roomName}\n📅 ${inDate} s/d ${outDate}\n💰 Rp ${totalBayar}\n\nMohon diproses.`;
+          
+          if(confirm("✅ Pesanan Dibuat! Lanjut ke WhatsApp?")) {
+              window.open(`https://wa.me/${nomorAdmin}?text=${encodeURIComponent(textChat)}`, '_blank'); 
+          }
+          window.location.href = "user.html";
+        } else {
+          alert("❌ " + data.message);
+        }
+      } catch (err) { alert("⚠️ Error koneksi."); } 
+      finally { btn.disabled = false; btn.textContent = originalText; }
     });
   }
-  
-  // Event listener untuk form pengaturan
-  const settingsForm = document.getElementById("settings-form");
-  if (settingsForm) {
-    settingsForm.addEventListener("submit", function(e) {
-      e.preventDefault();
-      showNotification("Pengaturan berhasil disimpan!", "success");
-    });
+
+  // ============================================================
+  // 4. LOAD PUBLIC ROOMS (Anti Putih)
+  // ============================================================
+  const roomsContainer = document.getElementById("rooms-container");
+  if (roomsContainer) {
+    (async () => {
+      try {
+        const res = await fetch(`${API_BASE_URL}/rooms`);
+        const json = await res.json();
+        if (json.success) {
+          roomsContainer.innerHTML = "";
+          json.data.forEach(room => {
+            const harga = parseInt(room.price).toLocaleString('id-ID');
+            const facilities = room.facilities ? room.facilities.split(',').map(f => `<span class="bg-gray-100 px-2 py-1 rounded text-xs mr-1">${f}</span>`).join('') : '';
+            
+            let btnAction = `
+              <button onclick="window.location.href='pemesanan.html?id=${room.id}&type=${encodeURIComponent(room.type)}&price=${room.price}'" 
+              class="btn-pesan w-full bg-primary text-white px-4 py-2 rounded hover:bg-opacity-90 mt-4 transition">Pesan Sekarang</button>`;
+            
+            let statusBadge = '';
+            if (room.status !== 'Tersedia') {
+               btnAction = `<button disabled class="w-full bg-gray-300 text-gray-500 px-4 py-2 rounded cursor-not-allowed mt-4">Tidak Tersedia</button>`;
+               statusBadge = `<div class="absolute top-4 right-4 bg-red-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow z-10">${room.status}</div>`;
+            }
+
+            const defaultImg = 'https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800';
+            const imageUrl = room.image_url ? room.image_url : defaultImg;
+
+            roomsContainer.insertAdjacentHTML('beforeend', `
+              <div class="room-card bg-white rounded-xl shadow-lg overflow-hidden relative h-full flex flex-col hover:shadow-2xl transition">
+                ${statusBadge}
+                <div class="h-64 w-full overflow-hidden bg-gray-200">
+                    <img 
+                        src="${imageUrl}" 
+                        alt="${room.type}" 
+                        class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                        onerror="this.onerror=null; this.src='${defaultImg}';" 
+                    />
+                </div>
+                <div class="p-6 flex flex-col flex-grow">
+                  <h3 class="text-xl font-bold mb-2 font-serif">${room.type}</h3>
+                  <p class="text-gray-600 text-sm mb-4 flex-grow line-clamp-3">${room.description || 'Kamar nyaman.'}</p>
+                  <div class="mb-4 flex flex-wrap gap-1">${facilities}</div>
+                  <div class="mt-auto pt-4 border-t">
+                    <div class="flex justify-between items-center">
+                      <span class="text-gray-500 text-sm">Mulai</span>
+                      <span class="text-primary font-bold text-lg">Rp ${harga}</span>
+                    </div>
+                    ${btnAction}
+                  </div>
+                </div>
+              </div>`);
+          });
+        }
+      } catch (err) { console.error(err); }
+    })();
   }
-  
-  // Event listener untuk generate laporan
-  const generateReportBtn = document.getElementById("generate-report");
-  if (generateReportBtn) {
-    generateReportBtn.addEventListener("click", function() {
-      const reportType = document.getElementById("report-type").value;
-      const reportPeriod = document.getElementById("report-period").value;
-      showNotification(`Laporan ${reportType} untuk periode ${reportPeriod} berhasil digenerate!`, "success");
-    });
-  }
-  
-  // Event listener untuk filter pemesanan
-  const filterStatus = document.getElementById("filter-status");
-  const filterDateFrom = document.getElementById("filter-date-from");
-  const filterDateTo = document.getElementById("filter-date-to");
-  
-  if (filterStatus && filterDateFrom && filterDateTo) {
-    [filterStatus, filterDateFrom, filterDateTo].forEach(element => {
-      element.addEventListener("change", function() {
-        showNotification("Filter diterapkan! Data akan diperbarui sesuai dengan filter yang dipilih.", "info");
-        // Di sini Anda bisa menambahkan logika filter yang lebih kompleks
+
+  // Search Bar
+  const searchInput = document.getElementById("search-room-input");
+  if (searchInput) {
+    searchInput.addEventListener("input", function (e) {
+      const keyword = e.target.value.toLowerCase();
+      document.querySelectorAll(".room-card").forEach((card) => {
+        const title = card.querySelector("h3").textContent.toLowerCase();
+        card.style.display = title.includes(keyword) ? "flex" : "none";
       });
     });
   }
-  
-  // Tutup modal saat klik di luar modal
-  window.addEventListener("click", function(e) {
-    const editRoomModal = document.getElementById("edit-room-modal");
-    const editBookingModal = document.getElementById("edit-booking-modal");
-    const editUserModal = document.getElementById("edit-user-modal");
-    
-    if (e.target === editRoomModal) {
-      closeEditRoomModal();
+
+  // ============================================================
+  // 5. USER DASHBOARD
+  // ============================================================
+  const bookingHistoryBody = document.getElementById("booking-history-body");
+  if (bookingHistoryBody) {
+    (async () => {
+      const token = localStorage.getItem("token");
+      if (!token) return window.location.href = "login.html";
+
+      try {
+        const res = await fetch(`${API_BASE_URL}/bookings/my`, { headers: { 'Authorization': `Bearer ${token}` } });
+        const json = await res.json();
+        if (json.success) {
+          bookingHistoryBody.innerHTML = "";
+          if (json.data.length === 0) bookingHistoryBody.innerHTML = '<tr><td colspan="4" class="text-center py-4">Belum ada riwayat.</td></tr>';
+          
+          json.data.forEach(b => {
+            let badge = "bg-gray-100";
+            if(b.status === "Dikonfirmasi") badge = "bg-blue-100 text-blue-800";
+            if(b.status === "Aktif") badge = "bg-green-100 text-green-800";
+            if(b.status === "Dibatalkan") badge = "bg-red-100 text-red-800";
+
+            const dates = `${new Date(b.check_in).toLocaleDateString('id-ID')} - ${new Date(b.check_out).toLocaleDateString('id-ID')}`;
+            bookingHistoryBody.innerHTML += `
+              <tr class="border-b hover:bg-gray-50">
+                <td class="py-3 px-4 font-medium">${dates}</td>
+                <td class="py-3 px-4">${b.room_type}<br><span class="text-xs text-gray-500">ID: ${b.id}</span></td>
+                <td class="py-3 px-4"><span class="${badge} px-2 py-1 rounded text-xs font-bold">${b.status}</span></td>
+                <td class="py-3 px-4 font-bold text-primary">Rp ${parseInt(b.total_price).toLocaleString('id-ID')}</td>
+              </tr>`;
+          });
+        }
+      } catch (err) { console.error(err); }
+    })();
+  }
+
+  // ============================================================
+  // 6. ADMIN DASHBOARD (LENGKAP + UPLOAD FOTO)
+  // ============================================================
+  if (window.location.pathname.includes("admin.html")) {
+    const role = localStorage.getItem("role");
+    const token = localStorage.getItem("token");
+    if (!token || role !== "Admin") { alert("⛔ Khusus Admin!"); window.location.href = "login.html"; return; }
+
+    // Nama Admin
+    const sidebarName = document.querySelector("#admin-sidebar h3.text-lg");
+    const sidebarEmail = document.getElementById("admin-email");
+    if(sidebarName) sidebarName.innerText = localStorage.getItem("userName") || "Administrator";
+    if(sidebarEmail) sidebarEmail.innerText = localStorage.getItem("userEmail") || "admin@grandluxe.com";
+
+    // Load Bookings & Statistic
+    const loadAdminBookings = async () => {
+        const tbody = document.getElementById("bookings-table");
+        if(!tbody) return;
+        tbody.innerHTML = '<tr><td colspan="5" class="text-center py-4">Loading...</td></tr>';
+        
+        try {
+            const res = await fetch(`${API_BASE_URL}/admin/bookings`, { headers: { 'Authorization': `Bearer ${token}` } });
+            const json = await res.json();
+            if(json.success) {
+                const bookings = json.data;
+                tbody.innerHTML = "";
+                
+                const total = bookings.length;
+                const duit = bookings.filter(b => ['Selesai','Aktif','Dikonfirmasi'].includes(b.status)).reduce((a, c) => a + parseInt(c.total_price), 0);
+                const tamu = bookings.filter(b => b.status === 'Aktif').length;
+                
+                const statAngka = document.querySelectorAll(".bg-white h3.text-2xl");
+                if(statAngka.length >= 3) { 
+                   statAngka[0].innerText = total; 
+                   statAngka[1].innerText = `Rp ${duit.toLocaleString('id-ID')}`; 
+                   statAngka[2].innerText = tamu; 
+                }
+
+                bookings.forEach(b => {
+                    let badge = "bg-gray-100";
+                    if(b.status === "Dikonfirmasi") badge = "bg-blue-100 text-blue-800";
+                    if(b.status === "Aktif") badge = "bg-green-100 text-green-800";
+                    if(b.status === "Dibatalkan") badge = "bg-red-100 text-red-800";
+
+                    tbody.innerHTML += `
+                    <tr class="border-b hover:bg-gray-50">
+                        <td class="p-3 font-bold">#${b.id}</td>
+                        <td class="p-3">${b.guest_name}<br><span class="text-xs text-gray-500">${b.room_type}</span></td>
+                        <td class="p-3 text-sm">${new Date(b.check_in).toLocaleDateString()}</td>
+                        <td class="p-3"><span class="${badge} px-2 py-1 rounded text-xs font-bold">${b.status}</span></td>
+                        <td class="p-3">
+                            <select onchange="updateStatus(${b.id}, this.value)" class="border rounded text-sm bg-white p-1">
+                                <option disabled selected>Aksi</option>
+                                <option value="Dikonfirmasi">Terima</option>
+                                <option value="Aktif">Check-In</option>
+                                <option value="Selesai">Check-Out</option>
+                                <option value="Dibatalkan">Tolak</option>
+                            </select>
+                        </td>
+                    </tr>`;
+                });
+            }
+        } catch(e) { tbody.innerHTML = '<tr><td colspan="5">Error.</td></tr>'; }
+    };
+    loadAdminBookings();
+
+    // Update Status Booking
+    window.updateStatus = async (id, status) => {
+        if(!confirm(`Ubah status ke ${status}?`)) return;
+        await fetch(`${API_BASE_URL}/admin/bookings/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+            body: JSON.stringify({ status })
+        });
+        loadAdminBookings();
+    };
+
+    // Navigation Tabs
+    document.querySelectorAll('#admin-sidebar a').forEach(link => {
+        link.addEventListener('click', (e) => {
+            if (link.classList.contains('kelola-kamar')) {
+                e.preventDefault();
+                document.querySelectorAll('[id$="-content"]').forEach(el => el.classList.add('hidden'));
+                document.getElementById('kelola-kamar-content').classList.remove('hidden');
+                loadAdminRooms();
+            } else if (link.classList.contains('kelola-pemesanan')) {
+                e.preventDefault();
+                document.querySelectorAll('[id$="-content"]').forEach(el => el.classList.add('hidden'));
+                document.getElementById('kelola-pemesanan-content').classList.remove('hidden');
+                loadAdminBookings();
+            } else if (link.getAttribute('href') === 'admin.html') {
+                document.querySelectorAll('[id$="-content"]').forEach(el => el.classList.add('hidden'));
+                document.getElementById('dashboard-content').classList.remove('hidden');
+            }
+        });
+    });
+
+    // Load Admin Rooms (DENGAN TOMBOL EDIT & HAPUS)
+    window.loadAdminRooms = async () => {
+        const tbody = document.getElementById("rooms-table");
+        if(!tbody) return;
+        
+        try {
+            const res = await fetch(`${API_BASE_URL}/rooms`);
+            const json = await res.json();
+            if(json.success) {
+                tbody.innerHTML = "";
+                
+                // Update stat kamar
+                const statAngka = document.querySelectorAll(".bg-white h3.text-2xl");
+                const tersedia = json.data.filter(r => r.status === 'Tersedia').length;
+                if(statAngka.length >= 4) statAngka[3].innerText = tersedia;
+
+                json.data.forEach(r => {
+                    const bg = r.status === 'Tersedia' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
+                    tbody.innerHTML += `
+                    <tr class="border-b hover:bg-gray-50">
+                        <td class="p-3 font-medium">${r.type}</td>
+                        <td class="p-3">Rp ${parseInt(r.price).toLocaleString('id-ID')}</td>
+                        <td class="p-3"><span class="${bg} px-2 py-1 rounded text-xs font-bold">${r.status}</span></td>
+                        <td class="p-3 flex gap-3">
+                            <button onclick="openEditModal(${r.id}, '${r.type}', ${r.price}, '${r.status}')" class="text-blue-600 hover:underline font-medium">Edit</button>
+                            <button onclick="deleteRoom(${r.id})" class="text-red-600 hover:underline font-medium">Hapus</button>
+                        </td>
+                    </tr>`;
+                });
+            }
+        } catch(e) { tbody.innerHTML = '<tr><td colspan="4">Error.</td></tr>'; }
+    };
+
+    window.deleteRoom = async (id) => {
+        if(!confirm("Hapus kamar ini permanen?")) return;
+        const res = await fetch(`${API_BASE_URL}/rooms/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
+        const json = await res.json();
+        if(json.success) { alert("✅ Terhapus"); loadAdminRooms(); }
+        else { alert("❌ Gagal: " + json.message); }
+    };
+
+    // Add Room (UPLOAD FOTO)
+    const addForm = document.getElementById("add-room-form");
+    if(addForm) {
+        addForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const btn = addForm.querySelector('button[type="submit"]');
+            const originalText = btn.textContent;
+            btn.innerHTML = "Mengupload...";
+            btn.disabled = true;
+
+            const formData = new FormData();
+            formData.append('type', document.getElementById("add-room-type").value);
+            formData.append('price', document.getElementById("add-room-price").value);
+            formData.append('description', document.getElementById("add-room-desc").value);
+            formData.append('facilities', document.getElementById("add-room-facilities").value);
+            formData.append('status', 'Tersedia');
+            
+            const fileInput = document.getElementById("add-room-image");
+            if (fileInput.files[0]) {
+                formData.append('image', fileInput.files[0]); 
+            }
+
+            try {
+                const res = await fetch(`${API_BASE_URL}/rooms`, {
+                    method: 'POST',
+                    body: formData 
+                });
+                const json = await res.json(); 
+                if(res.ok) {
+                    alert("✅ Berhasil! Foto terupload.");
+                    document.getElementById("add-room-modal").classList.add("hidden");
+                    addForm.reset();
+                    loadAdminRooms(); 
+                } else {
+                    alert("❌ Gagal: " + json.message);
+                }
+            } catch(e) { alert("⚠️ Error koneksi."); } 
+            finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        });
     }
-    if (e.target === editBookingModal) {
-      closeEditBookingModal();
+
+    // Edit Room Logic
+    window.openEditModal = (id, type, price, status) => {
+        const modal = document.getElementById('edit-room-modal');
+        if(modal) {
+            modal.classList.remove('hidden');
+            document.getElementById('edit-room-id').value = id;
+            document.getElementById('edit-room-type').value = type;
+            document.getElementById('edit-room-price').value = price;
+            document.getElementById('edit-room-status').value = status;
+        }
+    };
+
+    const editForm = document.getElementById("edit-room-form");
+    if(editForm) {
+        editForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const id = document.getElementById('edit-room-id').value;
+            const body = {
+                type: document.getElementById('edit-room-type').value,
+                price: document.getElementById('edit-room-price').value,
+                status: document.getElementById('edit-room-status').value
+            };
+            const btn = editForm.querySelector('button[type="submit"]');
+            btn.innerText = "Menyimpan..."; btn.disabled = true;
+
+            try {
+                await fetch(`${API_BASE_URL}/rooms/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                    body: JSON.stringify(body)
+                });
+                document.getElementById('edit-room-modal').classList.add('hidden');
+                alert("✅ Update Berhasil");
+                loadAdminRooms();
+            } catch(e) { alert("Error."); }
+            finally { btn.innerText = "Simpan Perubahan"; btn.disabled = false; }
+        });
+
+        const cancelEdit = document.getElementById("cancel-edit-room");
+        if(cancelEdit) cancelEdit.addEventListener("click", () => document.getElementById('edit-room-modal').classList.add('hidden'));
     }
-    if (e.target === editUserModal) {
-      closeEditUserModal();
-    }
-  });
+  }
 });
