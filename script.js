@@ -3,7 +3,6 @@ const API_BASE_URL = "https://backend-testpemweb.vercel.app/api";
 // ============================================================
 // NOTIFICATION SYSTEM - Custom Toast Notifications
 // ============================================================
-// Update bagian NotificationSystem.init() dan styling
 const NotificationSystem = {
   init() {
     // Create notification container dengan responsive positioning
@@ -1099,3 +1098,4 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Auto update copyright year
 document.getElementById("current-year").textContent = new Date().getFullYear();
+
