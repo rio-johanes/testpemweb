@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://backend-testpemweb.vercel.app/';
+const API_BASE_URL = 'https://backend-testpemweb.vercel.app/api';
 document.addEventListener("DOMContentLoaded", function () {
 
   // ============================================================
@@ -616,5 +616,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 });
+
 
 
