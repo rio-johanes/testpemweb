@@ -3,14 +3,31 @@ const API_BASE_URL = "https://backend-testpemweb.vercel.app/api";
 // ============================================================
 // NOTIFICATION SYSTEM - Custom Toast Notifications
 // ============================================================
+// Update bagian NotificationSystem.init() dan styling
 const NotificationSystem = {
   init() {
-    // Create notification container
+    // Create notification container dengan responsive positioning
     const container = document.createElement("div");
     container.id = "notification-container";
     container.className =
-      "fixed top-6 right-6 z-[9999] flex flex-col gap-3 max-w-md w-full md:w-auto";
+      "fixed z-[9999] flex flex-col gap-3 max-w-sm w-[90vw] md:w-auto sm:max-w-md";
     document.body.appendChild(container);
+
+    // Responsive positioning
+    this.updatePosition();
+    window.addEventListener("resize", () => this.updatePosition());
+  },
+
+  updatePosition() {
+    const container = document.getElementById("notification-container");
+    if (!container) return;
+
+    // Untuk mobile, posisi sedikit ke dalam dari tepi
+    if (window.innerWidth < 768) {
+      container.className = "fixed z-[9999] flex flex-col gap-3 w-[90vw] max-w-sm left-1/2 transform -translate-x-1/2 top-4";
+    } else {
+      container.className = "fixed z-[9999] flex flex-col gap-3 max-w-md w-auto right-6 top-6";
+    }
   },
 
   show(message, type = "info", duration = 5000) {
@@ -21,9 +38,9 @@ const NotificationSystem = {
     const id = "toast-" + Date.now();
     notification.id = id;
 
-    // Base styling
+    // Base styling yang lebih compact untuk mobile
     const baseStyles =
-      "rounded-xl shadow-xl p-4 pl-5 pr-14 transform transition-all duration-500 translate-x-[150%] relative overflow-hidden backdrop-blur-sm border-l-4";
+      "rounded-xl shadow-xl p-3 pl-4 pr-12 transform transition-all duration-500 translate-y-[-100px] opacity-0 relative overflow-hidden backdrop-blur-sm border-l-4";
 
     // Type-based styling
     const typeStyles = {
@@ -52,20 +69,20 @@ const NotificationSystem = {
       info: "Info",
     };
 
-    notification.className = `${baseStyles} ${typeStyles[type]} animate-slide-in`;
+    notification.className = `${baseStyles} ${typeStyles[type]} animate-toast-in`;
     notification.innerHTML = `
             <div class="flex items-start">
-                <div class="text-xl mr-3 mt-0.5">
+                <div class="text-lg mr-3 mt-0.5 flex-shrink-0">
                     ${icons[type]}
                 </div>
-                <div class="flex-1">
-                    <div class="font-bold font-sans mb-1">${titles[type]}</div>
-                    <div class="text-sm font-medium">${message}</div>
+                <div class="flex-1 min-w-0">
+                    <div class="font-bold font-sans mb-1 truncate">${titles[type]}</div>
+                    <div class="text-sm font-medium break-words line-clamp-2">${message}</div>
                 </div>
             </div>
             <button onclick="NotificationSystem.close('${id}')" 
-                    class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 transition-colors">
-                <i class="fas fa-times"></i>
+                    class="absolute top-2 right-2 text-gray-400 hover:text-gray-600 transition-colors w-6 h-6 flex items-center justify-center">
+                <i class="fas fa-times text-xs"></i>
             </button>
             <div class="absolute bottom-0 left-0 right-0 h-1 bg-current opacity-20">
                 <div class="h-full bg-current progress-bar" style="width: 100%"></div>
@@ -76,8 +93,8 @@ const NotificationSystem = {
 
     // Trigger animation
     setTimeout(() => {
-      notification.classList.remove("translate-x-[150%]");
-      notification.classList.add("translate-x-0");
+      notification.classList.remove("translate-y-[-100px]", "opacity-0");
+      notification.classList.add("translate-y-0", "opacity-100");
 
       // Start progress bar animation
       const progressBar = notification.querySelector(".progress-bar");
@@ -98,49 +115,67 @@ const NotificationSystem = {
   close(id) {
     const notification = document.getElementById(id);
     if (notification) {
-      notification.classList.remove("translate-x-0");
-      notification.classList.add("translate-x-[150%]");
+      notification.classList.remove("translate-y-0", "opacity-100");
+      notification.classList.add("translate-y-[-100px]", "opacity-0");
       setTimeout(() => notification.remove(), 500);
     }
   },
 
   success(message, duration = 5000) {
-    return this.show(message, "success", duration);
+    // Durasi lebih pendek untuk mobile
+    const mobileDuration = window.innerWidth < 768 ? 3000 : duration;
+    return this.show(message, "success", mobileDuration);
   },
 
   error(message, duration = 5000) {
-    return this.show(message, "error", duration);
+    const mobileDuration = window.innerWidth < 768 ? 4000 : duration;
+    return this.show(message, "error", mobileDuration);
   },
 
   warning(message, duration = 5000) {
-    return this.show(message, "warning", duration);
+    const mobileDuration = window.innerWidth < 768 ? 3500 : duration;
+    return this.show(message, "warning", mobileDuration);
   },
 
   info(message, duration = 5000) {
-    return this.show(message, "info", duration);
+    const mobileDuration = window.innerWidth < 768 ? 3000 : duration;
+    return this.show(message, "info", mobileDuration);
   },
 };
 
-// Initialize notification system on load
 document.addEventListener("DOMContentLoaded", () => {
   NotificationSystem.init();
 
-  // Add animation CSS
   const style = document.createElement("style");
   style.textContent = `
-        @keyframes slideIn {
+        @keyframes toastIn {
             from {
-                transform: translateX(150%);
+                transform: translateY(-100px);
                 opacity: 0;
             }
             to {
-                transform: translateX(0);
+                transform: translateY(0);
                 opacity: 1;
             }
         }
         
-        .animate-slide-in {
-            animation: slideIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        @keyframes toastOut {
+            from {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+        }
+        
+        .animate-toast-in {
+            animation: toastIn 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+        
+        .animate-toast-out {
+            animation: toastOut 0.3s ease-in forwards;
         }
         
         #notification-container {
@@ -150,9 +185,51 @@ document.addEventListener("DOMContentLoaded", () => {
         #notification-container > div {
             pointer-events: auto;
         }
+        
+        /* Responsive text sizes */
+        @media (max-width: 640px) {
+            #notification-container > div {
+                font-size: 14px;
+            }
+            #notification-container > div .text-lg {
+                font-size: 16px;
+            }
+            #notification-container > div .text-sm {
+                font-size: 12px;
+            }
+        }
+        
+        /* Untuk layar sangat kecil */
+        @media (max-width: 360px) {
+            #notification-container {
+                width: 95vw !important;
+                max-width: 95vw !important;
+            }
+            #notification-container > div {
+                padding: 10px 12px !important;
+            }
+        }
+        
+        /* Pastikan notif di atas semua elemen */
+        #notification-container {
+            z-index: 99999 !important;
+        }
     `;
   document.head.appendChild(style);
 });
+
+// method close untuk animation out
+NotificationSystem.close = function(id) {
+    const notification = document.getElementById(id);
+    if (notification) {
+        notification.classList.add("animate-toast-out");
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.remove();
+            }
+        }, 300);
+    }
+};
 
 // ============================================================
 // 1. NAVBAR & UI (Mobile Menu & Scroll)
