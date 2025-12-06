@@ -147,13 +147,8 @@
             <!-- Tombol untuk user biasa/non-login -->
           <div id="default-buttons">
             <a
-              href="pemesanan.html"
-              class="block w-full sm:w-auto bg-accent text-dark px-8 py-3 rounded-md font-bold text-center hover:bg-opacity-90 transition-all duration-300 transform hover:-translate-y-1"
-              >Pesan Sekarang</a
-            >
-            <a
               href="kamar.html"
-              class="block w-full sm:w-auto border-2 border-white text-white px-8 py-3 rounded-md font-bold text-center hover:bg-white hover:text-dark transition-all duration-300"
+              class="block w-full sm:w-auto bg-accent text-dark px-8 py-3 rounded-md font-bold text-center hover:bg-opacity-90 transition-all duration-300 transform hover:-translate-y-1"
               >Jelajahi Kamar</a
             >
           </div>
@@ -365,124 +360,146 @@
     <!-- Footer -->
     <footer class="bg-dark text-white pt-16 pb-8">
       <div class="container mx-auto px-4">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mb-12">
+          <!-- Brand Info -->
           <div>
-            <h3 class="text-xl font-serif font-bold mb-6 text-accent">
+            <h3 class="text-2xl font-serif font-bold mb-6 text-accent">
               Grand Luxe Hotel
             </h3>
-            <p class="mb-4 text-gray-300">
+            <p class="mb-6 text-gray-300 text-lg leading-relaxed">
               Hotel mewah bintang lima dengan pelayanan terbaik di jantung kota.
               Pengalaman menginap tak terlupakan menanti Anda.
             </p>
-            <div class="flex space-x-4">
+            <div class="flex space-x-5">
               <a
-                href="#"
-                class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-accent transition-colors duration-300"
+                href="https://m.me/andareaspegri.damanik"
+                class="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center hover:bg-accent transition-all duration-300 transform hover:-translate-y-1"
+                aria-label="Facebook"
               >
-                <i class="fab fa-facebook-f"></i>
+                <i class="fab fa-facebook-f text-lg"></i>
               </a>
               <a
-                href="#"
-                class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-accent transition-colors duration-300"
+                href="https://ig.me/m/andar21_"
+                class="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center hover:bg-accent transition-all duration-300 transform hover:-translate-y-1"
+                aria-label="Instagram"
               >
-                <i class="fab fa-instagram"></i>
+                <i class="fab fa-instagram text-lg"></i>
               </a>
               <a
-                href="#"
-                class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-accent transition-colors duration-300"
+                href="https://wa.me/6282277158217"
+                target="_blank"
+                class="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center hover:bg-green-600 transition-all duration-300 transform hover:-translate-y-1"
+                aria-label="WhatsApp"
               >
-                <i class="fab fa-whatsapp"></i>
+                <i class="fab fa-whatsapp text-lg"></i>
               </a>
             </div>
           </div>
 
+          <!-- Quick Links -->
           <div>
-            <h3 class="text-xl font-serif font-bold mb-6 text-accent">
+            <h3 class="text-2xl font-serif font-bold mb-6 text-accent">
               Tautan Cepat
             </h3>
-            <ul class="space-y-3">
+            <ul class="space-y-4">
               <li>
                 <a
                   href="index.html"
-                  class="text-gray-300 hover:text-white transition-colors duration-300"
-                  >Beranda</a
+                  class="text-gray-300 hover:text-accent transition-colors duration-300 text-lg flex items-center group"
                 >
+                  <i class="fas fa-home mr-3 text-accent opacity-70 group-hover:opacity-100"></i>
+                  Beranda
+                </a>
               </li>
               <li>
                 <a
                   href="kamar.html"
-                  class="text-gray-300 hover:text-white transition-colors duration-300"
-                  >Kamar & Suite</a
+                  class="text-gray-300 hover:text-accent transition-colors duration-300 text-lg flex items-center group"
                 >
+                  <i class="fas fa-bed mr-3 text-accent opacity-70 group-hover:opacity-100"></i>
+                  Kamar & Suite
+                </a>
               </li>
               <li>
                 <a
                   href="pemesanan.html"
-                  class="text-gray-300 hover:text-white transition-colors duration-300"
-                  >Pemesanan</a
+                  class="text-gray-300 hover:text-accent transition-colors duration-300 text-lg flex items-center group"
                 >
+                  <i class="fas fa-calendar-check mr-3 text-accent opacity-70 group-hover:opacity-100"></i>
+                  Pemesanan
+                </a>
               </li>
               <li>
                 <a
                   href="login.html"
-                  class="text-gray-300 hover:text-white transition-colors duration-300"
-                  >Masuk</a
+                  class="text-gray-300 hover:text-accent transition-colors duration-300 text-lg flex items-center group"
                 >
+                  <i class="fas fa-sign-in-alt mr-3 text-accent opacity-70 group-hover:opacity-100"></i>
+                  Masuk
+                </a>
               </li>
             </ul>
           </div>
 
+          <!-- Contact Info -->
           <div>
-            <h3 class="text-xl font-serif font-bold mb-6 text-accent">
+            <h3 class="text-2xl font-serif font-bold mb-6 text-accent">
               Kontak Kami
             </h3>
-            <ul class="space-y-3 text-gray-300">
+            <ul class="space-y-6 text-gray-300">
               <li class="flex items-start">
-                <i class="fas fa-map-marker-alt mt-1 mr-3 text-accent"></i>
-                <span>Jalan abdulhakim, Medan Selayang</span>
+                <div class="bg-gray-800 p-3 rounded-full mr-4">
+                  <i class="fas fa-map-marker-alt text-accent text-lg"></i>
+                </div>
+                <div>
+                  <p class="font-semibold text-white mb-1">Alamat</p>
+                  <p class="text-lg">Jalan Abdulhakim, Medan Selayang</p>
+                  <p class="text-sm opacity-75">Sumatera Utara, Indonesia</p>
+                </div>
               </li>
-              <li class="flex items-center">
-                <i class="fas fa-phone mr-3 text-accent"></i>
-                <span>+62 822 7715 8217</span>
+              <li class="flex items-start">
+                <div class="bg-gray-800 p-3 rounded-full mr-4">
+                  <i class="fas fa-phone text-accent text-lg"></i>
+                </div>
+                <div>
+                  <p class="font-semibold text-white mb-1">Telepon</p>
+                  <a 
+                    href="tel:+6282277158217" 
+                    class="text-lg hover:text-accent transition-colors duration-300"
+                  >
+                    +62 822 7715 8217
+                  </a>
+                </div>
               </li>
-              <li class="flex items-center">
-                <i class="fas fa-envelope mr-3 text-accent"></i>
-                <span>info@grandluxehotel.com</span>
+              <li class="flex items-start">
+                <div class="bg-gray-800 p-3 rounded-full mr-4">
+                  <i class="fas fa-envelope text-accent text-lg"></i>
+                </div>
+                <div>
+                  <p class="font-semibold text-white mb-1">Email</p>
+                  <a 
+                    href="mailto:info@grandluxehotel.com" 
+                    class="text-lg hover:text-accent transition-colors duration-300"
+                  >
+                    info@grandluxehotel.com
+                  </a>
+                </div>
               </li>
             </ul>
-          </div>
-
-          <div>
-            <h3 class="text-xl font-serif font-bold mb-6 text-accent">
-              Newsletter
-            </h3>
-            <p class="mb-4 text-gray-300">
-              Berlangganan newsletter kami untuk mendapatkan penawaran khusus
-              dan update terbaru.
-            </p>
-            <form class="flex">
-              <input
-                type="email"
-                placeholder="Email Anda"
-                class="px-4 py-2 w-full rounded-l-md focus:outline-none text-dark"
-              />
-              <button
-                type="submit"
-                class="bg-accent text-dark px-4 py-2 rounded-r-md font-bold hover:bg-opacity-90 transition-colors duration-300"
-              >
-                Langganan
-              </button>
-            </form>
           </div>
         </div>
 
-        <div class="border-t border-gray-700 pt-8 text-center text-gray-400">
-          <p>&copy; 2025 Grand Luxe Hotel. All rights reserved.</p>
+        <!-- Copyright -->
+        <div class="border-t border-gray-800 pt-8 text-center">
+          <p class="text-gray-400 text-lg">
+            &copy; <span id="current-year">2025</span> Grand Luxe Hotel. All rights reserved.
+          </p>
+          <p class="text-gray-500 text-sm mt-2">
+            Designed with <i class="fas fa-heart text-red-500 mx-1"></i> for luxury experience
+          </p>
         </div>
       </div>
     </footer>
     <script src="script.js"></script>
   </body>
 </html>
-
-
